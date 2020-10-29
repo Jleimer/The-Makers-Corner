@@ -1,0 +1,35 @@
+{
+  "name": "server.js",
+  "version": "1.0.0",
+  "description": "A server for social media and sale of classes for at home construction",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "watch": "nodemon",
+    "seed": "node config/seeds.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Jleimer/The-Makers-Corner.git"
+  },
+  "keywords": [
+    "mern"
+  ],
+  "author": "Jleimer, kwedwick,",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jleimer/The-Makers-Corner/issues"
+  },
+  "homepage": "https://github.com/Jleimer/The-Makers-Corner#readme",
+  "dependencies": {
+    "apollo-server-express": "^2.18.2",
+    "bcrypt": "^5.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.11",
+    "stripe": "^8.119.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
