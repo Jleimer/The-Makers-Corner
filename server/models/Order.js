@@ -13,7 +13,7 @@ const orderSchema = new Schema({
       ref: 'Class'
     }
   ],
-  bluePrints: [
+  blueprints: [
       {
           type: Schema.Types.ObjectId,
           ref: 'Blueprint'
