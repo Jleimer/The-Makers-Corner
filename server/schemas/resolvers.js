@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
     type: Category {
@@ -57,6 +57,37 @@ const typeDefs = gql`
         username: String
         comments: [CommentSchema]
     }
+    
+    type Auth {
+        token: ID
+        user: User
+    }
 
+    type Query {
+        categories: [Category]
+        blueprints(category: ID, name: String): [Blueprint]
+        blueprint(_id: ID!): Blueprint
+        classes(category: ID, name: String): [Class]
+        class(_id: ID!): Class
+        user: User
+        order(_id: ID!): Order
+        checkout(classes: [ID]!, blueprints: [ID]!): Checkout
+    }
 
+    type Mutation {
+        ddUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
+        addOrder(classes:[ID!], blueprints[ID]!): Order
+        updateUser(firstName: String, lastName: String, email: String, password: String): User
+        deleteBlueprint(_id: ID!): BluePrint
+        deleteClass(_id: ID!): Class
+        addBlueprint(name: String!, description: String!, username: String!, image: String!, file: String!, price: Number!, difficulty: String!, category: String!): Blueprint
+        addClass(name: String!, username: String!, description: String!, price: Number!, classTime: String!, difficulty: String!, items: String!, category: String!): Class
+        
+    }
+
+    type Checkout {
+        session: ID
+    }
 `;
+
+module.exports = typeDefs;
