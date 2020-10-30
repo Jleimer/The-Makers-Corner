@@ -19,6 +19,11 @@ const classSchema = new Schema({
     min: 0.99,
     trim: true
   },
+  classTime: {
+    type: Date,
+    required: true,
+    default: Date.now
+  },
   difficulty: {
       type: String,
       required: true,
