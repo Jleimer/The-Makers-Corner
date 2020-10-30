@@ -38,6 +38,10 @@ const blueprintSchema = new Schema({
     required: true,
     trim: true
   },
+  username: {
+    type: String,
+    required: true,
+  },
   image: {
     type: String,
   },

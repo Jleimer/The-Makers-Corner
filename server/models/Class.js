@@ -37,6 +37,10 @@ const classSchema = new Schema({
     required: true,
     trim: true
   },
+  username: {
+    type: String,
+    required: true,
+  },
   price: {
     type: Number,
     required: true,

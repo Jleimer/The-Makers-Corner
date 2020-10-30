@@ -10,22 +10,26 @@ const typeDefs = gql`
         _id: ID
         name: String
         description: String
+        username: String
         image: String
         file: String
         price: Number
         difficulty: String
         category: String
+        reviews: [ReviewSchema]
     }
 
     type Class {
         _id: ID
         name: String
+        username: String
         description: String
         price: Number
         classTime: String
         difficulty: String
         items: String
         category: String
+        reviews: [ReviewSchema]
     }
 
     type Order {
@@ -53,6 +57,6 @@ const typeDefs = gql`
         username: String
         comments: [CommentSchema]
     }
-    
+
 
 `;
