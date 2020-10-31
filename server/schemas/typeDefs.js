@@ -16,7 +16,7 @@ const typeDefs = gql`
         price: Int
         difficulty: String
         category: String
-        reviews: [ReviewSchema]
+        
     }
 
     type Class {
@@ -29,7 +29,7 @@ const typeDefs = gql`
         difficulty: String
         items: String
         category: String
-        reviews: [ReviewSchema]
+        
     }
 
     type Order {
@@ -57,7 +57,7 @@ const typeDefs = gql`
         title: String
         createdAt: String
         username: String
-        comments: [CommentSchema]
+        
         category: String
     }
     

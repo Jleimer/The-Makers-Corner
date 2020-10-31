@@ -256,7 +256,7 @@ const resolvers = {
       }
       throw new AuthenticationError("Not logged in!");
     },
-    addBluePrintReview: async (parent, { classId, reviewBody }, context) => {
+    addBlueprintReview: async (parent, { classId, reviewBody }, context) => {
       if (context.user) {
         const blueprintReview = await Blueprint.findByIdAndUpdate(
           { _id: blueprintId },
