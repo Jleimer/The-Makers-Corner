@@ -1,7 +1,7 @@
 const User = require("./User");
 const Post = require("./Post");
 const Order = require("./Order");
-const Category = require("./Catergory");
+const Category = require("./Category");
 const Blueprint = require("./Blueprint");
 const Class = require("./Class");
 
