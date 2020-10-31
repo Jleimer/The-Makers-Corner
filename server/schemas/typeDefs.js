@@ -1,19 +1,19 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-    type: Category {
+    type Category {
         _id: ID
         name: String
     }
 
-    type BluePrint {
+    type Blueprint {
         _id: ID
         title: String
         description: String
         username: String
         image: String
         file: String
-        price: Number
+        price: Int
         difficulty: String
         category: String
         reviews: [ReviewSchema]
@@ -24,7 +24,7 @@ const typeDefs = gql`
         title: String
         username: String
         description: String
-        price: Number
+        price: Int
         classTime: String
         difficulty: String
         items: String
@@ -51,13 +51,14 @@ const typeDefs = gql`
         blueprints: [Blueprint]
     }
 
-    type: Post {
+    type Post {
         _id: ID
         postText: String
         title: String
         createdAt: String
         username: String
         comments: [CommentSchema]
+        category: String
     }
     
     type Auth {
@@ -71,6 +72,8 @@ const typeDefs = gql`
         blueprint(_id: ID!): Blueprint
         classes(category: ID, name: String): [Class]
         class(_id: ID!): Class
+        posts(category: ID, name: String): Post
+        post(postId: ID!): Post
         user: User
         order(_id: ID!): Order
         checkout(classes: [ID]!, blueprints: [ID]!): Checkout
@@ -78,18 +81,19 @@ const typeDefs = gql`
 
     type Mutation {
         addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-        addOrder(classes:[ID!], blueprints[ID]!): Order
+        addOrder(classes:[ID]!, blueprints: [ID]!): Order
         login(email: String!, password: String!): Auth
         updateUser(firstName: String, lastName: String, email: String, password: String): User
-        addBlueprint(title: String!, description: String!, image: String!, file: String!, price: Number!, difficulty: String!, category: String!): Blueprint
-        addClass(title: String!, description: String!, price: Number!, classTime: String!, difficulty: String!, items: String!, category: String!): Class
-        addPost(postText: String!, title: String!): Post
+        addBlueprint(title: String!, description: String!, image: String!, file: String!, price: Int!, difficulty: String!, category: String!): Blueprint
+        addClass(title: String!, description: String!, price: Int!, classTime: String!, difficulty: String!, items: String!, category: String!): Class
+        addPost(postText: String!, title: String!, category: String!): Post
         addComment(postId: ID!, commentBody: String!): Post
         addClassReview(classId: ID!, reviewBody: String!): Class
         addBlueprintReview(blueprintId: ID!, reviewBody: String!): Blueprint
-        updateClass(classId: ID!, title: String!, description: String!, price: Number, items: String!): Class
-        updateBlueprint(blueprintId: ID!, title: String!, description: String!, prince: Number): Blueprint
-        deleteBlueprint(blueprintId: ID!): BluePrint
+        updateClass(classId: ID!, title: String!, description: String!, price: Int, items: String!): Class
+        updateBlueprint(blueprintId: ID!, title: String!, description: String!, price: Int): Blueprint
+        updatePost(postId: ID!, title: String!, postBody: String!, category: String!): Post
+        deleteBlueprint(blueprintId: ID!): Blueprint
         deleteClass(classId: ID!): Class
         deletePost(postId: ID!): Post
         deleteComment(postId: ID!, commentId: ID!): Post

@@ -54,6 +54,11 @@ const postSchema = new Schema(
       required: true,
     },
     comments: [CommentSchema],
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+      required: true
+    },
   },
   {
     toJSON: {
