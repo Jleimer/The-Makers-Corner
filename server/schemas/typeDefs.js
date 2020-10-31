@@ -79,21 +79,22 @@ const typeDefs = gql`
     type Mutation {
         addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
         addOrder(classes:[ID!], blueprints[ID]!): Order
+        login(email: String!, password: String!): Auth
         updateUser(firstName: String, lastName: String, email: String, password: String): User
-        deleteBlueprint(_id: ID!): BluePrint
-        deleteClass(_id: ID!): Class
-        addBlueprint(title: String!, description: String!, username: String!, image: String!, file: String!, price: Number!, difficulty: String!, category: String!): Blueprint
-        addClass(title: String!, username: String!, description: String!, price: Number!, classTime: String!, difficulty: String!, items: String!, category: String!): Class
-        addPost(postText: String!, title: String!, username: String!): Post
-        deletePost(_id: ID!): Post
-        addComment(post._id: ID!, commentBody: String!, username: String!): Post
-        deleteComment(post._id: ID!, commentId: ID!): Post
-        addBlueprintReview(blueprint._id: ID!, reviewBody: String!, username: String!): Blueprint
-        deleteBlueprintReview(blueprint._id: ID!, reviewId: ID!): Blueprint
-        addClassReview(blueprint._id: ID!, reviewBody: String!, username: String!): Class
-        deleteClassReview(blueprint._id: ID!, reviewId: ID!): Class
-        updateClass(_id: ID!, title: String!, description: String!, price: Number, items: String!): Class
-        updateBlueprint(_id: ID!, title: String!, description: String!, prince: Number): Blueprint
+        addBlueprint(title: String!, description: String!, image: String!, file: String!, price: Number!, difficulty: String!, category: String!): Blueprint
+        addClass(title: String!, description: String!, price: Number!, classTime: String!, difficulty: String!, items: String!, category: String!): Class
+        addPost(postText: String!, title: String!): Post
+        addComment(postId: ID!, commentBody: String!): Post
+        addClassReview(classId: ID!, reviewBody: String!): Class
+        addBlueprintReview(blueprintId: ID!, reviewBody: String!): Blueprint
+        updateClass(classId: ID!, title: String!, description: String!, price: Number, items: String!): Class
+        updateBlueprint(blueprintId: ID!, title: String!, description: String!, prince: Number): Blueprint
+        deleteBlueprint(blueprintId: ID!): BluePrint
+        deleteClass(classId: ID!): Class
+        deletePost(postId: ID!): Post
+        deleteComment(postId: ID!, commentId: ID!): Post
+        deleteBlueprintReview(blueprintId: ID!, reviewId: ID!): Blueprint
+        deleteClassReview(blueprintId: ID!, reviewId: ID!): Class
     }
 
     type Checkout {
