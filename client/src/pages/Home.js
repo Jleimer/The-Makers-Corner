@@ -7,7 +7,8 @@ import React from 'react';
 const Home = () => {
     return (
         <div className="container">
-            INSERT COMPONENTS
+            <h1>Home</h1>
+            {/* INSERT COMPONENTS */}
         </div>
     );
 };
