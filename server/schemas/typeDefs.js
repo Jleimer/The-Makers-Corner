@@ -6,6 +6,20 @@ const typeDefs = gql`
         name: String
     }
 
+    type Review {
+        _id: ID
+        reviewBody: String
+        username: String
+        createdAt: String
+    }
+
+    type Comment {
+        _id: ID
+        commentBody: String
+        username: String
+        createdAt: String
+    }
+
     type Blueprint {
         _id: ID
         title: String
@@ -16,6 +30,7 @@ const typeDefs = gql`
         price: Int
         difficulty: String
         category: String
+        reviews: [Review]
         
     }
 
@@ -29,6 +44,7 @@ const typeDefs = gql`
         difficulty: String
         items: String
         category: String
+        reviews: [Review]
         
     }
 
@@ -57,7 +73,7 @@ const typeDefs = gql`
         title: String
         createdAt: String
         username: String
-        
+        comments: [Comment]
         category: String
     }
     
@@ -87,7 +103,7 @@ const typeDefs = gql`
         addBlueprint(title: String!, description: String!, image: String!, file: String!, price: Int!, difficulty: String!, category: String!): Blueprint
         addClass(title: String!, description: String!, price: Int!, classTime: String!, difficulty: String!, items: String!, category: String!): Class
         addPost(postText: String!, title: String!, category: String!): Post
-        addComment(postId: ID!, commentBody: String!): Post
+        addCommentPost(postId: ID!, commentBody: String!): Post
         addClassReview(classId: ID!, reviewBody: String!): Class
         addBlueprintReview(blueprintId: ID!, reviewBody: String!): Blueprint
         updateClass(classId: ID!, title: String!, description: String!, price: Int, items: String!): Class
@@ -96,7 +112,7 @@ const typeDefs = gql`
         deleteBlueprint(blueprintId: ID!): Blueprint
         deleteClass(classId: ID!): Class
         deletePost(postId: ID!): Post
-        deleteComment(postId: ID!, commentId: ID!): Post
+        deleteCommentPost(postId: ID!, commentId: ID!): Post
         deleteBlueprintReview(blueprintId: ID!, reviewId: ID!): Blueprint
         deleteClassReview(blueprintId: ID!, reviewId: ID!): Class
     }
