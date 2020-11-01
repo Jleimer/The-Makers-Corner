@@ -1,6 +1,7 @@
 const db = require('./connection');
 const { User, Class, Blueprint } = require('../models')
 
+db.once('open', async () => {
 await Class.deleteMany();
 
 const classes = await Class.insertMany([
@@ -45,10 +46,11 @@ const bluePrint = await Blueprint.insertMany([
 await User.deleteMany();
 
   await User.create({
-    firstName: 'Pamela',
-    lastName: 'Washington',
-    email: 'pamela@testmail.com',
-    password: 'password12345',
+    firstName: 'Jonathan',
+    lastName: 'Eimer',
+    email: 'jleimer@testmail.com',
+    username: 'jleimer',
+    password: 'ghost',
     orders: [
       {
         products: [products[0]._id, products[0]._id, products[1]._id]
@@ -57,9 +59,11 @@ await User.deleteMany();
   });
 
   await User.create({
-    firstName: 'Elijah',
-    lastName: 'Holt',
-    email: 'eholt@testmail.com',
-    password: 'password12345'
+    firstName: 'Keegan',
+    lastName: 'Wedwick',
+    email: 'kwedwick@testmail.com',
+    password: 'ghost'
   });
-
+  
+  process.exit();
+});
