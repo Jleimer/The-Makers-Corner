@@ -348,7 +348,7 @@ const resolvers = {
     },
     deleteCommentPost: async (parent, { postId, commentId }, context) => {
       if (context.user) {
-        const updatedPost = await Post.findByIdAndUpdate(
+        await Post.findByIdAndUpdate(
           { _id: postId },
           { $pull: { comments: { _id: commentId } } },
           { new: true }
@@ -356,8 +356,7 @@ const resolvers = {
         await Comment.findByIdAndDelete(
           {
             _id: commentId,
-          },
-          { new: true }
+          }
         );
 
         return updatedPost;
@@ -367,7 +366,7 @@ const resolvers = {
     },
     deleteBlueprintReview: async (parent, { blueprintId, reviewId }, context) => {
       if (context.user) {
-        const updatedBlueprint = await Blueprint.findByIdAndUpdate(
+        await Blueprint.findByIdAndUpdate(
           { _id: blueprintId },
           { $pull: { reviews: { _id: reviewId } } },
           { new: true }
@@ -375,18 +374,17 @@ const resolvers = {
         await Review.findByIdAndDelete(
           {
             _id: reviewId,
-          },
-          { new: true }
+          }
         );
 
-        return updatedBlueprint;
+        return Blueprint;
       }
 
       throw new AuthenticationError("Not logged in!");
     },
     deleteClassReview: async (parent, { classId, reviewId }, context) => {
       if (context.user) {
-        const updatedClass = await Class.findByIdAndUpdate(
+        await Class.findByIdAndUpdate(
           { _id: classId },
           { $pull: { reviews: { _id: reviewId } } },
           { new: true }
@@ -394,11 +392,10 @@ const resolvers = {
         await Review.findByIdAndDelete(
           {
             _id: reviewId,
-          },
-          { new: true }
+          }
         );
 
-        return updatedClass;
+        return Class;
       }
     },
   },
