@@ -90,5 +90,34 @@ db.once("open", async () => {
   ]);
   console.log("blueprints seeded");
 
+  await Post.deleteMany();
+  const posts = await Post.insertMany([
+    {
+      postText: "This is a brand new post!",
+      title: "First Post",
+      username: "kwedwick",
+      createdAt: "11/01/2020",
+      comments: [],
+      category: categories[4]._id,
+    },
+    {
+      postText: "This is a second post!",
+      title: "Second Post",
+      username: "kwedwick",
+      createdAt: "10/30/2020",
+      comments: [],
+      category: categories[2]._id,
+    },
+    {
+      postText: "This is a third post!",
+      title: "Third Post",
+      username: "jleimer",
+      createdAt: "10/31/2020",
+      comments: [],
+      category: categories[2]._id,
+    }
+  ])
+  console.log("post(s) seeded");
+
   process.exit();
 });
