@@ -205,7 +205,7 @@ const resolvers = {
     },
     addBlueprint: async (parent, args, context) => {
       if (context.user) {
-        const newBlueprint = await Blueprint.create({ ...args, username: context.user.username });
+        const newBlueprint = await (await Blueprint.create({ ...args, username: context.user.username })).populate("category");
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
