@@ -14,7 +14,7 @@ db.once("open", async () => {
   ]);
 
   console.log("categories seeded");
-
+  console.log(categories[0]._id, categories[0].name)
   await User.deleteMany();
 
   await User.create(
@@ -61,6 +61,7 @@ db.once("open", async () => {
     },
   ]);
   console.log("classes seeded");
+  console.log(classes[1].category)
 
   await Blueprint.deleteMany();
 
