@@ -30,10 +30,11 @@ const resolvers = {
       }
       return await Blueprint.find(params)
         .populate("category")
+        .populate("reviews")
         .sort({ createdAt: -1 });
     },
     blueprint: async (parent, { _id }) => {
-      return await Blueprint.findById(_id).populate("category");
+      return await Blueprint.findById(_id).populate("category").populate("reviews");
     },
     classes: async (parent, { category, name }) => {
       const params = {};
@@ -48,10 +49,11 @@ const resolvers = {
       }
       return await Class.find(params)
         .populate("category")
+        .populate("reviews")
         .sort({ createdAt: -1 });
     },
     class: async (parent, { _id }) => {
-      return await Class.findById(_id).populate("category");
+      return await Class.findById(_id).populate("category").populate("reviews");
     },
     posts: async (parent, { category, name }) => {
       const params = {};
