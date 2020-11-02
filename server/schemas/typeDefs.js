@@ -91,7 +91,7 @@ const typeDefs = gql`
         posts(category: ID, name: String): Post
         post(postId: ID!): Post
         user: User
-        users(category: ID, username: String): [User]
+        users: [User]
         order(_id: ID!): Order
         checkout(classes: [ID]!, blueprints: [ID]!): Checkout
     }
@@ -101,7 +101,7 @@ const typeDefs = gql`
         addOrder(classes:[ID]!, blueprints: [ID]!): Order
         login(email: String!, password: String!): Auth
         updateUser(firstName: String, lastName: String, email: String, password: String): User
-        addBlueprint(name: String!, description: String!, image: String!, file: String!, price: Int!, difficulty: String!, category: String!): Blueprint
+        addBlueprint(name: String!, description: String!, image: String, file: String, price: Int!, difficulty: String!, category: String!): Blueprint
         addClass(name: String!, description: String!, price: Int!, classTime: String!, difficulty: String!, items: String!, category: String!): Class
         addPost(postText: String!, title: String!, category: String!): Post
         addCommentPost(postId: ID!, commentBody: String!): Post
