@@ -97,7 +97,6 @@ db.once("open", async () => {
       title: "First Post",
       username: "kwedwick",
       createdAt: "11/01/2020",
-      comments: [],
       category: categories[4]._id,
     },
     {
@@ -105,7 +104,6 @@ db.once("open", async () => {
       title: "Second Post",
       username: "kwedwick",
       createdAt: "10/30/2020",
-      comments: [],
       category: categories[2]._id,
     },
     {
@@ -113,7 +111,6 @@ db.once("open", async () => {
       title: "Third Post",
       username: "jleimer",
       createdAt: "10/31/2020",
-      comments: [],
       category: categories[2]._id,
     }
   ])

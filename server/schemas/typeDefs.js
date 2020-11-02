@@ -84,7 +84,7 @@ const typeDefs = gql`
 
     type Query {
         categories: [Category]
-        blueprints(category: ID, name: String): [Blueprint]
+        blueprints(category: ID, title: String): [Blueprint]
         blueprint(_id: ID!): Blueprint
         classes(category: ID, name: String): [Class]
         class(_id: ID!): Class
