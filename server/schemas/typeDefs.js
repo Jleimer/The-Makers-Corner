@@ -84,13 +84,14 @@ const typeDefs = gql`
 
     type Query {
         categories: [Category]
-        blueprints(category: ID, title: String): [Blueprint]
+        blueprints(category: ID, name: String): [Blueprint]
         blueprint(_id: ID!): Blueprint
         classes(category: ID, name: String): [Class]
         class(_id: ID!): Class
         posts(category: ID, name: String): Post
         post(postId: ID!): Post
         user: User
+        users(category: ID, username: String): [User]
         order(_id: ID!): Order
         checkout(classes: [ID]!, blueprints: [ID]!): Checkout
     }

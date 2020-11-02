@@ -17,6 +17,9 @@ const resolvers = {
     categories: async () => {
       return await Category.find();
     },
+    users: async () => {
+      return await User.find();
+    },
     blueprints: async (parent, { category, name }) => {
       const params = {};
       if (category) {
@@ -90,7 +93,7 @@ const resolvers = {
           .populate("classes")
           .populate("blueprints")
           .populate("posts");
-
+          
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
         return user;
@@ -98,6 +101,9 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+    // user: async () => {
+    //   return await User.find();
+    // },
     order: async (parent, { _id }, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id)
