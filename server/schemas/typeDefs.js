@@ -29,7 +29,7 @@ const typeDefs = gql`
         file: String
         price: Int
         difficulty: String
-        category: String
+        category: Category
         reviews: [Review]
         
     }
@@ -43,7 +43,7 @@ const typeDefs = gql`
         classTime: String
         difficulty: String
         items: String
-        category: String
+        category: Category
         reviews: [Review]
         
     }
@@ -74,7 +74,7 @@ const typeDefs = gql`
         createdAt: String
         username: String
         comments: [Comment]
-        category: String
+        category: Category
     }
     
     type Auth {
