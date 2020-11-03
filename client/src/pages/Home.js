@@ -1,14 +1,15 @@
 import React from 'react';
 // IMPORT COMPONENTS
-// - Cart
-// - Categories
+import Cart from '../components/Cart';
 // - ProductList ?? 
 
 const Home = () => {
     return (
         <div className="container">
-            <h1>Home</h1>
+            {/* <Cart/> */}
+            <h2>Home</h2>
             {/* INSERT COMPONENTS */}
+            {/* -- INSERT PRODUCTLIST... ONLY TOP 5 */}
         </div>
     );
 };

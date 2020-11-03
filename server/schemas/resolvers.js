@@ -17,9 +17,6 @@ const resolvers = {
     categories: async () => {
       return await Category.find();
     },
-    users: async () => {
-      return await User.find();
-    },
     blueprints: async (parent, { category, name }) => {
       const params = {};
       if (category) {
@@ -101,9 +98,9 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
-    // user: async () => {
-    //   return await User.find();
-    // },
+    users: async () => {
+      return await User.find().select("-__v -password");
+    },
     order: async (parent, { _id }, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id)
@@ -199,7 +196,7 @@ const resolvers = {
     },
     updateUser: async (parent, args, context) => {
       if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, {
+        return await User.findByIdAndUpdate({_id: context.user._id}, args, {
           new: true,
         });
       }
@@ -208,9 +205,7 @@ const resolvers = {
     },
     addBlueprint: async (parent, args, context) => {
       if (context.user) {
-        const newBlueprint = await Blueprint.create(...args, {
-          username: context.user.username,
-        });
+        const newBlueprint = await (await Blueprint.create({ ...args, username: context.user.username })).populate("category");
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
@@ -224,9 +219,7 @@ const resolvers = {
     },
     addClass: async (parent, args, context) => {
       if (context.user) {
-        const newClass = await Class.create(...args, {
-          username: context.user.username,
-        });
+        const newClass = await Class.create({ ...args, username: context.user.username });
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
@@ -240,9 +233,7 @@ const resolvers = {
     },
     addPost: async (parent, args, context) => {
       if (context.user) {
-        const newPost = await Post.create(...args, {
-          username: context.user.username,
-        });
+        const newPost = await Post.create({ ...args, username: context.user.username });
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
@@ -257,9 +248,7 @@ const resolvers = {
     //I don't think this is right
     addCommentPost: async (parent, { postId, args }, context) => {
       if (context.user) {
-        const newComment = await Comment.create(...args, {
-          username: context.user.username,
-        });
+        const newComment = await Comment.create({ ...args, username: context.user.username });
 
         await Post.findByIdAndUpdate(
           { _id: postId },
@@ -273,9 +262,7 @@ const resolvers = {
     },
     addClassReview: async (parent, { classId, args }, context) => {
       if (context.user) {
-        const newReview = await Review.create(...args, {
-          username: context.user.username,
-        });
+        const newReview = await Review.create({ ...args, username: context.user.username });
 
         await Class.findByIdAndUpdate(
           { _id: classId },
@@ -289,9 +276,7 @@ const resolvers = {
     },
     addBlueprintReview: async (parent, { blueprintId, args }, context) => {
       if (context.user) {
-        const newReview = await Review.create(...args, {
-          username: context.user.username,
-        });
+        const newReview = await Review.create({ ...args, username: context.user.username });
 
         await Blueprint.findByIdAndUpdate(
           { _id: blueprintId },

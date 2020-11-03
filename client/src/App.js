@@ -15,8 +15,10 @@ import MessageBoard from './pages/MessageBoard';
 import Signup from './pages/Signup';
 
 // IMPORT COMPONENTS
-// - Header
-// - Footer
+import Navigation from './components/Navigation';
+import Footer from './components/Footer';
+import { Provider } from 'react-redux';
+import store from './utils/store';
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -35,7 +37,8 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
-          {/* HEADER COMPONENT */}
+        <Provider store={store}>
+          <Navigation/>
           <div className="container">
             <Switch>
               <Route exact path="/" component={Home}/>
@@ -50,7 +53,8 @@ function App() {
               <Route component={NoMatch}/>
             </Switch>
           </div>
-          {/* FOOTER COMPONENT */}
+          </Provider>
+          <Footer/>
         </div>
       </Router>
     </ApolloProvider>
