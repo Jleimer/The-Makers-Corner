@@ -3,7 +3,7 @@ import React from 'react';
 const Classes = () => {
     return (
         <div>
-            <h1>Classes Page</h1>
+            <h2>Classes Page</h2>
         </div>
     );
 };
