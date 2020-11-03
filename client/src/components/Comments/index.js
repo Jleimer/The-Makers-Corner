@@ -7,7 +7,7 @@ import { QUERY_COMMENTS, QUERY_ME } from '../../utils/queries';
 const Comments = () => {
     const [commentText] = useState('');
     
-    const [addComment, { error }] = useMutation(ADD_COMMENT, {
+    const [addComment] = useMutation(ADD_COMMENT, {
         update(cache, { data: { addComment } }) {
             try {
                 const { comments } = cache.readQuery({ query: QUERY_COMMENTS });
@@ -49,7 +49,6 @@ const Comments = () => {
                     placeholder="Post comments here..."
                     value={commentText}
                     className="form-input col-12 col-md-9"
-                    onChange={handleChange}
                 ></textarea>
                 <button className="btn col-12 col-md-3" type="submit">
                     Submit
