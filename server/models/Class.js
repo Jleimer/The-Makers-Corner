@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const moment = require('moment');
 const { Schema } = mongoose;
 
 const classSchema = new Schema({
@@ -13,11 +13,20 @@ const classSchema = new Schema({
     required: true,
     trim: true
   },
+  username: {
+    type: String,
+    required: true,
+  },
   price: {
     type: Number,
     required: true,
     min: 0.99,
     trim: true
+  },
+  classTime: {
+    type: Date,
+    required: true,
+    default: Date.now
   },
   difficulty: {
       type: String,
@@ -32,6 +41,10 @@ const classSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Category',
     required: true
+  },
+  reviews: {
+    type: Schema.Types.ObjectId,
+    ref: "Review",
   },
 });
 

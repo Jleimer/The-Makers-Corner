@@ -13,6 +13,10 @@ const blueprintSchema = new Schema({
     required: true,
     trim: true
   },
+  username: {
+    type: String,
+    required: true,
+  },
   image: {
     type: String,
   },
@@ -33,6 +37,10 @@ const blueprintSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Category",
     required: true,
+  },
+  reviews: {
+    type: Schema.Types.ObjectId,
+    ref: "Review",
   },
 });
 

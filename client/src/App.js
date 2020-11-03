@@ -1,24 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { ApolloProvider } from '@apollo/react-hooks';
+import ApolloClient from 'apollo-boost';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+import Home from './pages/Home';
+import NoMatch from './pages/NoMatch';
+import Blueprints from './pages/Blueprints';
+import Classes from './pages/Classes';
+import Dashboard from './pages/Dashboard';
+// import Detail from './pages/Detail';
+// - Check to see if Blueprints & classes stay separate or if they turn into products??
+import Login from './pages/Login';
+import MessageBoard from './pages/MessageBoard';
+import Signup from './pages/Signup';
+
+// IMPORT COMPONENTS
+import Navigation from './components/Navigation';
+import Footer from './components/Footer';
+
+const client = new ApolloClient({
+  request: (operation) => {
+    const token = localStorage.getItem('id_token')
+    operation.setContext({
+      headers: {
+        authorization: token ? `Bearer ${token}` : ''
+      }
+    })
+  },
+  uri: '/graphql',
+})
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <Router>
+        <div className="flex-column justify-flex-start min-100-vh">
+          <Navigation/>
+          <div className="container">
+            <Switch>
+              <Route exact path="/" component={Home}/>
+              <Route exact path="/blueprints" component={Blueprints}/>
+              <Route exact path="/classes" component={Classes}/>
+              {/* OR combine blueprints and classes into products.... '/products' */}
+              {/* ... Detail page would then be '/products:id */}
+              <Route exact path="/dashboard" component={Dashboard}/>
+              <Route exact path="/login" component={Login}/>
+              <Route exact path="/signup" component={Signup}/>
+              <Route exact path="/messageboard" component={MessageBoard}/>
+              <Route component={NoMatch}/>
+            </Switch>
+          </div>
+          <Footer/>
+        </div>
+      </Router>
+    </ApolloProvider>
   );
 }
 

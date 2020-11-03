@@ -32,7 +32,30 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    orders: [Order.Schema]
+    orders: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Order'
+        }
+    ],
+    posts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Post'
+        }
+    ],
+    classes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Class'
+        }
+    ],
+    blueprints: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Blueprint'
+        }
+    ]
 });
 
 userSchema.pre('save', async function(next) {

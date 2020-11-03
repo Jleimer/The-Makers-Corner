@@ -3,40 +3,24 @@ const moment = require("moment");
 
 const { Schema } = mongoose;
 
-const postSchema = new Schema(
+const commentSchema = new Schema(
   {
-    postText: {
+    commentBody: {
       type: String,
       required: true,
+      maxlength: 280,
       minlength: 1,
-      maxlength: 1000,
       trim: true,
     },
-    title: {
+    username: {
       type: String,
       required: true,
-      minlength: 1,
-      maxlength: 40,
-      trim: true,
     },
     createdAt: {
       type: Date,
       default: Date.now,
       get: (createdAtVal) =>
         moment(createdAtVal).format("MMM DD, YYYY [at] hh:mm a"),
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-    comments: {
-      type: Schema.Types.ObjectId,
-      ref: 'Comment'
-    },
-    category: {
-      type: Schema.Types.ObjectId,
-      ref: 'Category',
-      required: true
     },
   },
   {
@@ -48,6 +32,6 @@ const postSchema = new Schema(
   }
 );
 
-const Post = mongoose.model("Post", postSchema);
+const Comment = mongoose.model("Comment", commentSchema);
 
-module.exports = Post;
+module.exports = Comment;

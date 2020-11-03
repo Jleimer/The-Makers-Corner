@@ -13,12 +13,12 @@ const orderSchema = new Schema({
       ref: 'Class'
     }
   ],
-  bluePrints: [
+  blueprints: [
       {
           type: Schema.Types.ObjectId,
           ref: 'Blueprint'
       }
-  ]
+  ],
 });
 
 const Order = mongoose.model('Order', orderSchema);
