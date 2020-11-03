@@ -43,7 +43,7 @@ function Navigation() {
       <h1>
         <Link to="/">
           <span role="img" aria-label="shopping bag">🛍️</span>
-          -Shop-Shop
+          The Maker's Corner
         </Link>
       </h1>
 
