@@ -39,3 +39,15 @@ export const ADD_ORDER = gql`
         }
     }
 `;
+
+export const ADD_COMMENT = gql`
+    muuation addComment($commentText: String!) {
+        addComment(commentText: $commentText) {
+            _id
+            commentText
+            createdAt
+            username
+        }
+    }
+`;
+
