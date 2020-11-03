@@ -17,6 +17,8 @@ import Signup from './pages/Signup';
 // IMPORT COMPONENTS
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
+import { Provider } from 'react-redux';
+import store from './utils/store';
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -35,6 +37,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
+        <Provider store={store}>
           <Navigation/>
           <div className="container">
             <Switch>
@@ -50,6 +53,7 @@ function App() {
               <Route component={NoMatch}/>
             </Switch>
           </div>
+          </Provider>
           <Footer/>
         </div>
       </Router>
