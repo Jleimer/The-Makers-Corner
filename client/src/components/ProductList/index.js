@@ -5,7 +5,7 @@ import { UPDATE_PRODUCTS } from "../../utils/actions";
 import { useQuery } from '@apollo/react-hooks';
 import { QUERY_PRODUCTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
-import spinner from "../../assets/spinner.gif"
+// import spinner from "../../assets/spinner.gif"
 
 function ProductList() {
   const dispatch = useDispatch();
@@ -61,8 +61,8 @@ function ProductList() {
       ) : (
         <h3>You haven't added any products yet!</h3>
       )}
-      { loading ? 
-      <img src={spinner} alt="loading" />: null}
+      {/* { loading ? 
+      <img src={spinner} alt="loading" />: null} */}
     </div>
   );
 }
