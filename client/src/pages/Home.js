@@ -6,7 +6,7 @@ import Cart from '../components/Cart';
 const Home = () => {
     return (
         <div className="container">
-            <Cart/>
+            {/* <Cart/> */}
             <h1>Home</h1>
             {/* INSERT COMPONENTS */}
             {/* -- INSERT PRODUCTLIST... ONLY TOP 5 */}
