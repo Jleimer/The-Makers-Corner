@@ -23,7 +23,7 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_ORDER = gql`
-    mutation addOrder(classes:[ID]!, blueprints: [ID]!) {
+    mutation addOrder($classes:[ID]!, $blueprints: [ID]!) {
         addOrder(classes: $classes, blueprints: $blueprints) {
             purchaseDate
             classes {
@@ -49,7 +49,7 @@ export const ADD_ORDER = gql`
 `;
 
 export const ADD_COMMENT = gql`
-    muuation addComment($commentText: String!) {
+    mutation addComment($commentText: String!) {
         addComment(commentText: $commentText) {
             _id
             commentText
