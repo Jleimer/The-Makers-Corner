@@ -54,7 +54,9 @@ function App() {
             </Switch>
           </div>
           </Provider>
-          <Footer/>
+          <footer>
+            <Footer/>
+          </footer>
         </div>
       </Router>
     </ApolloProvider>

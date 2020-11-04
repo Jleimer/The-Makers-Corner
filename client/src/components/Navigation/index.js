@@ -1,6 +1,7 @@
 import React from "react";
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
+import Cart from "../Cart";
 
 function Navigation() {
 
@@ -37,26 +38,29 @@ function Navigation() {
       );
     } else {
       return (
-        <ul className="flex-row">
-          <li className="mx-1">
+        <ul>
+          <li>
             <Link to="/blueprints">
               Blueprints
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
             <Link to="/classes">
               Classes
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
             <Link to="/signup">
               Signup
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
             <Link to="/login">
               Login
             </Link>
+          </li>
+          <li>
+            <Cart/>
           </li>
         </ul>
       );

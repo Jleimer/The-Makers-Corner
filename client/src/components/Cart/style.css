@@ -5,7 +5,6 @@
     min-width: 20%;
     max-width: 30%;
     max-height: 60%;
-    background-color: var(--light);
     overflow: auto;
     padding: .5rem;
     box-shadow: 0 0 1rem rgba(0, 0, 0, .5);
@@ -22,9 +21,8 @@
   .cart .close {
     position: absolute;
     top: .5rem;
-    right: .5rem;
+    right: .5rem; 
     cursor: pointer;
-    color: var(--tertiary);
   }
   
   .cart .close:hover {
@@ -33,11 +31,6 @@
   
   .cart-closed {
     position: fixed;
-    top: 2%;
-    right: 1%;
-    font-size: 2rem;
-    cursor: pointer;
-    background-color: var(--secondary);
     border-radius: 50%;
     padding: .25rem;
     width: 50px;
