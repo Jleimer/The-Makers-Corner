@@ -12,7 +12,7 @@ import {
 
 const initialState = {
     blueprints: [],
-    classes: [],
+    courses: [],
     cart: [],
     cartOpen: false,
     categories: [],
