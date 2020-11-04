@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const QUERY_COURSES = gql`
   query getCourse($category: ID) {
@@ -32,41 +32,41 @@ export const QUERY_ALL_COURSES = gql`
 `;
 
 export const QUERY_CATEGORIES = gql`
-{
-  categories {
-    _id
-    name
+  {
+    categories {
+      _id
+      name
+    }
   }
-}
 `;
 
 export const QUERY_USER = gql`
-{
-  user {
-    firstName
-    lastName
-    orders {
-      _id
-      purchaseDate
-      blueprints {
+  {
+    user {
+      firstName
+      lastName
+      orders {
         _id
-        name
-        description
-        price
-        quantity
-        image
-      }
-      courses {
-        _id
-        name
-        description
-        price
-        quantity
-        image
+        purchaseDate
+        blueprints {
+          _id
+          name
+          description
+          price
+          quantity
+          image
+        }
+        courses {
+          _id
+          name
+          description
+          price
+          quantity
+          image
+        }
       }
     }
   }
-}
 `;
 
 export const QUERY_CHECKOUT = gql`
@@ -104,23 +104,24 @@ export const QUERY_ME = gql`
 `;
 
 export const QUERY_BLUEPRINTS = gql`
-  query getBlueprints($category: ID) {
-    blueprints(category: $category) {
+  query blueprints($category: ID, $name: String) {
+    blueprints(category: $category, name: $String) {
       _id
       name
       description
       price
-      quantity
+      file
       image
       category {
         _id
+        name
       }
     }
   }
 `;
 
 export const QUERY_ALL_BLUEPRINTS = gql`
-  {
+ {
     blueprints {
       _id
       name
@@ -128,6 +129,7 @@ export const QUERY_ALL_BLUEPRINTS = gql`
       price
       quantity
       category {
+        _id
         name
       }
     }

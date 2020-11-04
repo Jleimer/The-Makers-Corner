@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 const { Schema } = mongoose;
 
-const classSchema = new Schema({
+const courseSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -23,7 +23,7 @@ const classSchema = new Schema({
     min: 0.99,
     trim: true
   },
-  classTime: {
+  courseTime: {
     type: Date,
     required: true,
     default: Date.now
@@ -48,6 +48,6 @@ const classSchema = new Schema({
   },
 });
 
-const Class = mongoose.model('Class', classSchema);
+const Course = mongoose.model('Cource', courseSchema);
 
-module.exports = Class;
+module.exports = Course;

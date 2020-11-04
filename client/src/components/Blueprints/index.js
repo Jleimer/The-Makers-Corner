@@ -13,6 +13,7 @@ function Blueprints() {
     const { currentCategory } = state;
 
     const { loading, data } = useQuery(QUERY_BLUEPRINTS);
+    console.log(data);
 
     useEffect(() => {
         if(data) {
