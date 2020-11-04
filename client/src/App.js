@@ -6,8 +6,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
 import NoMatch from './pages/NoMatch';
 import Blueprints from './pages/Blueprints';
-import Classes from './pages/Classes';
+import Course from './pages/Courses';
 import Dashboard from './pages/Dashboard';
+import OrderHistory from './pages/OrderHistory';
 // import Detail from './pages/Detail';
 // - Check to see if Blueprints & classes stay separate or if they turn into products??
 import Login from './pages/Login';
@@ -19,7 +20,8 @@ import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import { Provider } from 'react-redux';
 import store from './utils/store';
-
+import './index.css';
+import Detail from './pages/Detail';
 const client = new ApolloClient({
   request: (operation) => {
     const token = localStorage.getItem('id_token')
@@ -43,18 +45,20 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route exact path="/blueprints" component={Blueprints}/>
-              <Route exact path="/classes" component={Classes}/>
-              {/* OR combine blueprints and classes into products.... '/products' */}
-              {/* ... Detail page would then be '/products:id */}
+              <Route exact path="/courses" component={Course}/>
+              <Route exact path="/products:id" component={Detail}/>
               <Route exact path="/dashboard" component={Dashboard}/>
               <Route exact path="/login" component={Login}/>
+              <Route exact path="/orderhistory" component={OrderHistory}/>
               <Route exact path="/signup" component={Signup}/>
               <Route exact path="/messageboard" component={MessageBoard}/>
               <Route component={NoMatch}/>
             </Switch>
           </div>
           </Provider>
-          <Footer/>
+          <footer>
+            <Footer/>
+          </footer>
         </div>
       </Router>
     </ApolloProvider>

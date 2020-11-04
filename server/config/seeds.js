@@ -1,5 +1,5 @@
 const db = require("./connection");
-const { User, Class, Blueprint, Category, Order, Post } = require("../models");
+const { User, Course, Blueprint, Category, Order, Post } = require("../models");
 
 db.once("open", async () => {
   await Category.deleteMany();
@@ -36,8 +36,8 @@ db.once("open", async () => {
 
   console.log("User(s) seeded");
 
-  await Class.deleteMany();
-  const classes = await Class.insertMany([
+  await Course.deleteMany();
+  const courses = await Course.insertMany([
     {
       name: "Resin Pouring",
       description:
@@ -60,8 +60,8 @@ db.once("open", async () => {
       username: "kwedwick"
     },
   ]);
-  console.log("classes seeded");
-  console.log(classes[1].category)
+  console.log("courses seeded");
+  console.log(courses[1].category)
 
   await Blueprint.deleteMany();
 

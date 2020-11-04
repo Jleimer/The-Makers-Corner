@@ -11,7 +11,8 @@ import {
 } from "./actions";
 
 const initialState = {
-    products: [],
+    blueprints: [],
+    courses: [],
     cart: [],
     cartOpen: false,
     categories: [],
@@ -49,12 +50,12 @@ export const reducer = (state = initialState, action) => {
                     cart: [...state.cart, action.product],
             };
 
-        case ADD_MULTIPLE_TO_CART:
-            console.log(action.type);
-            return {
-                ...state,
-                cart: [...state.cart, ...action.products],
-            };
+        // case ADD_MULTIPLE_TO_CART:
+        //     console.log(action.type);
+        //     return {
+        //         ...state,
+        //         cart: [...state.cart, ...action.products],
+        //     };
 
         case REMOVE_FROM_CART:
             console.log(action.type);
@@ -67,19 +68,19 @@ export const reducer = (state = initialState, action) => {
                 cartOpen: newState.length > 0,
                     cart: newState,
             };
-
-        case UPDATE_CART_QUANTITY:
-            console.log(action.type);
-            return {
-                ...state,
-                cartOpen: true,
-                    cart: state.cart.map((product) => {
-                        if (action._id === product._id) {
-                            product.purchaseQuantity = action.purchaseQuantity;
-                        }
-                        return product;
-                    }),
-            };
+        //later date
+        // case UPDATE_CART_QUANTITY:
+        //     console.log(action.type);
+        //     return {
+        //         ...state,
+        //         cartOpen: true,
+        //             cart: state.cart.map((product) => {
+        //                 if (action._id === product._id) {
+        //                     product.purchaseQuantity = action.purchaseQuantity;
+        //                 }
+        //                 return product;
+        //             }),
+        //     };
 
         case CLEAR_CART:
             console.log(action.type);

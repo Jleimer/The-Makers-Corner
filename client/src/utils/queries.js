@@ -1,8 +1,8 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
-export const QUERY_PRODUCTS = gql`
-  query getProducts($category: ID) {
-    products(category: $category) {
+export const QUERY_COURSES = gql`
+  query getCourse($category: ID) {
+    courses(category: $category) {
       _id
       name
       description
@@ -16,9 +16,9 @@ export const QUERY_PRODUCTS = gql`
   }
 `;
 
-export const QUERY_ALL_PRODUCTS = gql`
+export const QUERY_ALL_COURSES = gql`
   {
-    products {
+    courses {
       _id
       name
       description
@@ -32,33 +32,41 @@ export const QUERY_ALL_PRODUCTS = gql`
 `;
 
 export const QUERY_CATEGORIES = gql`
-{
-  categories {
-    _id
-    name
+  {
+    categories {
+      _id
+      name
+    }
   }
-}
 `;
 
 export const QUERY_USER = gql`
-{
-  user {
-    firstName
-    lastName
-    orders {
-      _id
-      purchaseDate
-      products {
+  {
+    user {
+      firstName
+      lastName
+      orders {
         _id
-        name
-        description
-        price
-        quantity
-        image
+        purchaseDate
+        blueprints {
+          _id
+          name
+          description
+          price
+          quantity
+          image
+        }
+        courses {
+          _id
+          name
+          description
+          price
+          quantity
+          image
+        }
       }
     }
   }
-}
 `;
 
 export const QUERY_CHECKOUT = gql`
@@ -90,6 +98,39 @@ export const QUERY_ME = gql`
         _id
         commentText
         createdAt
+      }
+    }
+  }
+`;
+
+export const QUERY_BLUEPRINTS = gql`
+  query blueprints($category: ID, $name: String) {
+    blueprints(category: $category, name: $String) {
+      _id
+      name
+      description
+      price
+      file
+      image
+      category {
+        _id
+        name
+      }
+    }
+  }
+`;
+
+export const QUERY_ALL_BLUEPRINTS = gql`
+ {
+    blueprints {
+      _id
+      name
+      description
+      price
+      quantity
+      category {
+        _id
+        name
       }
     }
   }

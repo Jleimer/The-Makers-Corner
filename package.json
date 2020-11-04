@@ -12,6 +12,8 @@
     "nodemon": "^2.0.6"
 =======
     "if-env": "^1.0.4",
+    "materialize-css": "^1.0.0-rc.2",
+    "react-materialize": "^3.9.3",
     "stripe": "^8.119.0"
 >>>>>>> 5004efd46a045727630dc8a5f79c9080c1a16ee3
   },

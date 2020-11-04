@@ -1,6 +1,7 @@
 import React from "react";
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
+import Cart from "../Cart";
 
 function Navigation() {
 
@@ -8,30 +9,66 @@ function Navigation() {
     if (Auth.loggedIn()) {
       return (
         <ul className="flex-row">
-          <li className="mx-1">
+          <li>
+            <Link to="/blueprints">
+              Blueprints
+            </Link>
+          </li>
+          <li>
+            <Link to="/courses">
+              Courses
+            </Link>
+          </li>
+          <li>
+            <Link to="/dashboard">
+              Dashboard
+            </Link>
+          </li>
+          <li>
+            <Link to="/messageboard">
+              Message Board
+            </Link>
+          </li>
+          <li>
             <Link to="/orderHistory">
               Order History
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
             <a href="/" onClick={() => Auth.logout()}>
               Logout
             </a>
+          </li>
+          <li>
+            <Cart/>
           </li>
         </ul>
       );
     } else {
       return (
-        <ul className="flex-row">
-          <li className="mx-1">
+        <ul>
+          <li>
+            <Link to="/blueprints">
+              Blueprints
+            </Link>
+          </li>
+          <li>
+            <Link to="/courses">
+              Courses
+            </Link>
+          </li>
+          <li>
             <Link to="/signup">
               Signup
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
             <Link to="/login">
               Login
             </Link>
+          </li>
+          <li>
+            <Cart/>
           </li>
         </ul>
       );
@@ -42,7 +79,6 @@ function Navigation() {
     <header className="flex-row px-1">
       <h1>
         <Link to="/">
-          <span role="img" aria-label="shopping bag">🛍️</span>
           The Maker's Corner
         </Link>
       </h1>

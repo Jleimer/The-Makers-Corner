@@ -6,27 +6,29 @@ export const LOGIN = gql`
             token
             user {
                 _id
+                username
             }
         }
     }
 `;
 
 export const ADD_USER = gql`
-    mutation addUser($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
-        addUser(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
+    mutation addUser($username: String!, $firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+        addUser(username: $username, firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
             token
             user {
                 _id
+                username
             }
         }
     }
 `;
 
 export const ADD_ORDER = gql`
-    mutation addOrder(classes:[ID]!, blueprints: [ID]!) {
-        addOrder(classes: $classes, blueprints: $blueprints) {
+    mutation addOrder($courses:[ID]!, $blueprints: [ID]!) {
+        addOrder(courses: $courses, blueprints: $blueprints) {
             purchaseDate
-            classes {
+            courses {
                 _id
                 name
                 description
@@ -51,6 +53,12 @@ export const ADD_ORDER = gql`
 export const ADD_POST = gql`
     mutation addPost($postText: String!, $title: String!, $category: String!) {
         addPost(postText: $postText, title: $title, category: $category) {
+
+`;
+
+export const ADD_COMMENT = gql`
+    mutation addComment($commentText: String!) {
+        addComment(commentText: $commentText) {
             _id
             postText
             createdAt
