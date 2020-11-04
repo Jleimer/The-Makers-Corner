@@ -9,27 +9,32 @@ function Navigation() {
     if (Auth.loggedIn()) {
       return (
         <ul className="flex-row">
-          <li className="mx-1">
+          <li>
             <Link to="/blueprints">
               Blueprints
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
             <Link to="/classes">
               Classes
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
             <Link to="/dashboard">
               Dashboard
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
+            <Link to="/messageboard">
+              Message Board
+            </Link>
+          </li>
+          <li>
             <Link to="/orderHistory">
               Order History
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
             <a href="/" onClick={() => Auth.logout()}>
               Logout
             </a>

@@ -19,7 +19,7 @@ import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import { Provider } from 'react-redux';
 import store from './utils/store';
-
+import './index.css';
 const client = new ApolloClient({
   request: (operation) => {
     const token = localStorage.getItem('id_token')

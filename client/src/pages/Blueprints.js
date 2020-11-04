@@ -1,15 +1,15 @@
 import React from 'react';
 import CategoryMenu from '../components/CategoryMenu';
-// IMPORT BLUEPRINTS COMPONENT
+import Blueprints from '../components/Blueprints';
 
-const Blueprints = () => {
+const BluePrints = () => {
     return (
         <div>
             <h2>Blueprints Page</h2>
             <CategoryMenu />
-            {/* BLUE PRINT COMPONENT */}
+            {/* <Blueprints/> */}
         </div>
     );
 };
 
-export default Blueprints;
+export default BluePrints;
