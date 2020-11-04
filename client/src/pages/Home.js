@@ -9,9 +9,10 @@ const Home = () => {
     return (
         <div className="container">
             <div>
-                <h2>Checkout out the latest blueprints:</h2>
+                <div className="header">
+
+                </div>
                 <Blueprints />
-                <h2>Checkout out the latest Classes:</h2>
                 <Courses />
             </div>
             {/* INSERT COMPONENTS */}

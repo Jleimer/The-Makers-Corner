@@ -1,6 +1,10 @@
+html, body {
+  padding:0px;
+  margin:0px;
+}
+
 body {
   font-family: 'Lato', sans-serif;
-  margin: 15px;
 }
 
 ul {
@@ -86,8 +90,9 @@ button {
 }
 
 footer {
-  position: absolute;
+  position: sticky;
   bottom: 0;
   width: 100%;
   padding: 10px;
+  margin-top: 25px;
  }
