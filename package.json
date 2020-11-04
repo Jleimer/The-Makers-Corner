@@ -5,6 +5,8 @@
   "main": "server/server.js",
   "dependencies": {
     "if-env": "^1.0.4",
+    "materialize-css": "^1.0.0-rc.2",
+    "react-materialize": "^3.9.3",
     "stripe": "^8.119.0"
   },
   "devDependencies": {

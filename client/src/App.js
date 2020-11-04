@@ -21,6 +21,7 @@ import Footer from './components/Footer';
 import { Provider } from 'react-redux';
 import store from './utils/store';
 import './index.css';
+import Detail from './pages/Detail';
 const client = new ApolloClient({
   request: (operation) => {
     const token = localStorage.getItem('id_token')
@@ -45,8 +46,7 @@ function App() {
               <Route exact path="/" component={Home}/>
               <Route exact path="/blueprints" component={Blueprints}/>
               <Route exact path="/courses" component={Course}/>
-              {/* OR combine blueprints and classes into products.... '/products' */}
-              {/* ... Detail page would then be '/products:id */}
+              <Route exact path="/products:id" component={Detail}/>
               <Route exact path="/dashboard" component={Dashboard}/>
               <Route exact path="/login" component={Login}/>
               <Route exact path="/orderhistory" component={OrderHistory}/>
