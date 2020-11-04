@@ -170,6 +170,7 @@ const resolvers = {
     addOrder: async (parent, { blueprints, classes }, context) => {
       if (context.user) {
         const order = new Order({ blueprints, classes });
+        
         await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order },
         });
@@ -205,7 +206,8 @@ const resolvers = {
     },
     addBlueprint: async (parent, args, context) => {
       if (context.user) {
-        const newBlueprint = await (await Blueprint.create({ ...args, username: context.user.username })).populate("category");
+        let newBlueprint = await (await Blueprint.create({ ...args, username: context.user.username })).populate("category");
+        newBlueprint = await newBlueprint.populate("category").execPopulate();
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
@@ -219,7 +221,8 @@ const resolvers = {
     },
     addClass: async (parent, args, context) => {
       if (context.user) {
-        const newClass = await Class.create({ ...args, username: context.user.username });
+        let newClass = await Class.create({ ...args, username: context.user.username });
+        newClass = await newClass.populate("category").execPopulate();
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
@@ -249,7 +252,7 @@ const resolvers = {
     //I don't think this is right
     addCommentPost: async (parent, { postId, args }, context) => {
       if (context.user) {
-        const newComment = await Comment.create({ ...args, username: context.user.username });
+        let newComment = await Comment.create({ ...args, username: context.user.username });
 
         await Post.findByIdAndUpdate(
           { _id: postId },
@@ -257,7 +260,7 @@ const resolvers = {
           { new: true }
         ).populate("comments");
 
-        return;
+        return Post;
       }
       throw new AuthenticationError("Not logged in!");
     },
