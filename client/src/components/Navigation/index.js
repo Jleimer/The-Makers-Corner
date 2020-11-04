@@ -9,6 +9,21 @@ function Navigation() {
       return (
         <ul className="flex-row">
           <li className="mx-1">
+            <Link to="/blueprints">
+              Blueprints
+            </Link>
+          </li>
+          <li className="mx-1">
+            <Link to="/classes">
+              Classes
+            </Link>
+          </li>
+          <li className="mx-1">
+            <Link to="/dashboard">
+              Dashboard
+            </Link>
+          </li>
+          <li className="mx-1">
             <Link to="/orderHistory">
               Order History
             </Link>
@@ -23,6 +38,16 @@ function Navigation() {
     } else {
       return (
         <ul className="flex-row">
+          <li className="mx-1">
+            <Link to="/blueprints">
+              Blueprints
+            </Link>
+          </li>
+          <li className="mx-1">
+            <Link to="/classes">
+              Classes
+            </Link>
+          </li>
           <li className="mx-1">
             <Link to="/signup">
               Signup
@@ -42,7 +67,6 @@ function Navigation() {
     <header className="flex-row px-1">
       <h1>
         <Link to="/">
-          <span role="img" aria-label="shopping bag">🛍️</span>
           The Maker's Corner
         </Link>
       </h1>

@@ -3,7 +3,7 @@ import React from 'react';
 const MessageBoard = () => {
     return (
         <div>
-            <h1>Message Board</h1>
+            <h2>Message Board</h2>
         </div>
     );
 };
