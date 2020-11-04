@@ -33,8 +33,8 @@ const resolvers = {
         .populate("reviews")
         .sort({ createdAt: -1 });
     },
-    blueprint: async (parent, { _id }) => {
-      return await Blueprint.findById(_id).populate("category").populate("reviews");
+    blueprint: async (parent, { blueprintId }) => {
+      return await Blueprint.findById({_id: blueprintId}).populate("category").populate("reviews");
     },
     classes: async (parent, { category, name }) => {
       const params = {};
@@ -52,8 +52,8 @@ const resolvers = {
         .populate("reviews")
         .sort({ createdAt: -1 });
     },
-    class: async (parent, { _id }) => {
-      return await Class.findById(_id).populate("category").populate("reviews");
+    class: async (parent, { classId }) => {
+      return await Class.findById({_id: classId}).populate("category").populate("reviews");
     },
     posts: async (parent, { category, name }) => {
       const params = {};
@@ -71,8 +71,8 @@ const resolvers = {
         .populate("comments")
         .sort({ createdAt: -1 });
     },
-    post: async (parent, { _id }) => {
-      return await Post.findById(_id).populate("category").populate("comments");
+    post: async (parent, { postId }) => {
+      return await Post.findById({_id: postId}).populate("category").populate("comments");
     },
     user: async (parent, args, context) => {
       if (context.user) {
@@ -288,28 +288,28 @@ const resolvers = {
       }
       throw new AuthenticationError("Not logged in!");
     },
-    updateClass: async (parent, { classId, args }, context) => {
+    updateClass: async (parent, {classId, ...args}, context) => {
       if (context.user) {
-        return await Class.findByIdAndUpdate({ _id: classId }, ...args, {
+        return await Class.findByIdAndUpdate({_id: classId}, args, {
           new: true,
         }).populate("reviews");
       }
 
       throw new AuthenticationError("Not logged in!");
     },
-    updateBlueprint: async (parent, { blueprintId, args }, context) => {
+    updateBlueprint: async (parent, { blueprintId, ...args }, context) => {
       if (context.user) {
         return await Blueprint.findByIdAndUpdate(
           { _id: blueprintId },
-          ...args,
+          args,
           { new: true }
         ).populate("reviews");
       }
       throw new AuthenticationError("Not logged in!");
     },
-    updatePost: async (parent, { postId, args }, context) => {
+    updatePost: async (parent, { postId, ...args }, context) => {
       if (context.user) {
-        return await Post.findByIdAndUpdate({ _id: blueprintId }, ...args, {
+        return await Post.findByIdAndUpdate({ _id: postId }, args, {
           new: true,
         }).populate("comments");
       }

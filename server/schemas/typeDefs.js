@@ -85,10 +85,10 @@ const typeDefs = gql`
     type Query {
         categories: [Category]
         blueprints(category: ID, name: String): [Blueprint]
-        blueprint(_id: ID!): Blueprint
+        blueprint(blueprintId: ID!): Blueprint
         classes(category: ID, name: String): [Class]
-        class(_id: ID!): Class
-        posts(category: ID, name: String): Post
+        class(classId: ID!): Class
+        posts(category: ID, name: String): [Post]
         post(postId: ID!): Post
         user: User
         users: [User]
@@ -103,13 +103,13 @@ const typeDefs = gql`
         updateUser(firstName: String, lastName: String, email: String, password: String): User
         addBlueprint(name: String!, description: String!, image: String, file: String, price: Float!, difficulty: String!, category: String!): Blueprint
         addClass(name: String!, description: String!, price: Float!, classTime: String!, difficulty: String!, items: String!, category: String!): Class
-        addPost(postText: String!, title: String!, category: String!): Post
+        addPost(postText: String!, title: String!, category: ID!): Post
         addCommentPost(postId: ID!, commentBody: String!): Post
         addClassReview(classId: ID!, reviewBody: String!): Class
         addBlueprintReview(blueprintId: ID!, reviewBody: String!): Blueprint
-        updateClass(classId: ID!, name: String!, description: String!, price: Float, items: String!): Class
-        updateBlueprint(blueprintId: ID!, name: String!, description: String!, price: Float): Blueprint
-        updatePost(postId: ID!, title: String!, postBody: String!, category: String!): Post
+        updateClass(classId: ID!, name: String!, description: String!, classTime: String!, difficulty: String!, price: Float!, items: String!): Class
+        updateBlueprint(blueprintId: ID!, name: String!, description: String!, difficulty: String!, price: Float!): Blueprint
+        updatePost(postId: ID!, title: String!, postText: String!, category: ID!): Post
         deleteBlueprint(blueprintId: ID!): Blueprint
         deleteClass(classId: ID!): Class
         deletePost(postId: ID!): Post
