@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export const QUERY_PRODUCTS = gql`
+export const QUERY_COURSES = gql`
   query getProducts($category: ID) {
     products(category: $category) {
       _id
@@ -16,7 +16,7 @@ export const QUERY_PRODUCTS = gql`
   }
 `;
 
-export const QUERY_ALL_PRODUCTS = gql`
+export const QUERY_ALL_COURSES = gql`
   {
     products {
       _id
@@ -90,6 +90,37 @@ export const QUERY_ME = gql`
         _id
         commentText
         createdAt
+      }
+    }
+  }
+`;
+
+export const QUERY_BLUEPRINTS = gql`
+  query getProducts($category: ID) {
+    products(category: $category) {
+      _id
+      name
+      description
+      price
+      quantity
+      image
+      category {
+        _id
+      }
+    }
+  }
+`;
+
+export const QUERY_ALL_BLUEPRINTS = gql`
+  {
+    products {
+      _id
+      name
+      description
+      price
+      quantity
+      category {
+        name
       }
     }
   }
