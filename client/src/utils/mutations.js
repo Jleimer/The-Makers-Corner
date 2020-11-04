@@ -25,10 +25,10 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_ORDER = gql`
-    mutation addOrder($classes:[ID]!, $blueprints: [ID]!) {
-        addOrder(classes: $classes, blueprints: $blueprints) {
+    mutation addOrder($courses:[ID]!, $blueprints: [ID]!) {
+        addOrder(courses: $courses, blueprints: $blueprints) {
             purchaseDate
-            classes {
+            courses {
                 _id
                 name
                 description

@@ -35,16 +35,15 @@ const Login = (props) => {
 
     return (
         <div>
-            <Link to='/signup'>
-                Signup instead
-            </Link>
+            
 
             <h2>Login</h2>
-
+            <div className="form-div">
             <form onSubmit={handleFormSubmit}>
                 <div>
                     <label htmlFor="email">Email address: </label>
                     <input
+                        className="input"
                         placeholder="johndoe@test.com"
                         name="email"
                         type="email"
@@ -55,6 +54,7 @@ const Login = (props) => {
                 <div>
                     <label htmlFor="password">Password: </label>
                     <input
+                        className="input"
                         placeholder="******"
                         name="password"
                         type="password"
@@ -71,8 +71,12 @@ const Login = (props) => {
                     <button type='submit'>
                         Submit
                     </button>
+                    <Link to='/signup'>
+                        Signup instead
+                    </Link>
                 </div>
             </form>
+            </div>
         </div>
     );
 };

@@ -40,11 +40,13 @@ const Signup = (props) => {
             </Link>
 
             <h2>Signup</h2>
-
+            <div className="form-div">
             <form onSubmit={handleFormSubmit}>
                 <div>
                     <label htmlFor="username">Username: </label>
-                    <input 
+                    <br></br>
+                    <input
+                        className="input"
                         placeholder="johndoe"
                         name="username"
                         type="username"
@@ -54,7 +56,9 @@ const Signup = (props) => {
                 </div>
                 <div>
                     <label htmlFor="firstName">First Name: </label>
+                    <br></br>
                     <input 
+                        className="input"
                         placeholder="John"
                         name="firstName"
                         type="firstName"
@@ -64,7 +68,9 @@ const Signup = (props) => {
                 </div>
                 <div>
                     <label htmlFor="lastName">Last Name: </label>
+                    <br></br>
                     <input
+                        className="input"
                         placeholder="Doe"
                         name="lastName"
                         type="lastName"
@@ -74,7 +80,9 @@ const Signup = (props) => {
                 </div>
                 <div>
                     <label htmlFor="email">Email: </label>
+                    <br></br>
                     <input
+                        className="input"
                         placeholder="johndoe@test.com"
                         name="email"
                         type="email"
@@ -84,7 +92,9 @@ const Signup = (props) => {
                 </div>
                 <div>
                     <label htmlFor="password">Password: </label>
+                    <br></br>
                     <input
+                        className="input"
                         placeholder="******"
                         name="password"
                         type="password"
@@ -98,6 +108,7 @@ const Signup = (props) => {
                     </button>
                 </div>
             </form>
+            </div>
             {error && <div>Signup failed, please try again!</div>}
         </div>
     );

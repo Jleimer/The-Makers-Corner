@@ -1,5 +1,6 @@
 body {
   font-family: 'Lato', sans-serif;
+  margin: 15px;
 }
 
 ul {
@@ -37,10 +38,39 @@ h1 a {
   text-decoration: none;
 }
 
+h2 {
+  text-align: center;
+}
+
 p {
   font-family: 'Lato', sans-serif;
   text-align: center;
 }
+
+.form-div
+{
+    display: block;
+    text-align: center;
+}
+
+form
+{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+.input{
+  width: 100%;
+  min-width: 125px;
+  max-width: 700px;
+  padding: 8px 10px;
+  margin: 8px 0px;
+  box-sizing: border-box;
+}
+
+
 
 footer {
   position: absolute;

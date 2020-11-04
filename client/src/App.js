@@ -6,8 +6,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
 import NoMatch from './pages/NoMatch';
 import Blueprints from './pages/Blueprints';
-import Classes from './pages/Classes';
+import Course from './pages/Courses';
 import Dashboard from './pages/Dashboard';
+import OrderHistory from './pages/OrderHistory';
 // import Detail from './pages/Detail';
 // - Check to see if Blueprints & classes stay separate or if they turn into products??
 import Login from './pages/Login';
@@ -43,11 +44,12 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route exact path="/blueprints" component={Blueprints}/>
-              <Route exact path="/classes" component={Classes}/>
+              <Route exact path="/courses" component={Course}/>
               {/* OR combine blueprints and classes into products.... '/products' */}
               {/* ... Detail page would then be '/products:id */}
               <Route exact path="/dashboard" component={Dashboard}/>
               <Route exact path="/login" component={Login}/>
+              <Route exact path="/orderhistory" component={OrderHistory}/>
               <Route exact path="/signup" component={Signup}/>
               <Route exact path="/messageboard" component={MessageBoard}/>
               <Route component={NoMatch}/>

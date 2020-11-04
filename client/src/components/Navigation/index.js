@@ -15,8 +15,8 @@ function Navigation() {
             </Link>
           </li>
           <li>
-            <Link to="/classes">
-              Classes
+            <Link to="/courses">
+              Courses
             </Link>
           </li>
           <li>
@@ -39,6 +39,9 @@ function Navigation() {
               Logout
             </a>
           </li>
+          <li>
+            <Cart/>
+          </li>
         </ul>
       );
     } else {
@@ -50,8 +53,8 @@ function Navigation() {
             </Link>
           </li>
           <li>
-            <Link to="/classes">
-              Classes
+            <Link to="/courses">
+              Courses
             </Link>
           </li>
           <li>
