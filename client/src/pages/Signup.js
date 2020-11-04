@@ -35,10 +35,6 @@ const Signup = (props) => {
     
     return (
         <div>
-            <Link to='/login'>
-                Login instead
-            </Link>
-
             <h2>Signup</h2>
             <div className="form-div">
             <form onSubmit={handleFormSubmit}>
@@ -106,6 +102,10 @@ const Signup = (props) => {
                     <button type="submit">
                         Signup
                     </button>
+                    <br></br>
+                    <Link to='/login' className="instead">
+                        Login instead
+                    </Link>
                 </div>
             </form>
             </div>

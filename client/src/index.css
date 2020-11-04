@@ -12,10 +12,6 @@ ul {
   list-style: none;
 }
 
-li {
-  float: left;
-}
-
 li a {
   display: block;
   color: #333;
@@ -31,6 +27,8 @@ li a:hover {
 h1 {
   font-family: 'Grenze Gotisch', cursive;
   text-align: center;
+  font-size: 26px;
+  margin-bottom: 5px;
 }
 
 h1 a {
@@ -59,20 +57,32 @@ form
     margin-left: auto;
     margin-right: auto;
     text-align: left;
+    min-width: 250px;
+    max-width: 500px;
+    width: 100%;
 }
 
 .input{
   width: 100%;
-  min-width: 125px;
-  max-width: 700px;
   padding: 8px 10px;
   margin: 8px 0px;
   box-sizing: border-box;
+  /* min-width: 250px; */
 }
 
 button {
+  width: 100px;
   padding: 5px 8px;
-  
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-family: 'Lato', sans-serif;
+  font-weight: bolder;
+}
+
+.instead {
+  color: #333;
 }
 
 footer {

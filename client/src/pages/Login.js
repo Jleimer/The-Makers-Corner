@@ -72,7 +72,7 @@ const Login = (props) => {
                         Submit
                     </button>
                     <br></br>
-                    <Link to='/signup'>
+                    <Link to='/signup' className="instead">
                         Signup instead
                     </Link>
                 </div>
