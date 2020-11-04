@@ -7,7 +7,7 @@ import { QUERY_COMMENTS, QUERY_ME } from '../../utils/queries';
 const Comments = () => {
     const [commentText] = useState('');
     
-    const [addComment, { error }] = useMutation(ADD_COMMENT, {
+    const [addComment] = useMutation(ADD_COMMENT, {
         update(cache, { data: { addComment } }) {
             try {
                 const { comments } = cache.readQuery({ query: QUERY_COMMENTS });

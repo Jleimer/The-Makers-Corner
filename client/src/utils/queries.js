@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
-export const QUERY_PRODUCTS = gql`
-  query getProducts($category: ID) {
-    products(category: $category) {
+export const QUERY_COURSES = gql`
+  query getCourse($category: ID) {
+    courses(category: $category) {
       _id
       name
       description
@@ -16,9 +16,9 @@ export const QUERY_PRODUCTS = gql`
   }
 `;
 
-export const QUERY_ALL_PRODUCTS = gql`
+export const QUERY_ALL_COURSES = gql`
   {
-    products {
+    courses {
       _id
       name
       description
@@ -48,7 +48,15 @@ export const QUERY_USER = gql`
     orders {
       _id
       purchaseDate
-      products {
+      blueprints {
+        _id
+        name
+        description
+        price
+        quantity
+        image
+      }
+      courses {
         _id
         name
         description
@@ -90,6 +98,37 @@ export const QUERY_ME = gql`
         _id
         commentText
         createdAt
+      }
+    }
+  }
+`;
+
+export const QUERY_BLUEPRINTS = gql`
+  query getBlueprints($category: ID) {
+    blueprints(category: $category) {
+      _id
+      name
+      description
+      price
+      quantity
+      image
+      category {
+        _id
+      }
+    }
+  }
+`;
+
+export const QUERY_ALL_BLUEPRINTS = gql`
+  {
+    blueprints {
+      _id
+      name
+      description
+      price
+      quantity
+      category {
+        name
       }
     }
   }
