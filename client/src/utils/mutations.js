@@ -49,8 +49,8 @@ export const ADD_ORDER = gql`
 `;
 
 export const ADD_POST = gql`
-    mutation addPost($postText: String!) {
-        addPost(postText: $postText) {
+    mutation addPost($postText: String!, $title: String!, $category: String!) {
+        addPost(postText: $postText, title: $title, category: $category) {
             _id
             postText
             createdAt
@@ -60,8 +60,8 @@ export const ADD_POST = gql`
 `;
 
 export const ADD_BLUEPRINT = gql`
-    mutation addBlueprint($blueprint: String!) {
-        addBlueprint(name: String!, description: String!, image: String, file: String, price: Float!, difficulty: String!, category: String!): Blueprint {
+    mutation addBlueprint($name: String!, $description: String!, $image: String, $file: String, $price: Float!, $difficulty: String!, $category: String!) {
+        addBlueprint(name: $name, description: $description, image: $image, file: $file, price: $price, difficulty: String!, category: String!) {
             _id
             name
             username
@@ -71,8 +71,8 @@ export const ADD_BLUEPRINT = gql`
 `;
 
 export const ADD_CLASS = gql`
-    mutation addClass($class: String!) {
-        addClass(name: String!, description: String!, price: Float!, classTime: String!, difficulty: String!, items: String!, category: String!): Class {
+    mutation addClass($name: String!, $description: $String!, $price: Float!, $classTime: String!, $items: String!, $category: String!) {
+        addClass(name: $name, description: $description, price: $price, classTime: $classtime, difficulty: $difficulty, items: $items, category: $category) {
             _id
             name
             username
