@@ -233,8 +233,9 @@ const resolvers = {
     },
     addPost: async (parent, args, context) => {
       if (context.user) {
-        const newPost = await Post.create({ ...args, username: context.user.username });
-
+        let newPost = await Post.create({ ...args, username: context.user.username });
+        newPost = await newPost.populate("category").execPopulate();
+        
         await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { posts: newPost._id } },

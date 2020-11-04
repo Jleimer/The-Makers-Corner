@@ -101,8 +101,8 @@ const typeDefs = gql`
         addOrder(classes:[ID]!, blueprints: [ID]!): Order
         login(email: String!, password: String!): Auth
         updateUser(firstName: String, lastName: String, email: String, password: String): User
-        addBlueprint(name: String!, description: String!, image: String, file: String, price: Float!, difficulty: String!, category: String!): Blueprint
-        addClass(name: String!, description: String!, price: Float!, classTime: String!, difficulty: String!, items: String!, category: String!): Class
+        addBlueprint(name: String!, description: String!, image: String, file: String, price: Float!, difficulty: String!, category: ID!): Blueprint
+        addClass(name: String!, description: String!, price: Float!, classTime: String!, difficulty: String!, items: String!, category: ID!): Class
         addPost(postText: String!, title: String!, category: ID!): Post
         addCommentPost(postId: ID!, commentBody: String!): Post
         addClassReview(classId: ID!, reviewBody: String!): Class
