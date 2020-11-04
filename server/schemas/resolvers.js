@@ -219,7 +219,7 @@ const resolvers = {
       }
       throw new AuthenticationError("Not logged in!");
     },
-    addCourses: async (parent, args, context) => {
+    addCourse: async (parent, args, context) => {
       if (context.user) {
         let newCourse = await Course.create({ ...args, username: context.user.username });
         newCourse = await newCourse.populate("category").execPopulate();
