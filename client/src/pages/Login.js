@@ -71,6 +71,7 @@ const Login = (props) => {
                     <button type='submit'>
                         Submit
                     </button>
+                    <br></br>
                     <Link to='/signup'>
                         Signup instead
                     </Link>
