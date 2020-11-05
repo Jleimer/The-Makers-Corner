@@ -70,8 +70,8 @@ db.once("open", async () => {
       name: "Workbench",
       description:
         "This is an easy work that can fit in almost any garage or shop. Storage underneath and a places for a small tools on top. You can easliy add wheels to this for the perfect mobile bench.",
-      image: "asdfsadf",
-      file: "asdf",
+      image: "",
+      file: "",
       price: 6.0,
       difficulty: "Some exprience required",
       category: categories[3]._id,
@@ -81,8 +81,8 @@ db.once("open", async () => {
       name: "Shaker cabinet door",
       description:
         "Plans for basic shaker cabinet doors.  Just adjust plans for custom measurements and you are set!",
-      image: "asdfasdf",
-      file: "asdfasdf",
+      image: "",
+      file: "",
       price: 5.0,
       difficulty: "Experience with table saw required",
       category: categories[4]._id,

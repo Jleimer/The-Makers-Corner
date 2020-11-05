@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import {idbPromise } from "../../utils/helpers";
 
-function BlueprintsItem() {
+function BlueprintsItem(blueprint) {
     const dispatch = useDispatch();
     const state = useSelector(state => state);
+
 
     const {
         image,
@@ -20,7 +21,7 @@ function BlueprintsItem() {
         category,
         reviews,
         difficulty
-    } = state.blueprints;
+    } = blueprint;
 
     const { cart } = state
 
