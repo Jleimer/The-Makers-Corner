@@ -14,13 +14,12 @@ import Login from './pages/Login';
 import MessageBoard from './pages/MessageBoard';
 import Signup from './pages/Signup';
 
-// IMPORT COMPONENTS
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import { Provider } from 'react-redux';
 import store from './utils/store';
 import './index.css';
-import Detail from './pages/Detail';
+
 const client = new ApolloClient({
   request: (operation) => {
     const token = localStorage.getItem('id_token')
