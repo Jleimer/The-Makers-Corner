@@ -47,7 +47,7 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 cartOpen: true,
-                    cart: [...state.cart, action.product],
+                    cart: [...state.cart, action.blueprints, action.courses],
             };
 
         // case ADD_MULTIPLE_TO_CART:
@@ -57,17 +57,20 @@ export const reducer = (state = initialState, action) => {
         //         cart: [...state.cart, ...action.products],
         //     };
 
-        case REMOVE_FROM_CART:
-            console.log(action.type);
-            let newState = state.cart.filter((product) => {
-                return product._id !== action._id;
-            });
+        // case REMOVE_FROM_CART:
+        //     console.log(action.type);
+        //     let blueprintState = state.cart.filter((blueprints) => {
+        //         return blueprints._id !== action._id;
+        //     });
+        //     let courseState = state.cart.filter((courses) => {
+        //         return courses._id !== action._id;
+        //     });
 
-            return {
-                ...state,
-                cartOpen: newState.length > 0,
-                    cart: newState,
-            };
+        //     return {
+        //         ...state,
+        //         cartOpen: blueprintState.length > 0 || courseState.length > 0,
+        //             cart: newState,
+        //     };
         //later date
         // case UPDATE_CART_QUANTITY:
         //     console.log(action.type);
