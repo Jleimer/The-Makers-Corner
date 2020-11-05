@@ -12,27 +12,32 @@ const MessageBoard = () => {
   // const { data: userData } = useQuery(QUERY_ME);
   // const comments = data?.comments || [];
 
-  //    const { loading, data } = useQuery(QUERY_ALL_POSTS);
-  //    const { data: userData } = useQuery(QUERY_ME);
-  //    const posts = data?.posts || [];
+     const { loading, data } = useQuery(QUERY_ALL_POSTS);
+     const { data: userData } = useQuery(QUERY_SINGLE_USER);
+     const posts = data?.posts || [];
 
-  //    const loggedIn = Auth.loggedIn();
-  const { data } = useQuery(QUERY_SINGLE_USER);
-  let user;
+     const loggedIn = Auth.loggedIn();
+//   const { data } = useQuery(QUERY_SINGLE_USER);
+//   let user;
 
-  if (data) {
-    user = data.user;
-  }
+//   if (data) {
+//     user = data.user;
+//   }
   return (
     <div>
       <h2>Message Board</h2>
-      {user ? (
-        <div>
-          <PostList />
+        {loggedIn && (
+            <div>
+                <PostList />
+            </div>
+        )}
+        <div className={`${loggedIn}`}>
+            {loading ? (
+                <div>Loading...</div>
+            ):(
+                <PostList posts={posts} title="Join the discussion -"/>
+            )}
         </div>
-      ) : (
-        <h2>You need to be logged into to see the message board!</h2>
-      )}
     </div>
   );
 };
