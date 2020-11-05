@@ -23,8 +23,8 @@ const typeDefs = gql`
     type Blueprint {
         _id: ID
         name: String
-        description: String
         username: String
+        description: String
         image: String
         file: String
         price: Float
@@ -90,8 +90,9 @@ const typeDefs = gql`
         course(courseId: ID!): Course
         posts(category: ID, name: String): [Post]
         post(postId: ID!): Post
-        user: User
+        user(username: String!): User
         users: [User]
+        me: Auth
         order(_id: ID!): Order
         checkout(courses: [ID]!, blueprints: [ID]!): Checkout
     }
@@ -100,7 +101,7 @@ const typeDefs = gql`
         addUser(firstName: String!, lastName: String!, email: String!, username: String!, password: String!): Auth
         addOrder(courses:[ID]!, blueprints: [ID]!): Order
         login(email: String!, password: String!): Auth
-        updateUser(firstName: String, lastName: String, email: String, password: String): User
+        updateUser(firstName: String!, lastName: String!, email: String!, password: String!): User
         addBlueprint(name: String!, description: String!, image: String, file: String, price: Float!, difficulty: String!, category: ID!): Blueprint
         addCourse(name: String!, description: String!, price: Float!, courseTime: String!, difficulty: String!, items: String!, category: ID!): Course
         addPost(postText: String!, title: String!, category: ID!): Post

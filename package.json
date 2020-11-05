@@ -4,11 +4,16 @@
   "description": "A server for social media and sale of classes for at home construction",
   "main": "server/server.js",
   "dependencies": {
+<<<<<<< HEAD
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "if-env": "^1.0.4",
     "mongoose": "^5.10.11",
     "nodemon": "^2.0.6"
+=======
+    "dotenv": "^8.2.0",
+    "if-env": "^1.0.4"
+>>>>>>> e98cce82cbd39851244f7fa8377fe196b09776f1
   },
   "devDependencies": {
     "concurrently": "^5.3.0"

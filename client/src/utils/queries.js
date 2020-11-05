@@ -1,36 +1,6 @@
 import gql from "graphql-tag";
 
-export const QUERY_COURSES = gql`
-  query getCourse($category: ID) {
-    courses(category: $category) {
-      _id
-      name
-      description
-      price
-      quantity
-      image
-      category {
-        _id
-      }
-    }
-  }
-`;
-
-export const QUERY_ALL_COURSES = gql`
-  {
-    courses {
-      _id
-      name
-      description
-      price
-      quantity
-      category {
-        name
-      }
-    }
-  }
-`;
-
+//queries the category IDs and name
 export const QUERY_CATEGORIES = gql`
   {
     categories {
@@ -40,11 +10,86 @@ export const QUERY_CATEGORIES = gql`
   }
 `;
 
-export const QUERY_USER = gql`
+//returns the single user info - shows that user dashboard
+export const QUERY_SINGLE_USER = gql`
+ {
+    user {
+      firstName
+      lastName
+      username
+      blueprints {
+        _id
+        name
+        description
+        username
+        price
+        quantity
+        category {
+          _id
+          name
+        }
+      }
+      courses {
+        _id
+        name
+        description
+        price
+        image
+      }
+      posts {
+        _id
+        title
+        postText
+        username
+        createdAt
+        comments {
+          commentBody
+          username
+          createdAt
+        }
+      }
+    }
+  }
+`;
+
+//returns just the person logged in - dashboard
+export const QUERY_ME = gql`
   {
     user {
       firstName
       lastName
+      username
+      blueprints {
+        _id
+        name
+        description
+        username
+        price
+        quantity
+        category {
+          _id
+          name
+        }
+      }
+      courses {
+        _id
+        name
+        description
+        price
+        image
+      }
+      posts {
+        _id
+        title
+        postText
+        username
+        createdAt
+        comments {
+          commentBody
+          username
+          createdAt
+        }
+      }
       orders {
         _id
         purchaseDate
@@ -53,7 +98,6 @@ export const QUERY_USER = gql`
           name
           description
           price
-          quantity
           image
         }
         courses {
@@ -61,7 +105,6 @@ export const QUERY_USER = gql`
           name
           description
           price
-          quantity
           image
         }
       }
@@ -69,6 +112,7 @@ export const QUERY_USER = gql`
   }
 `;
 
+//checking out with items in the cart
 export const QUERY_CHECKOUT = gql`
   query getCheckout($products: [ID]!) {
     checkout(products: $products) {
@@ -77,38 +121,14 @@ export const QUERY_CHECKOUT = gql`
   }
 `;
 
-export const QUERY_COMMENTS = gql`
-  query comments($username: String) {
-    comments(username: $username) {
-      _id
-      commentText
-      createdAt
-      username
-    }
-  }
-`;
-
-export const QUERY_ME = gql`
-  {
-    me {
-      _id
-      username
-      email
-      comments {
-        _id
-        commentText
-        createdAt
-      }
-    }
-  }
-`;
-
-export const QUERY_BLUEPRINTS = gql`
+//filter blueprints by category
+export const QUERY_CATEGORY_BLUEPRINTS = gql`
   query blueprints($category: ID, $name: String) {
-    blueprints(category: $category, name: $String) {
+    blueprints(category: $category, name: $name) {
       _id
       name
       description
+      username
       price
       file
       image
@@ -120,17 +140,107 @@ export const QUERY_BLUEPRINTS = gql`
   }
 `;
 
+//returns all blueprints - unfiltered
 export const QUERY_ALL_BLUEPRINTS = gql`
- {
+  {
     blueprints {
       _id
       name
       description
+      username
       price
       quantity
       category {
         _id
         name
+      }
+    }
+  }
+`;
+
+// using the category ID or name to filter the courses
+export const QUERY_CATEGORY_COURSES = gql`
+  query courses($category: ID, $name: String) {
+    courses(category: $category, name: $name) {
+      _id
+      name
+      description
+      username
+      price
+      image
+      category {
+        _id
+        name
+      }
+    }
+  }
+`;
+
+// returns all courses - unfiltered
+export const QUERY_ALL_COURSES = gql`
+  {
+    courses {
+      _id
+      name
+      description
+      username
+      price
+      category {
+        _id
+        name
+      }
+    }
+  }
+`;
+
+// returns single course
+export const QUERY_SINGLE_COURSE = gql`
+  query course($courseId: ID!) {
+    course(courseId: $courseId) {
+      _id
+      username
+      name
+      description
+      price
+      category {
+        _id
+        name
+      }
+    }
+  }
+`;
+
+//queries all of the posts -unfiltered - use for messageboard
+export const QUERY_ALL_POSTS = gql`
+  {
+    posts {
+      _id
+      title
+      postText
+      username
+      createdAt
+      comments {
+        commentBody
+        username
+        createdAt
+      }
+    }
+  }
+`;
+
+//single post page using postId
+export const QUERY_SINGLE_POST = gql`
+  query post($postId: ID!) {
+    post(postId: $postId) {
+      _id
+      title
+      postText
+      username
+      createdAt
+      comments {
+        commentBody
+        username
+        createdAt
       }
     }
   }
