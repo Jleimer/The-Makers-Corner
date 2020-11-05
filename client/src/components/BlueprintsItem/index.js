@@ -5,12 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import {idbPromise } from "../../utils/helpers";
 
-function BlueprintsItem() {
+function BlueprintsItem(item) {
     const dispatch = useDispatch();
     const state = useSelector(state => state);
 
     const {
-        image,
         name,
         _id,
         price,
@@ -20,12 +19,13 @@ function BlueprintsItem() {
         category,
         reviews,
         difficulty
-    } = state.blueprints;
+    } = item;
+        // ^ item was state.blueprints;
 
     const { cart } = state
 
     const addToCart = () => {
-        const itemInCart = cart.blueprints.find((cartItem) => cartItem._id === _id)
+        const itemInCart = cart.find((cartItem) => cartItem._id === _id)
         if (itemInCart) {
             dispatch({
                 type: UPDATE_CART_QUANTITY,
@@ -39,19 +39,19 @@ function BlueprintsItem() {
         } else {
             dispatch({
                 type: ADD_TO_CART,
-                blueprint: { ...cart.blueprints, purchaseQuantity: 1 }
+                blueprint: { ...item, purchaseQuantity: 1 }
             });
-            idbPromise('cart', 'put', { ...cart.blueprints, purchaseQuantity: 1 });
+            idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
         }
     }
 
     return ( 
         <div className = "card px-1 py-1" >
             <Link to = {`/blueprints/${_id}`} >
-                <img 
+                {/* <img 
                     alt = {name}
                     src = {`/images/${image}`}
-                /> 
+                />  */}
                 <p>{name}</p>
             </Link> 
             <div>

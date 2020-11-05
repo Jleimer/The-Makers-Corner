@@ -86,6 +86,10 @@ input[type=text], select, textarea {
   text-align: center;
 }
 
+.categories {
+  text-align: center;
+}
+
 button {
   width: 100px;
   padding: 5px 8px;
