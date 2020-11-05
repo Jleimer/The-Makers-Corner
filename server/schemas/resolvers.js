@@ -3,7 +3,7 @@ const {
   User,
   Post,
   Category,
-  Class,
+  Course,
   Blueprint,
   Order,
   Comment,
@@ -36,7 +36,7 @@ const resolvers = {
     blueprint: async (parent, { blueprintId }) => {
       return await Blueprint.findById({_id: blueprintId}).populate("category").populate("reviews");
     },
-    classes: async (parent, { category, name }) => {
+    courses: async (parent, { category, name }) => {
       const params = {};
       if (category) {
         params.category = category;
@@ -47,13 +47,13 @@ const resolvers = {
           $regex: name,
         };
       }
-      return await Class.find(params)
+      return await Course.find(params)
         .populate("category")
         .populate("reviews")
         .sort({ createdAt: -1 });
     },
-    class: async (parent, { classId }) => {
-      return await Class.findById({_id: classId}).populate("category").populate("reviews");
+    course: async (parent, { courseId }) => {
+      return await Course.findById({_id: courseId}).populate("category").populate("reviews");
     },
     posts: async (parent, { category, name }) => {
       const params = {};
@@ -79,7 +79,7 @@ const resolvers = {
         const user = await User.findById(context.user._id)
           .select("-__v -password")
           .populate({
-            path: "orders.classes",
+            path: "orders.courses",
             populate: "category",
           })
           .populate({
@@ -87,7 +87,7 @@ const resolvers = {
             populate: "category",
           })
 
-          .populate("classes")
+          .populate("courses")
           .populate("blueprints")
           .populate("posts");
           
@@ -109,7 +109,7 @@ const resolvers = {
             populate: "category",
           })
           .populate({
-            path: "orders.classes",
+            path: "orders.courses",
             populate: "category",
           });
         return user.orders.id(_id);
@@ -120,14 +120,14 @@ const resolvers = {
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
       const order = new Order({
-        classes: args.classes,
+        courses: args.courses,
         blueprints: args.blueprints,
       });
-      const { classes, blueprints } = await order
+      const { courses, blueprints } = await order
         .populate("blueprints")
-        .populate("classes")
+        .populate("courses")
         .execPopulate();
-      const products = classes.concat(blueprints);
+      const products = courses.concat(blueprints);
 
       const line_items = [];
       for (let i = 0; i < products.length; i++) {
@@ -167,9 +167,10 @@ const resolvers = {
 
       return { token, user };
     },
-    addOrder: async (parent, { blueprints, classes }, context) => {
+    addOrder: async (parent, { blueprints, courses }, context) => {
       if (context.user) {
-        const order = new Order({ blueprints, classes });
+        const order = new Order({ blueprints, courses });
+
         await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order },
         });
@@ -205,7 +206,8 @@ const resolvers = {
     },
     addBlueprint: async (parent, args, context) => {
       if (context.user) {
-        const newBlueprint = await (await Blueprint.create({ ...args, username: context.user.username })).populate("category");
+        let newBlueprint = await (await Blueprint.create({ ...args, username: context.user.username })).populate("category");
+        newBlueprint = await newBlueprint.populate("category").execPopulate();
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
@@ -217,17 +219,18 @@ const resolvers = {
       }
       throw new AuthenticationError("Not logged in!");
     },
-    addClass: async (parent, args, context) => {
+    addCourse: async (parent, args, context) => {
       if (context.user) {
-        const newClass = await Class.create({ ...args, username: context.user.username });
+        let newCourse = await Course.create({ ...args, username: context.user.username });
+        newCourse = await newCourse.populate("category").execPopulate();
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { classes: newClass._id } },
+          { $push: { courses: newCourse._id } },
           { new: true }
         );
 
-        return newClass;
+        return newCourse;
       }
       throw new AuthenticationError("Not logged in!");
     },
@@ -249,7 +252,7 @@ const resolvers = {
     //I don't think this is right
     addCommentPost: async (parent, { postId, args }, context) => {
       if (context.user) {
-        const newComment = await Comment.create({ ...args, username: context.user.username });
+        let newComment = await Comment.create({ ...args, username: context.user.username });
 
         await Post.findByIdAndUpdate(
           { _id: postId },
@@ -257,21 +260,21 @@ const resolvers = {
           { new: true }
         ).populate("comments");
 
-        return;
+        return Post;
       }
       throw new AuthenticationError("Not logged in!");
     },
-    addClassReview: async (parent, { classId, args }, context) => {
+    addCourseReview: async (parent, { courseId, args }, context) => {
       if (context.user) {
         const newReview = await Review.create({ ...args, username: context.user.username });
 
-        await Class.findByIdAndUpdate(
-          { _id: classId },
+        await Course.findByIdAndUpdate(
+          { _id: courseId },
           { $push: { reviews: newReview._id } },
           { new: true }
         ).populate("reviews");
 
-        return Class;
+        return Course;
       }
       throw new AuthenticationError("Not logged in!");
     },
@@ -289,9 +292,9 @@ const resolvers = {
       }
       throw new AuthenticationError("Not logged in!");
     },
-    updateClass: async (parent, {classId, ...args}, context) => {
+    updateCourse: async (parent, {courseId, ...args}, context) => {
       if (context.user) {
-        return await Class.findByIdAndUpdate({_id: classId}, args, {
+        return await Course.findByIdAndUpdate({_id: courseId}, args, {
           new: true,
         }).populate("reviews");
       }
@@ -318,25 +321,68 @@ const resolvers = {
     },
     deleteBlueprint: async (parent, { blueprintId }, context) => {
       if (context.user) {
-        return await Blueprint.findByIdAndDelete(
-          { _id: blueprintId },
-          { new: true }
+        await Blueprint.findByIdAndDelete(
+          { _id: blueprintId }
         );
+        await User.findByIdAndUpdate({_id:context.user._id}, {$pull: {blueprints: blueprintId}}, {new: true}).select("-__v -password")
+        .populate({
+          path: "orders.courses",
+          populate: "category",
+        })
+        .populate({
+          path: "orders.blueprints",
+          populate: "category",
+        })
+        .populate("courses")
+        .populate("blueprints")
+        .populate("posts");
+        
+        return User;
       }
 
       throw new AuthenticationError("Not logged in!");
     },
-    deleteClass: async (parent, { classId }, context) => {
+    deleteCourse: async (parent, { courseId }, context) => {
       if (context.user) {
-        return await Class.findByIdAndDelete({ _id: classId }, { new: true });
+        await Course.findByIdAndDelete({ _id: courseId }, { new: true });
+        await User.findByIdAndUpdate({_id:context.user._id}, {$pull: {courses: courseId}}, {new: true}).select("-__v -password")
+        .populate({
+          path: "orders.courses",
+          populate: "category",
+        })
+        .populate({
+          path: "orders.blueprints",
+          populate: "category",
+        })
+        .populate("courses")
+        .populate("blueprints")
+        .populate("posts");
+        
+        return User;
       }
 
       throw new AuthenticationError("Not logged in!");
     },
     deletePost: async (parent, { postId }, context) => {
       if (context.user) {
-        return await Post.findByIdAndDelete({ _id: postId }, { new: true });
+        await Post.findByIdAndDelete({ _id: postId }, { new: true });
+
+        await User.findByIdAndUpdate({_id:context.user._id}, {$pull: {posts: postId}}, {new: true}).select("-__v -password")
+        .populate({
+          path: "orders.courses",
+          populate: "category",
+        })
+        .populate({
+          path: "orders.blueprints",
+          populate: "category",
+        })
+        .populate("courses")
+        .populate("blueprints")
+        .populate("posts");
+
+        return User;
       }
+      
 
       throw new AuthenticationError("Not logged in!");
     },
@@ -376,10 +422,10 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in!");
     },
-    deleteClassReview: async (parent, { classId, reviewId }, context) => {
+    deleteCourseReview: async (parent, { courseId, reviewId }, context) => {
       if (context.user) {
-        await Class.findByIdAndUpdate(
-          { _id: classId },
+        await Course.findByIdAndUpdate(
+          { _id: courseId },
           { $pull: { reviews: { _id: reviewId } } },
           { new: true }
         ).populate("reviews");
@@ -389,7 +435,7 @@ const resolvers = {
           }
         );
 
-        return Class;
+        return Course;
       }
     },
   },

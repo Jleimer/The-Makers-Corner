@@ -7,10 +7,10 @@ const orderSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  classes: [
+  courses: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Class'
+      ref: 'Course'
     }
   ],
   blueprints: [

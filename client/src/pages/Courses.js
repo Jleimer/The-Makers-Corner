@@ -1,15 +1,15 @@
 import React from 'react';
 import CategoryMenu from '../components/CategoryMenu';
-import Blueprints from '../components/Blueprints';
+import Courses from '../components/Courses';
 
-const BluePrints = () => {
+const Course = () => {
     return (
         <div>
-            <h2>Blueprints</h2>
+            <h2>Courses</h2>
             <CategoryMenu />
-            <Blueprints />
+            <Courses />
         </div>
     );
 };
 
-export default BluePrints;
+export default Course;

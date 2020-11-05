@@ -1,31 +1,39 @@
 import React, { useState } from 'react';
 
-import { useMutation } from '@apollo/react-hooks';
-import { ADD_COMMENT } from '../../utils/mutations';
-import { QUERY_COMMENTS, QUERY_ME } from '../../utils/queries';
+// import { useMutation } from '@apollo/react-hooks';
+// import { ADD_COMMENT } from '../../utils/mutations';
+// import { QUERY_COMMENTS, QUERY_ME } from '../../utils/queries';
 
-const Comments = () => {
-    const [commentText] = useState('');
-    
-    const [addComment] = useMutation(ADD_COMMENT, {
-        update(cache, { data: { addComment } }) {
-            try {
-                const { comments } = cache.readQuery({ query: QUERY_COMMENTS });
-                cache.writeQuery({
-                    query: QUERY_COMMENTS,
-                    data: { comments: [addComment, ...comments] },
-                });
-            } catch (e) {
-                console.error(e);
-            }
 
-            const { me } = cache.readQuery({ query: QUERY_ME });
-            cache.writeQuery({
-                query: QUERY_ME,
-                data: { me: { ...me, comments: [...me.comments, addComment] } },
-            });
-        },
+const Comments = ({ value = [], ...props }) => {
+    const [state, dispatch] = useCommentReducer({
+        comments: [],
     });
+    return <Comments value={[state, dispatch]} {...props} />
+
+
+// const Comments = () => {
+//     const [commentText] = useState('');
+    
+//     const [addComment] = useMutation(ADD_COMMENT, {
+//         update(cache, { data: { addComment } }) {
+//             try {
+//                 const { comments } = cache.readQuery({ query: QUERY_COMMENTS });
+//                 cache.writeQuery({
+//                     query: QUERY_COMMENTS,
+//                     data: { comments: [addComment, ...comments] },
+//                 });
+//             } catch (e) {
+//                 console.error(e);
+//             }
+
+//             const { me } = cache.readQuery({ query: QUERY_ME });
+//             cache.writeQuery({
+//                 query: QUERY_ME,
+//                 data: { me: { ...me, comments: [...me.comments, addComment] } },
+//             });
+//         },
+//     });
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();

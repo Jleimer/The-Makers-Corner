@@ -1,6 +1,7 @@
 import React from "react";
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
+import Cart from "../Cart";
 
 function Navigation() {
 
@@ -8,55 +9,66 @@ function Navigation() {
     if (Auth.loggedIn()) {
       return (
         <ul className="flex-row">
-          <li className="mx-1">
+          <li>
             <Link to="/blueprints">
               Blueprints
             </Link>
           </li>
-          <li className="mx-1">
-            <Link to="/classes">
-              Classes
+          <li>
+            <Link to="/courses">
+              Courses
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
             <Link to="/dashboard">
               Dashboard
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
+            <Link to="/messageboard">
+              Message Board
+            </Link>
+          </li>
+          <li>
             <Link to="/orderHistory">
               Order History
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
             <a href="/" onClick={() => Auth.logout()}>
               Logout
             </a>
+          </li>
+          <li>
+            <Cart/>
           </li>
         </ul>
       );
     } else {
       return (
-        <ul className="flex-row">
-          <li className="mx-1">
+        <ul>
+          <li>
             <Link to="/blueprints">
               Blueprints
             </Link>
           </li>
-          <li className="mx-1">
-            <Link to="/classes">
-              Classes
+          <li>
+            <Link to="/courses">
+              Courses
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
             <Link to="/signup">
               Signup
             </Link>
           </li>
-          <li className="mx-1">
+          <li>
             <Link to="/login">
               Login
             </Link>
+          </li>
+          <li>
+            <Cart/>
           </li>
         </ul>
       );

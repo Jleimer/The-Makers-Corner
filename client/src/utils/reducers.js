@@ -11,7 +11,8 @@ import {
 } from "./actions";
 
 const initialState = {
-    products: [],
+    blueprints: [],
+    courses: [],
     cart: [],
     cartOpen: false,
     categories: [],
@@ -67,7 +68,7 @@ export const reducer = (state = initialState, action) => {
                 cartOpen: newState.length > 0,
                     cart: newState,
             };
-
+       
         case UPDATE_CART_QUANTITY:
             console.log(action.type);
             return {
