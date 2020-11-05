@@ -4,18 +4,8 @@
   "description": "A server for social media and sale of classes for at home construction",
   "main": "server/server.js",
   "dependencies": {
-<<<<<<< HEAD
-    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
-    "if-env": "^1.0.4",
-    "mongoose": "^5.10.11",
-    "nodemon": "^2.0.6"
-=======
-    "if-env": "^1.0.4",
-    "materialize-css": "^1.0.0-rc.2",
-    "react-materialize": "^3.9.3",
-    "stripe": "^8.119.0"
->>>>>>> 5004efd46a045727630dc8a5f79c9080c1a16ee3
+    "if-env": "^1.0.4"
   },
   "devDependencies": {
     "concurrently": "^5.3.0"
