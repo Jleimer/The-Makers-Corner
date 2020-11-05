@@ -66,3 +66,7 @@
       margin: 0 auto;
     }
   } 
+
+input[type=text], select, textarea {
+  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}

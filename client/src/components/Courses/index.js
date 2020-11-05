@@ -46,7 +46,7 @@ function Courses() {
     <div className="my-2">
       <h2>Our courses:</h2>
       {state.courses.length ? (
-        <div className="flex-row">
+        <div className="courses">
             {filterCourses().map(course => (
                 <CoursesItem
                   key={course._id}
