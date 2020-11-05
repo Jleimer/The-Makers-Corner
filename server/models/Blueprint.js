@@ -8,14 +8,14 @@ const blueprintSchema = new Schema({
     required: true,
     trim: true,
   },
+  username: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,
     trim: true
-  },
-  username: {
-    type: String,
-    required: true,
   },
   image: {
     type: String,
