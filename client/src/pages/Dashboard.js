@@ -6,7 +6,7 @@ import { QUERY_SINGLE_COURSE, QUERY_SINGLE_BLUEPRINT, QUERY_ME } from '../utils/
 const Dashboard = () => {
     const [formInfo, setInfo] = useState('');
     
-    const [addBlueprint, {error}] = useMutation(ADD_BLUEPRINT, {
+    const [addBlueprint] = useMutation(ADD_BLUEPRINT, {
         update(cache, { data: { addBlueprint } }) {
             try {
                 const { blueprints } = cache.readQuery({ query: QUERY_SINGLE_BLUEPRINT});

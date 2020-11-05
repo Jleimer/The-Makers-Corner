@@ -3,10 +3,6 @@ import React from 'react';
 import Comments from '../components/Posts';
 import Auth from '../utils/auth';
 import { QUERY_ALL_POSTS, QUERY_ME } from '../utils/queries';
-    // QUERY_ME } 
-
-
-    // comments CHANGED TO POSTS!!!!!
     
 const MessageBoard = () => {
    // const { data } = useQuery(QUERY_COMMENTS);

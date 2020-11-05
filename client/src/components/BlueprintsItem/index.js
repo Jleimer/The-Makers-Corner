@@ -57,6 +57,8 @@ function BlueprintsItem(item) {
             <div>
                 <p>{description}</p>
                 <p>{difficulty}</p>
+                <p>{category}</p>
+                <p>{reviews}</p>
                 <p>{username}</p>
                 <div>{quantity} {pluralize("item", quantity)} in stock </div>
                 <span>${price}</span> 

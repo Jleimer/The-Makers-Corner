@@ -77,8 +77,8 @@ const Cart = () => {
     }
 
     function submitCheckout() {
-        const course = [];
-        const blueprint = [];
+        const courseIds = [];
+        const blueprintIds = [];
 
         state.cart.blueprints.forEach((item) => {
             for (let i = 0; i < item.purchaseQuantity; i++) {
