@@ -7,7 +7,7 @@ const BluePrints = () => {
         <div>
             <h2>Blueprints</h2>
             <CategoryMenu />
-            {/* <Blueprints/> */}
+            <Blueprints />
         </div>
     );
 };

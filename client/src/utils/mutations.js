@@ -175,7 +175,7 @@ export const ADD_BLUEPRINT = gql`
 `;
 // add single course to database
 export const ADD_COURSE = gql`
-    mutation addCourse($name: String!, $description: $String!, $price: Float!, $classTime: String!, $items: String!, $category: ID!) {
+    mutation addCourse($name: String!, $description: String!, $price: Number!, $classTime: String!, $difficulty: String!, $items: String!, $category: ID!) {
         addClass(name: $name, description: $description, price: $price, classTime: $classTime, difficulty: $difficulty, items: $items, category: $category) {
             _id
             name
@@ -362,6 +362,17 @@ export const UPDATE_POST_INFO = gql`
     }
 `;
 
+// export const ADD_COMMENT_POST = gql`
+//     mutation addCourseReview($courseId: ID!, $reviewBody: String!) {
+//         addCourseReview(courseId: $courseId, reviewBody: $reviewBody) {
+//             _id
+//             name
+//             reviewBody
+//             username{
+//                 _id
+//             }
+//         }
+//     }
 
-
+// `;
 

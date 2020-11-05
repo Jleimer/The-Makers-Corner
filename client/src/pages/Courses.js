@@ -7,7 +7,7 @@ const Course = () => {
         <div>
             <h2>Courses</h2>
             <CategoryMenu />
-            {/* <Courses/> */}
+            <Courses />
         </div>
     );
 };
