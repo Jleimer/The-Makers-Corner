@@ -362,17 +362,3 @@ export const UPDATE_POST_INFO = gql`
     }
 `;
 
-// export const ADD_COMMENT_POST = gql`
-//     mutation addCourseReview($courseId: ID!, $reviewBody: String!) {
-//         addCourseReview(courseId: $courseId, reviewBody: $reviewBody) {
-//             _id
-//             name
-//             reviewBody
-//             username{
-//                 _id
-//             }
-//         }
-//     }
-
-// `;
-

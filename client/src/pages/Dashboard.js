@@ -25,7 +25,7 @@ const Dashboard = () => {
         }
     });
 
-    const [addCourse, {error}] = useMutation(ADD_COURSE, {
+    const [addCourse] = useMutation(ADD_COURSE, {
         update(cache, { data: { addCourse } }) {
             try {
                 const { courses } = cache.readQuery({ query: QUERY_SINGLE_COURSE});

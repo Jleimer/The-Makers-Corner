@@ -10,7 +10,7 @@ import {
   ADD_MULTIPLE_TO_CART,
   REMOVE_FROM_CART,
   TOGGLE_CART,
-//   UPDATE_CART_QUANTITY,
+  UPDATE_CART_QUANTITY,
   CLEAR_CART,
 } from "./actions";
 
@@ -68,7 +68,7 @@ export const reducer = (state = initialState, action) => {
       };
 
     case UPDATE_POSTS:
-        console.log(action)
+      console.log(action);
       return {
         ...state,
         posts: [...action.posts],
@@ -90,19 +90,19 @@ export const reducer = (state = initialState, action) => {
       };
 
     case REMOVE_FROM_CART:
-        console.log(action);
-        let blueprintState = state.cart.blueprints.filter((blueprints) => {
-            return blueprints._id !== action._id;
-        });
-        let courseState = state.cart.courses.filter((courses) => {
-            return courses._id !== action._id;
-        });
+      console.log(action);
+      let blueprintState = state.cart.blueprints.filter((blueprints) => {
+        return blueprints._id !== action._id;
+      });
+      let courseState = state.cart.courses.filter((courses) => {
+        return courses._id !== action._id;
+      });
 
-        return {
-            ...state,
-            cartOpen: blueprintState.length > 0 || courseState.length > 0,
-                cart: [...state.cart, blueprintState, courseState]
-        };
+      return {
+        ...state,
+        cartOpen: blueprintState.length > 0 || courseState.length > 0,
+        cart: [...state.cart, blueprintState, courseState],
+      };
 
     case TOGGLE_CART:
       console.log(action);
@@ -111,26 +111,26 @@ export const reducer = (state = initialState, action) => {
         cartOpen: !state.cartOpen,
       };
 
-    // case UPDATE_CART_QUANTITY:
-    //   console.log(action.type);
-    //   return {
-    //     ...state,
-    //     cartOpen: true,
-    //     cart: state.cart.blueprints.map((blueprints) => {
-    //       if (action._id === blueprints._id) {
-    //         blueprints.purchaseQuantity = action.purchaseQuantity;
-    //       }
-    //       return blueprints;
-    //     }),
-    //   };
+    case UPDATE_CART_QUANTITY:
+      console.log(action);
+      return {
+        ...state,
+        cartOpen: true,
+        cart: state.cart.blueprints.map((blueprints) => {
+          if (action._id === blueprints._id) {
+            blueprints.purchaseQuantity = action.purchaseQuantity;
+          }
+          return blueprints;
+        }),
+      };
 
     case CLEAR_CART:
-        console.log(action);
-        return {
-            ...state,
-            cartOpen: false,
-                cart: [],
-        };
+      console.log(action);
+      return {
+        ...state,
+        cartOpen: false,
+        cart: [],
+      };
 
     default:
       return state;

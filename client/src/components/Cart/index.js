@@ -80,15 +80,19 @@ const Cart = () => {
         const courseIds = [];
         const blueprintIds = [];
 
-        state.cart.forEach((item) => {
+        state.cart.blueprints.forEach((item) => {
+            for (let i = 0; i < item.purchaseQuantity; i++) {
+                blueprintIds.push(item._id);
+            }
+        });
+        state.cart.courses.forEach((item) => {
             for (let i = 0; i < item.purchaseQuantity; i++) {
                 courseIds.push(item._id);
-                blueprintIds.push(item._id);
             }
         });
 
         getCheckout({
-            variables: { course: courseIds, blueprints: blueprintIds }
+            variables: { courses: courseIds, blueprints: blueprintIds }
         });
     }
 
@@ -101,7 +105,10 @@ const Cart = () => {
             <h2>Shopping Cart</h2>
             {state.cart.length ? (
                 <div>
-                    {state.cart.map(item => (
+                    {state.cart.blueprints.map(item => (
+                        <CartItem key={item._id} item={item} />
+                    ))}
+                    {state.cart.courses.map(item => (
                         <CartItem key={item._id} item={item} />
                     ))}
 
