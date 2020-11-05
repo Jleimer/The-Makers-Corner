@@ -50,12 +50,12 @@ export const reducer = (state = initialState, action) => {
                     cart: [...state.cart, action.blueprints, action.courses],
             };
 
-        case ADD_MULTIPLE_TO_CART:
-            console.log(action.type);
-            return {
-                ...state,
-                cart: [...state.cart, ...action.products],
-            };
+        // case ADD_MULTIPLE_TO_CART:
+        //     console.log(action.type);
+        //     return {
+        //         ...state,
+        //         cart: [...state.cart, ...action.products],
+        //     };
 
         // case REMOVE_FROM_CART:
         //     console.log(action.type);
@@ -66,26 +66,6 @@ export const reducer = (state = initialState, action) => {
         //         return courses._id !== action._id;
         //     });
 
-<<<<<<< HEAD
-            return {
-                ...state,
-                cartOpen: newState.length > 0,
-                    cart: newState,
-            };
-       
-        case UPDATE_CART_QUANTITY:
-            console.log(action.type);
-            return {
-                ...state,
-                cartOpen: true,
-                    cart: state.cart.map((product) => {
-                        if (action._id === product._id) {
-                            product.purchaseQuantity = action.purchaseQuantity;
-                        }
-                        return product;
-                    }),
-            };
-=======
         //     return {
         //         ...state,
         //         cartOpen: blueprintState.length > 0 || courseState.length > 0,
@@ -104,7 +84,6 @@ export const reducer = (state = initialState, action) => {
         //                 return product;
         //             }),
         //     };
->>>>>>> cbc899be982a082a090da2ed87b8330770b681af
 
         case CLEAR_CART:
             console.log(action.type);
