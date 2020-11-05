@@ -57,8 +57,11 @@ const Cart = () => {
 
     function calculateTotal() {
         let sum = 0;
-        state.cart.forEach(item => {
-            sum += item.price * item.purchaseQuantity;
+        state.cart.blueprints.forEach(item => {
+            sum += item.price;
+        });
+        state.cart.courses.forEach(item => {
+            sum += item.price;
         });
         return sum.toFixed(2);
     }
@@ -77,15 +80,19 @@ const Cart = () => {
         const course = [];
         const blueprint = [];
 
-        state.cart.forEach((item) => {
+        state.cart.blueprints.forEach((item) => {
             for (let i = 0; i < item.purchaseQuantity; i++) {
-                course.push(item._id);
-                blueprint.push(item._id);
+                blueprintIds.push(item._id);
+            }
+        });
+        state.cart.courses.forEach((item) => {
+            for (let i = 0; i < item.purchaseQuantity; i++) {
+                courseIds.push(item._id);
             }
         });
 
         getCheckout({
-            variables: { course: course, blueprint: blueprint }
+            variables: { courses: courseIds, blueprints: blueprintIds }
         });
     }
 
@@ -98,7 +105,10 @@ const Cart = () => {
             <h2>Shopping Cart</h2>
             {state.cart.length ? (
                 <div>
-                    {state.cart.map(item => (
+                    {state.cart.blueprints.map(item => (
+                        <CartItem key={item._id} item={item} />
+                    ))}
+                    {state.cart.courses.map(item => (
                         <CartItem key={item._id} item={item} />
                     ))}
 

@@ -1,108 +1,140 @@
 import {
-    UPDATE_PRODUCTS,
-    UPDATE_CATEGORIES,
-    UPDATE_CURRENT_CATEGORY,
-    ADD_TO_CART,
-    ADD_MULTIPLE_TO_CART,
-    REMOVE_FROM_CART,
-    UPDATE_CART_QUANTITY,
-    CLEAR_CART,
-    TOGGLE_CART,
+  UPDATE_CATEGORIES,
+  UPDATE_CURRENT_CATEGORY,
+  ADD_COMMENT,
+  ADD_REVIEW,
+  UPDATE_BLUEPRINTS,
+  UPDATE_COURSES,
+  UPDATE_POSTS,
+  ADD_TO_CART,
+  ADD_MULTIPLE_TO_CART,
+  REMOVE_FROM_CART,
+  TOGGLE_CART,
+  UPDATE_CART_QUANTITY,
+  CLEAR_CART,
 } from "./actions";
 
 const initialState = {
-    blueprints: [],
-    courses: [],
-    cart: [],
-    cartOpen: false,
-    categories: [],
-    currentCategory: "",
-}
+  blueprints: [],
+  courses: [],
+  cart: [],
+  cartOpen: false,
+  categories: [],
+  currentCategory: "",
+};
 
 export const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case UPDATE_PRODUCTS:
-            console.log(action.type);
-            return {
-                ...state,
-                products: [...action.products],
-            };
+  switch (action.type) {
+    case UPDATE_CATEGORIES:
+      console.log(action);
+      return {
+        ...state,
+        categories: [...action.categories],
+      };
+    case UPDATE_CURRENT_CATEGORY:
+      console.log(action);
+      return {
+        ...state,
+        currentCategory: action.currentCategory,
+      };
 
-        case UPDATE_CATEGORIES:
-            console.log(action.type);
-            return {
-                ...state,
-                categories: [...action.categories],
-            };
+    case ADD_COMMENT:
+      console.log(action);
+      return {
+        ...state,
+        posts: [...state.posts, action.comments],
+      };
 
-        case UPDATE_CURRENT_CATEGORY:
-            console.log(action.type);
-            return {
-                ...state,
-                currentCategory: action.currentCategory,
-            };
+    case ADD_REVIEW:
+      console.log(action);
+      return {
+        ...state,
+        blueprints: [...state.blueprints, action.reviews],
+        courses: [...state.courses, action.reviews],
+      };
 
-        case ADD_TO_CART:
-            console.log(action.type);
-            return {
-                ...state,
-                cartOpen: true,
-                    cart: [...state.cart, action.blueprints, action.courses],
-            };
+    case UPDATE_BLUEPRINTS:
+      console.log(action);
+      return {
+        ...state,
+        blueprints: [...action.blueprints],
+      };
 
-        // case ADD_MULTIPLE_TO_CART:
-        //     console.log(action.type);
-        //     return {
-        //         ...state,
-        //         cart: [...state.cart, ...action.products],
-        //     };
+    case UPDATE_COURSES:
+      console.log(action);
+      return {
+        ...state,
+        courses: [...action.courses],
+      };
 
-        // case REMOVE_FROM_CART:
-        //     console.log(action.type);
-        //     let blueprintState = state.cart.filter((blueprints) => {
-        //         return blueprints._id !== action._id;
-        //     });
-        //     let courseState = state.cart.filter((courses) => {
-        //         return courses._id !== action._id;
-        //     });
+    case UPDATE_POSTS:
+      console.log(action);
+      return {
+        ...state,
+        posts: [...action.posts],
+      };
 
-        //     return {
-        //         ...state,
-        //         cartOpen: blueprintState.length > 0 || courseState.length > 0,
-        //             cart: newState,
-        //     };
-        //later date
-        // case UPDATE_CART_QUANTITY:
-        //     console.log(action.type);
-        //     return {
-        //         ...state,
-        //         cartOpen: true,
-        //             cart: state.cart.map((product) => {
-        //                 if (action._id === product._id) {
-        //                     product.purchaseQuantity = action.purchaseQuantity;
-        //                 }
-        //                 return product;
-        //             }),
-        //     };
+    case ADD_TO_CART:
+      console.log(action);
+      return {
+        ...state,
+        cartOpen: true,
+        cart: [...state.cart, action.blueprints, action.courses],
+      };
 
-        case CLEAR_CART:
-            console.log(action.type);
-            return {
-                ...state,
-                cartOpen: false,
-                    cart: [],
-            };
+    case ADD_MULTIPLE_TO_CART:
+      console.log(action);
+      return {
+        ...state,
+        cart: [...state.cart, ...action.blueprints, ...action.courses],
+      };
 
-        case TOGGLE_CART:
-            console.log(action.type);
-            return {
-                ...state,
-                cartOpen: !state.cartOpen,
-            };
+    case REMOVE_FROM_CART:
+      console.log(action);
+      let blueprintState = state.cart.blueprints.filter((blueprints) => {
+        return blueprints._id !== action._id;
+      });
+      let courseState = state.cart.courses.filter((courses) => {
+        return courses._id !== action._id;
+      });
 
-        default:
-            return state;
-    }
+      return {
+        ...state,
+        cartOpen: blueprintState.length > 0 || courseState.length > 0,
+        cart: [...state.cart, blueprintState, courseState],
+      };
+
+    case TOGGLE_CART:
+      console.log(action);
+      return {
+        ...state,
+        cartOpen: !state.cartOpen,
+      };
+
+    case UPDATE_CART_QUANTITY:
+      console.log(action);
+      return {
+        ...state,
+        cartOpen: true,
+        cart: state.cart.blueprints.map((blueprints) => {
+          if (action._id === blueprints._id) {
+            blueprints.purchaseQuantity = action.purchaseQuantity;
+          }
+          return blueprints;
+        }),
+      };
+
+    case CLEAR_CART:
+      console.log(action);
+      return {
+        ...state,
+        cartOpen: false,
+        cart: [],
+      };
+
+    default:
+      return state;
+  }
 };
 
 export default reducer;

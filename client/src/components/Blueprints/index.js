@@ -54,6 +54,9 @@ function Blueprints() {
                             image={blueprint.image}
                             name={blueprint.name}
                             price={blueprint.price}
+                            description={blueprint.description}
+                            username={blueprint.username}
+                            difficulty={blueprint.difficulty}
                         />
                     ))}
                 </div>

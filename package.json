@@ -1,5 +1,5 @@
 {
-  "name": "The-Makers-Corner",
+  "name": "the-makers-corner",
   "version": "1.0.0",
   "description": "A server for social media and sale of classes for at home construction",
   "main": "server/server.js",
