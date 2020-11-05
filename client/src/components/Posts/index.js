@@ -5,23 +5,23 @@ import React, { useState } from 'react';
 // import { QUERY_COMMENTS, QUERY_ME } from '../../utils/queries';
 
 
-const Comments = ({ value = [], ...props }) => {
+const Posts = ({ value = [], ...props }) => {
     const [state, dispatch] = useCommentReducer({
-        comments: [],
+        posts: [],
     });
-    return <Comments value={[state, dispatch]} {...props} />
+    return <Posts value={[state, dispatch]} {...props} />
 
 
-// const Comments = () => {
-//     const [commentText] = useState('');
+// const Posts = () => {
+//     const [postText] = useState('');
     
-//     const [addComment] = useMutation(ADD_COMMENT, {
-//         update(cache, { data: { addComment } }) {
+//     const [addPost] = useMutation(ADD_POST, {
+//         update(cache, { data: { addPost } }) {
 //             try {
-//                 const { comments } = cache.readQuery({ query: QUERY_COMMENTS });
+//                 const { posts } = cache.readQuery({ query: QUERY_POSTS });
 //                 cache.writeQuery({
-//                     query: QUERY_COMMENTS,
-//                     data: { comments: [addComment, ...comments] },
+//                     query: QUERY_POSTS,
+//                     data: { posts: [addPost, ...posts] },
 //                 });
 //             } catch (e) {
 //                 console.error(e);
@@ -30,7 +30,7 @@ const Comments = ({ value = [], ...props }) => {
 //             const { me } = cache.readQuery({ query: QUERY_ME });
 //             cache.writeQuery({
 //                 query: QUERY_ME,
-//                 data: { me: { ...me, comments: [...me.comments, addComment] } },
+//                 data: { me: { ...me, posts: [...me.posts, addPost] } },
 //             });
 //         },
 //     });
@@ -39,8 +39,8 @@ const Comments = ({ value = [], ...props }) => {
         event.preventDefault();
 
         try {
-            await addComment({
-                variables: { commentText },
+            await addPost({
+                variables: { PostText },
             });
         } catch (e) {
             console.error(e);
@@ -55,7 +55,7 @@ const Comments = ({ value = [], ...props }) => {
             >
                 <textarea
                     placeholder="Post comments here..."
-                    value={commentText}
+                    value={PostText}
                     className="form-input col-12 col-md-9"
                     // onChange={handleChange}
                 ></textarea>
@@ -67,4 +67,4 @@ const Comments = ({ value = [], ...props }) => {
     );
 };
 
-export default Comments;
+export default Posts;

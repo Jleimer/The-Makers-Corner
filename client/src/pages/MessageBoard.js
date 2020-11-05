@@ -1,5 +1,5 @@
 import React from 'react';
-import Comments from '../components/Comments';
+import Comments from '../components/Posts';
 import Auth from '../utils/auth';
 // import { useQuery } from '@apollo/react-hooks';
 // import { QUERY_COMMENTS } from '../utils/queries';

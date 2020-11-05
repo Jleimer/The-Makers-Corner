@@ -74,18 +74,18 @@ const Cart = () => {
     }
 
     function submitCheckout() {
-        const courseIds = [];
-        const blueprintIds = [];
+        const course = [];
+        const blueprint = [];
 
         state.cart.forEach((item) => {
             for (let i = 0; i < item.purchaseQuantity; i++) {
-                courseIds.push(item._id);
-                blueprintIds.push(item._id);
+                course.push(item._id);
+                blueprint.push(item._id);
             }
         });
 
         getCheckout({
-            variables: { course: courseIds, blueprints: blueprintsIds }
+            variables: { course: course, blueprint: blueprint }
         });
     }
 
