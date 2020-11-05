@@ -74,6 +74,14 @@ form
   /* min-width: 250px; */
 }
 
+.blueprints {
+  text-align: center;
+}
+
+.courses {
+  text-align: center;
+}
+
 button {
   width: 100px;
   padding: 5px 8px;

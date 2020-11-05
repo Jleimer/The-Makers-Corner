@@ -46,7 +46,7 @@ function Blueprints() {
         <div className="my-2">
             <h2>Our Blueprints:</h2>
             {state.blueprints.length ? (
-                <div className="flex-row">
+                <div className="blueprints">
                     {filterBlueprints().map(blueprint => (
                         <BlueprintsItem
                             key={blueprint._id}
