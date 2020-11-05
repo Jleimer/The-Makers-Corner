@@ -56,9 +56,9 @@ export const ADD_POST = gql`
 
 `;
 
-export const ADD_COMMENT = gql`
-    mutation addComment($commentText: String!) {
-        addComment(commentText: $commentText) {
+export const ADD_COMMENT_POST = gql`
+    mutation addCommentPost($postId: ID!, $commentBody: String!) {
+        addCommentPost(postId: $postId, commentBody: $commentBody) {
             _id
             postText
             createdAt
@@ -88,4 +88,16 @@ export const ADD_CLASS = gql`
     }
 `;
 
+export const ADD_COMMENT_POST = gql`
+    mutation addCourseReview($courseId: ID!, $reviewBody: String!) {
+        addCourseReview(courseId: $courseId, reviewBody: $reviewBody) {
+            _id
+            name
+            reviewBody
+            username{
+                _id
+            }
+        }
+    }
 
+`;
