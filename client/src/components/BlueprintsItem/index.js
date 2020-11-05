@@ -14,7 +14,12 @@ function BlueprintsItem(item) {
         name,
         _id,
         price,
-        quantity
+        quantity,
+        description,
+        username,
+        category,
+        reviews,
+        difficulty
     } = item;
 
     const { cart } = state
@@ -50,6 +55,9 @@ function BlueprintsItem(item) {
                 <p>{name}</p>
             </Link> 
             <div>
+                <p>{description}</p>
+                <p>{difficulty}</p>
+                <p>{username}</p>
                 <div>{quantity} {pluralize("item", quantity)} in stock </div>
                 <span>${price}</span> 
             </div>

@@ -132,6 +132,7 @@ export const QUERY_CATEGORY_BLUEPRINTS = gql`
       price
       file
       image
+      difficulty
       category {
         _id
         name
@@ -185,6 +186,7 @@ export const QUERY_CATEGORY_COURSES = gql`
       username
       price
       image
+      difficulty
       category {
         _id
         name
