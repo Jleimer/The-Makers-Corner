@@ -3,7 +3,7 @@ import CoursesItem from "../CoursesItem";
 import { useDispatch, useSelector } from 'react-redux';
 import { UPDATE_COURSES } from "../../utils/actions";
 import { useQuery } from '@apollo/react-hooks';
-import { QUERY_COURSES } from "../../utils/queries";
+import { QUERY_ALL_COURSES } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 // import spinner from "../../assets/spinner.gif"
 
@@ -13,7 +13,7 @@ function Courses() {
 
   const { currentCategory } = state;
 
-  const { loading, data } = useQuery(QUERY_COURSES);
+  const { loading, data } = useQuery(QUERY_ALL_COURSES);
 
   useEffect(() => {
     if(data) {

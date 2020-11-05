@@ -1,4 +1,5 @@
 export const ADD_TO_CART = 'ADD_TO_CART';
+export const ADD_MULTIPLE_TO_CART = 'ADD_MULTIPLE_TO_CART';
 export const ADD_USER = 'ADD_USER';
 export const LOGIN = 'LOGIN';
 export const ADD_COMMENT = 'ADD_COMMENT';
