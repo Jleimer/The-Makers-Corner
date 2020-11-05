@@ -5,10 +5,10 @@ import Auth from '../../utils/auth';
 import { loadStripe } from '@stripe/stripe-js';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { QUERY_CHECKOUT } from '../../utils/queries';
-import { idbPromise } from '../../utils/helpers';
+// import { idbPromise } from '../../utils/helpers';
 import store from '../../utils/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
+import { TOGGLE_CART } from '../../utils/actions';
 import './style.css'
 
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
@@ -21,27 +21,27 @@ const Cart = () => {
 
     const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
-    useEffect(() => {
-        async function getCart() {
-            const cart = await idbPromise('cart', 'get');
-            dispatch({ type: ADD_MULTIPLE_TO_CART, courses: [...cart] });
-        };
+    // useEffect(() => {
+    //     async function getCart() {
+    //         const cart = await idbPromise('cart', 'get');
+    //         dispatch({ type: ADD_MULTIPLE_TO_CART, courses: [...cart] });
+    //     };
 
-        if (!state.cart.length) {
-            getCart();
-        }
-    }, [state.cart.length, dispatch]);
+    //     if (!state.cart.length) {
+    //         getCart();
+    //     }
+    // }, [state.cart.length, dispatch]);
 
-    useEffect(() => {
-        async function getCart() {
-            const cart = await idbPromise('cart', 'get');
-            dispatch({ type: ADD_MULTIPLE_TO_CART, blueprints: [...cart] });
-        };
+    // useEffect(() => {
+    //     async function getCart() {
+    //         const cart = await idbPromise('cart', 'get');
+    //         dispatch({ type: ADD_MULTIPLE_TO_CART, blueprints: [...cart] });
+    //     };
 
-        if (!state.cart.length) {
-            getCart();
-        }
-    }, [state.cart.length, dispatch]);
+    //     if (!state.cart.length) {
+    //         getCart();
+    //     }
+    // }, [state.cart.length, dispatch]);
 
     useEffect(() => {
         if (data) {
