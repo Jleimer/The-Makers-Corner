@@ -24,7 +24,18 @@ const Cart = () => {
     useEffect(() => {
         async function getCart() {
             const cart = await idbPromise('cart', 'get');
-            dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
+            dispatch({ type: ADD_MULTIPLE_TO_CART, courses: [...cart] });
+        };
+
+        if (!state.cart.length) {
+            getCart();
+        }
+    }, [state.cart.length, dispatch]);
+
+    useEffect(() => {
+        async function getCart() {
+            const cart = await idbPromise('cart', 'get');
+            dispatch({ type: ADD_MULTIPLE_TO_CART, blueprints: [...cart] });
         };
 
         if (!state.cart.length) {
@@ -63,18 +74,22 @@ const Cart = () => {
     }
 
     function submitCheckout() {
-        const productIds = [];
+        const courseIds = [];
+        const blueprintIds = [];
 
         state.cart.forEach((item) => {
             for (let i = 0; i < item.purchaseQuantity; i++) {
-                productIds.push(item._id);
+                courseIds.push(item._id);
+                blueprintIds.push(item._id);
             }
         });
 
         getCheckout({
-            variables: { products: productIds }
+            variables: { course: courseIds, blueprints: blueprintsIds }
         });
     }
+
+    
 
     return (
         <div className="cart">
