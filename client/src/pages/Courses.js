@@ -6,7 +6,7 @@ const Course = () => {
     return (
         <div>
             <h2>Courses</h2>
-            <CategoryMenu />
+            {/* <CategoryMenu /> */}
             <Courses />
         </div>
     );
