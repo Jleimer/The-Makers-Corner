@@ -74,6 +74,10 @@ form
   /* min-width: 250px; */
 }
 
+input[type=text], select, textarea {
+  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
 .blueprints {
   text-align: center;
 }
