@@ -1,12 +1,8 @@
 import {
-    UPDATE_PRODUCTS,
-    UPDATE_CATEGORIES,
-    UPDATE_CURRENT_CATEGORY,
-    ADD_TO_CART,
-    ADD_MULTIPLE_TO_CART,
-    REMOVE_FROM_CART,
+    UPDATE_BLUEPRINTS,
+    UPDATE_COURSES,
     UPDATE_CART_QUANTITY,
-    CLEAR_CART,
+    ADD_TO_CART,
     TOGGLE_CART,
 } from "./actions";
 
@@ -15,39 +11,39 @@ const initialState = {
     courses: [],
     cart: [],
     cartOpen: false,
-    categories: [],
-    currentCategory: "",
+    //categories: [],
+    //currentCategory: "",
 }
 
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case UPDATE_PRODUCTS:
+        case UPDATE_BLUEPRINTS:
             console.log(action.type);
             return {
                 ...state,
-                products: [...action.products],
+                //blueprints: [...action.blueprints],
             };
 
-        case UPDATE_CATEGORIES:
+        case UPDATE_COURSES:
             console.log(action.type);
             return {
                 ...state,
-                categories: [...action.categories],
+                //courses: [...action.courses],
             };
 
-        case UPDATE_CURRENT_CATEGORY:
+        case UPDATE_CART_QUANTITY:
             console.log(action.type);
             return {
                 ...state,
-                currentCategory: action.currentCategory,
+                //currentCategory: action.currentCategory,
             };
 
         case ADD_TO_CART:
             console.log(action.type);
             return {
                 ...state,
-                cartOpen: true,
-                    cart: [...state.cart, action.blueprints, action.courses],
+                // cartOpen: true,
+                //     cart: [...state.cart, action.blueprints, action.courses],
             };
 
         // case ADD_MULTIPLE_TO_CART:
@@ -85,19 +81,19 @@ export const reducer = (state = initialState, action) => {
         //             }),
         //     };
 
-        case CLEAR_CART:
-            console.log(action.type);
-            return {
-                ...state,
-                cartOpen: false,
-                    cart: [],
-            };
+        // case CLEAR_CART:
+        //     console.log(action.type);
+        //     return {
+        //         ...state,
+        //         cartOpen: false,
+        //             cart: [],
+        //     };
 
         case TOGGLE_CART:
             console.log(action.type);
             return {
                 ...state,
-                cartOpen: !state.cartOpen,
+                //cartOpen: !state.cartOpen,
             };
 
         default:
