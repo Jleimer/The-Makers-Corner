@@ -10,6 +10,11 @@ function Navigation() {
       return (
         <ul className="flex-row">
           <li>
+            <Link to="/">
+              Home
+            </Link>
+          </li>
+          <li>
             <Link to="/blueprints">
               Blueprints
             </Link>
