@@ -9,8 +9,7 @@ import Blueprints from './pages/Blueprints';
 import Course from './pages/Courses';
 import Dashboard from './pages/Dashboard';
 import OrderHistory from './pages/OrderHistory';
-// import Detail from './pages/Detail';
-// - Check to see if Blueprints & classes stay separate or if they turn into products??
+import Detail from './pages/Detail';
 import Login from './pages/Login';
 import MessageBoard from './pages/MessageBoard';
 import Signup from './pages/Signup';

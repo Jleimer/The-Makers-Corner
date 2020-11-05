@@ -85,7 +85,7 @@ const Cart = () => {
         });
 
         getCheckout({
-            variables: { course: courseIds, blueprints: blueprintsIds }
+            variables: { course: courseIds, blueprints: blueprintIds }
         });
     }
 
