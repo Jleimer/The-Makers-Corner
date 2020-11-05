@@ -49,14 +49,14 @@ function Blueprints() {
                 <div className="flex-row">
                     {filterBlueprints().map(blueprint => (
                         <BlueprintsItem
-                            key={blueprint._id}
-                            _id={blueprint._id}
-                            image={blueprint.image}
-                            name={blueprint.name}
-                            price={blueprint.price}
-                            description={blueprint.description}
-                            username={blueprint.username}
-                            difficulty={blueprint.difficulty}
+                            // key={blueprint._id}
+                            // _id={blueprint._id}
+                            // image={blueprint.image}
+                            // name={blueprint.name}
+                            // price={blueprint.price}
+                            // description={blueprint.description}
+                            // username={blueprint.username}
+                            // difficulty={blueprint.difficulty}
                         />
                     ))}
                 </div>

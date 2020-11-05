@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import {idbPromise } from "../../utils/helpers";
 
-function BlueprintsItem(item) {
+function BlueprintsItem() {
     const dispatch = useDispatch();
     const state = useSelector(state => state);
 
@@ -20,7 +20,7 @@ function BlueprintsItem(item) {
         category,
         reviews,
         difficulty
-    } = item;
+    } = state.blueprints;
 
     const { cart } = state
 
@@ -39,9 +39,9 @@ function BlueprintsItem(item) {
         } else {
             dispatch({
                 type: ADD_TO_CART,
-                blueprint: { ...item, purchaseQuantity: 1 }
+                blueprint: { ...cart.blueprints, purchaseQuantity: 1 }
             });
-            idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
+            idbPromise('cart', 'put', { ...cart.blueprints, purchaseQuantity: 1 });
         }
     }
 
