@@ -51,7 +51,7 @@ export const ADD_ORDER = gql`
 `;
 
 export const ADD_POST = gql`
-    mutation addPost($postText: String!, $title: String!, $category: String!) {
+    mutation addPost($postText: String!, $title: String!, $category: ID!) {
         addPost(postText: $postText, title: $title, category: $category) {
 
 `;
@@ -69,7 +69,7 @@ export const ADD_COMMENT_POST = gql`
 
 export const ADD_BLUEPRINT = gql`
     mutation addBlueprint($name: String!, $description: String!, $image: String, $file: String, $price: Float!, $difficulty: String!, $category: String!) {
-        addBlueprint(name: $name, description: $description, image: $image, file: $file, price: $price, difficulty: String!, category: String!) {
+        addBlueprint(name: $name, description: $description, image: $image, file: $file, price: $price, difficulty: $difficulty, category: $category) {
             _id
             name
             username
