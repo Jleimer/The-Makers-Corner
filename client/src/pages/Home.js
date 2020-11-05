@@ -1,7 +1,7 @@
 import React from 'react';
 // IMPORT COMPONENTS
-import Cart from '../components/Cart';
-// - ProductList ?? 
+// import Cart from '../components/Cart';
+// // - ProductList ?? 
 
 const Home = () => {
     return (
