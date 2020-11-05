@@ -1,70 +1,50 @@
-// import React, { useState } from 'react';
+import React, { useState } from 'react';
+import { ADD_COMMENT } from '../../utils/mutations';
+import { useMutation } from '@apollo/react-hooks';
 
-// // import { useMutation } from '@apollo/react-hooks';
-// // import { ADD_COMMENT } from '../../utils/mutations';
-// // import { QUERY_COMMENTS, QUERY_ME } from '../../utils/queries';
+const commentForm = ({ postId }) => {
 
+const [commentBody, setBody] = useState('');
+const [characterCount, setCharacterCount] = useState(0);
+const [addReaction, { error }] = useMutation(ADD_COMMENT);
 
-// const Comments = ({ value = [], ...props }) => {
-//     const [state, dispatch] = useCommentReducer({
-//         comments: [],
-//     });
-//     return <Comments value={[state, dispatch]} {...props} />
+const handleChange = event => {
+  if (event.target.value.length <= 280) {
+    setBody(event.target.value);
+    setCharacterCount(event.target.value.length);
+  }
+};
 
+const handleFormSubmit = async event => {
+    await addReaction({
+        variables: { commentBody, postId }
+      });
+  event.preventDefault();
+  setBody('');
+  setCharacterCount(0);
+};
 
-// // const Comments = () => {
-// //     const [commentText] = useState('');
-    
-// //     const [addComment] = useMutation(ADD_COMMENT, {
-// //         update(cache, { data: { addComment } }) {
-// //             try {
-// //                 const { comments } = cache.readQuery({ query: QUERY_COMMENTS });
-// //                 cache.writeQuery({
-// //                     query: QUERY_COMMENTS,
-// //                     data: { comments: [addComment, ...comments] },
-// //                 });
-// //             } catch (e) {
-// //                 console.error(e);
-// //             }
+// return (
+//     <div>
+//       <p className="m-0">
+//         {characterCount}: 0/280
+//       </p>
+//       <form className="flex-row justify-center justify-space-between-md align-stretch"
+//       onSubmit={handleFormSubmit}>
+//         <textarea
+//           placeholder="Leave a reaction to this thought..."
+//           value={reactionBody}
+//           className="form-input col-12 col-md-9"
+//           onChange={handleChange}
+//         ></textarea>
 
-// //             const { me } = cache.readQuery({ query: QUERY_ME });
-// //             cache.writeQuery({
-// //                 query: QUERY_ME,
-// //                 data: { me: { ...me, comments: [...me.comments, addComment] } },
-// //             });
-// //         },
-// //     });
+//         <button className="btn col-12 col-md-3" type="submit">
+//           Submit
+//         </button>
+//       </form>
+//       {error && <span className="ml-2">Something went wrong...</span>}
+//     </div>
+//   );
+};
 
-//     const handleFormSubmit = async (event) => {
-//         event.preventDefault();
-
-//         try {
-//             await addComment({
-//                 variables: { commentText },
-//             });
-//         } catch (e) {
-//             console.error(e);
-//         }
-//     };
-
-//     return (
-//         <div>
-//             <form
-//                 className="flex-row justify-center justify-space-between-md align-stretch"
-//                 onSubmit={handleFormSubmit}
-//             >
-//                 <textarea
-//                     placeholder="Post comments here..."
-//                     value={commentText}
-//                     className="form-input col-12 col-md-9"
-//                     // onChange={handleChange}
-//                 ></textarea>
-//                 <button className="btn col-12 col-md-3" type="submit">
-//                     Submit
-//                 </button>
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default Comments;
+export default commentForm
