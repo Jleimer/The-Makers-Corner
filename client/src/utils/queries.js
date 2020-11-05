@@ -1,17 +1,17 @@
 import gql from "graphql-tag";
 
 export const QUERY_COURSES = gql`
-  query getCourse($category: ID) {
-    courses(category: $category) {
+  query course($category: ID, $name: String) {
+    courses(category: $category, name: $name) {
       _id
       name
       description
       price
-      quantity
       image
       category {
         name
         _id
+        name
       }
     }
   }
@@ -24,8 +24,8 @@ export const QUERY_ALL_COURSES = gql`
       name
       description
       price
-      quantity
       category {
+        _id
         name
       }
     }
@@ -54,7 +54,6 @@ export const QUERY_USER = gql`
           name
           description
           price
-          quantity
           image
         }
         courses {
@@ -62,7 +61,6 @@ export const QUERY_USER = gql`
           name
           description
           price
-          quantity
           image
         }
       }
@@ -89,9 +87,41 @@ export const QUERY_CHECKOUT = gql`
 //   }
 // `;
 
+export const QUERY_ALL_POSTS = gql`
+  {
+    posts {
+      title
+      postText
+      username
+      createdAt
+      comments {
+        commentBody
+        username
+        createdAt
+      }
+    }
+  }
+`;
+
+export const QUERY_SINGLE_POST = gql`
+query post($postId: ID!) {
+  post(postId: $postId){
+    title
+      postText
+      username
+      createdAt
+      comments {
+        commentBody
+        username
+        createdAt
+      }
+  }
+}
+`;
+
 export const QUERY_ME = gql`
   {
-    me {
+    user {
       _id
       username
       email
@@ -104,9 +134,9 @@ export const QUERY_ME = gql`
   }
 `;
 
-export const QUERY_BLUEPRINTS = gql`
+export const QUERY_CATEGORY_BLUEPRINTS = gql`
   query blueprints($category: ID, $name: String) {
-    blueprints(category: $category, name: $String) {
+    blueprints(category: $category, name: $name) {
       _id
       name
       description
@@ -122,7 +152,7 @@ export const QUERY_BLUEPRINTS = gql`
 `;
 
 export const QUERY_ALL_BLUEPRINTS = gql`
- {
+  {
     blueprints {
       _id
       name
