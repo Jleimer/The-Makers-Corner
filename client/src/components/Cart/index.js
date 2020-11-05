@@ -57,8 +57,11 @@ const Cart = () => {
 
     function calculateTotal() {
         let sum = 0;
-        state.cart.forEach(item => {
-            sum += item.price * item.purchaseQuantity;
+        state.cart.blueprints.forEach(item => {
+            sum += item.price;
+        });
+        state.cart.courses.forEach(item => {
+            sum += item.price;
         });
         return sum.toFixed(2);
     }
