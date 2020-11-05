@@ -74,7 +74,7 @@ const resolvers = {
     post: async (parent, { postId }) => {
       return await Post.findById({_id: postId}).populate("category").populate("comments");
     },
-    user: async (parent, args, context) => {
+    me: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id)
           .select("-__v -password")
@@ -87,6 +87,21 @@ const resolvers = {
             populate: "category",
           })
 
+          .populate("courses")
+          .populate("blueprints")
+          .populate("posts");
+          
+        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
+
+        return user;
+      }
+
+      throw new AuthenticationError("Not logged in");
+    },
+    user: async (parent, {username}, context) => {
+      if (context.user) {
+        const user = await User.findById(username)
+          .select("-__v -password")
           .populate("courses")
           .populate("blueprints")
           .populate("posts");
