@@ -9,6 +9,7 @@ function BlueprintsItem(item) {
     const dispatch = useDispatch();
     const state = useSelector(state => state);
 
+
     const {
         name,
         _id,
@@ -20,7 +21,6 @@ function BlueprintsItem(item) {
         reviews,
         difficulty
     } = item;
-        // ^ item was state.blueprints;
 
     const { cart } = state
 

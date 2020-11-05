@@ -53,3 +53,5 @@ const MessageBoard = () => {
     </div>
   );
 };
+
+export default MessageBoard;
