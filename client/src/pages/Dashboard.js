@@ -1,13 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/react-hooks';
+import { ADD_COURSE, ADD_BLUEPRINT } from '../utils/mutations';
+import { QUERY_SINGLE_COURSE, QUERY_SINGLE_BLUEPRINT, QUERY_ME } from '../utils/queries';
 
 const Dashboard = () => {
+    const [formInfo, setInfo] = useState('');
+    
+    const [addBlueprint, {error}] = useMutation(ADD_BLUEPRINT, {
+        update(cache, { data: { addBlueprint } }) {
+            try {
+                const { blueprints } = cache.readQuery({ query: QUERY_SINGLE_BLUEPRINT});
+                cache.writeQuery({
+                    query: QUERY_SINGLE_BLUEPRINT,
+                    data: { blueprints: [addBlueprint, ...blueprints] }
+                });
+            } catch (e) {
+                console.error(e);
+            }
+            const { me } = cache.readQuery({ query: QUERY_ME });
+            cache.writeQuery({
+                query: QUERY_ME,
+                data: { me: {...me, blueprints: [...me.blueprints, addBlueprint] } }
+            });
+        }
+    });
+
+    const [addCourse, {error}] = useMutation(ADD_COURSE, {
+        update(cache, { data: { addCourse } }) {
+            try {
+                const { courses } = cache.readQuery({ query: QUERY_SINGLE_COURSE});
+                cache.writeQuery({
+                    query: QUERY_SINGLE_COURSE,
+                    data: { courses: [addCourse, ...courses] }
+                });
+            } catch (e) {
+                console.error(e);
+            }
+            const { me } = cache.readQuery({ query: QUERY_ME });
+            cache.writeQuery({
+                query: QUERY_ME,
+                data: { me: {...me, courses: [...me.courses, addCourse] } }
+            });
+        }
+    });
+
+    const handleFormSubmit = async event => {
+        event.preventDefault();
+
+        try {
+            await addBlueprint({
+                variables: { formInfo }
+            });
+            await addCourse({
+                variables: { formInfo }
+            });
+            
+            setInfo('');
+        } catch (e) {
+        console.error(e);
+        }
+    };
+
     return (
         <div>
             <h2>Dashboard</h2>
             <div>
                 <h3>Add a Course</h3>
                 <div className="form-div">
-                    <form>
+                    <form onSubmit={handleFormSubmit}>
                         <div>
                             <label htmlFor="name">Course Name: </label>
                             <input
@@ -96,7 +156,7 @@ const Dashboard = () => {
             <div>
                 <h3>Add a Blueprint</h3>
                 <div className="form-div">
-                    <form>
+                    <form onSubmit={handleFormSubmit}>
                         <div>
                             <label htmlFor="name">Blueprint Title: </label>
                             <input

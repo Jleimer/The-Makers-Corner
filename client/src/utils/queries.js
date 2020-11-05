@@ -158,6 +158,23 @@ export const QUERY_ALL_BLUEPRINTS = gql`
   }
 `;
 
+// returns single blueprint
+export const QUERY_SINGLE_BLUEPRINT = gql`
+  query blueprint($blueprintId: ID!) {
+    blueprint(blueprintId: $blueprintId) {
+      _id
+      username
+      name
+      description
+      price
+      category {
+        _id
+        name
+      }
+    }
+  }
+`;
+
 // using the category ID or name to filter the courses
 export const QUERY_CATEGORY_COURSES = gql`
   query courses($category: ID, $name: String) {
