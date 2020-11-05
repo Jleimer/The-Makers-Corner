@@ -1,6 +1,9 @@
 import { useQuery } from "@apollo/react-hooks";
-import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { UPDATE_POSTS } from "../utils/actions";
 import PostList from "../components/PostList";
+import { idbPromise } from "../utils/helpers";
 import Auth from "../utils/auth";
 import { QUERY_ALL_POSTS, QUERY_SINGLE_USER } from "../utils/queries";
 // QUERY_ME }
@@ -8,25 +11,39 @@ import { QUERY_ALL_POSTS, QUERY_SINGLE_USER } from "../utils/queries";
 // comments CHANGED TO POSTS!!!!!
 
 const MessageBoard = () => {
-  // const { data } = useQuery(QUERY_COMMENTS);
-  // const { data: userData } = useQuery(QUERY_ME);
-  // const comments = data?.comments || [];
-
-  //    const { loading, data } = useQuery(QUERY_ALL_POSTS);
-  //    const { data: userData } = useQuery(QUERY_ME);
-  //    const posts = data?.posts || [];
-
-  //    const loggedIn = Auth.loggedIn();
-  const { data } = useQuery(QUERY_SINGLE_USER);
+  const loggedIn = Auth.loggedIn();
+  useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { loading, data } = useQuery(QUERY_SINGLE_USER);
   let user;
 
   if (data) {
     user = data.user;
   }
+
+  useEffect(() => {
+    if (data) {
+      dispatch({
+        type: UPDATE_POSTS,
+        posts: data.posts,
+      });
+      data.posts.forEach((post) => {
+        idbPromise("posts", "put", post);
+      });
+    } else if (!loading) {
+      idbPromise("posts", "get").then((posts) => {
+        dispatch({
+          type: UPDATE_POSTS,
+          posts: posts,
+        });
+      });
+    }
+  }, [data, loading, dispatch]);
+
   return (
     <div>
       <h2>Message Board</h2>
-      {user ? (
+      {loggedIn ? (
         <div>
           <PostList />
         </div>

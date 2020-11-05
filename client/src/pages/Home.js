@@ -5,6 +5,7 @@ import React from 'react';
 import Blueprints from '../components/Blueprints';
 import Courses from '../components/Courses';
 
+
 const Home = () => {
     return (
         <div className="container">

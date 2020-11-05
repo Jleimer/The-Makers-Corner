@@ -13,6 +13,7 @@ function PostList() {
 
   const { currentCategory } = state;
   const { loading, data } = useQuery(QUERY_ALL_POSTS);
+  const posts = data?.posts || [];
 
   useEffect(() => {
     if (data) {
@@ -34,34 +35,35 @@ function PostList() {
   }, [data, loading, dispatch]);
 
   function filterPosts() {
-      if (!currentCategory) {
-          return state.posts;
-      }
-      return state.posts.filter(post => post.category._id === currentCategory);
+    if (!currentCategory) {
+      return state.posts;
+    }
+    return state.posts.filter((post) => post.category._id === currentCategory);
   }
 
   return (
     <div className="my-2">
-            <h2>Our Posts:</h2>
-            {state.posts.length ? (
-                <div className="flex-row">
-                    {filterPosts().map(post => (
-                        <SinglePost
-                            key={post._id}
-                            _id={post._id}
-                            title={post.title}
-                            username={post.username}
-                            createdAt={post.createdAt}
-                            />
-                    ))}
-                </div>
-            ) : (
-                <h3>No posts yet!</h3>
-            )}
-            {/* { loading ? 
-            <img src={spinner} alt="loading" />: null} */}
+      <h2>Our Posts:</h2>
+
+      {loading ? (
+        <h3>Loading posts...</h3>
+      ) : (
+        <div className="flex-row">
+          {posts.map((post) => (
+            <SinglePost
+              key={post._id}
+              _id={post._id}
+              title={post.title}
+              username={post.username}
+              createdAt={post.createdAt}
+            />
+          ))}
         </div>
+      )}
+      {/* { loading ? 
+            <img src={spinner} alt="loading" />: null} */}
+    </div>
   );
-        };
+}
 
 export default PostList;
