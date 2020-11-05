@@ -82,15 +82,21 @@ const Dashboard = () => {
                         </div>
                         <div>
                             <label htmlFor="category">Category: </label>
-                            <select></select>
+                            <select
+                                className="select"
+                            >
+                            </select>
                         </div>
-                        <input type="submit" value="Submit"></input>
+                        <button type='submit'>
+                            Submit
+                        </button>
                     </form>
                 </div>
             </div>
             <div>
                 <h3>Add a Blueprint</h3>
-                <form>
+                <div className="form-div">
+                    <form>
                         <div>
                             <label htmlFor="name">Blueprint Title: </label>
                             <input
@@ -153,10 +159,16 @@ const Dashboard = () => {
                         </div>
                         <div>
                             <label htmlFor="category">Category: </label>
-                            <select></select>
+                            <select
+                                className="select"
+                            >
+                            </select>
                         </div>
-                        <input type="submit" value="Submit"></input>
+                        <button type='submit'>
+                            Submit
+                        </button>
                     </form>
+                </div>
             </div>
         </div>
     );
