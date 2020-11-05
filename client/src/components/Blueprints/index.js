@@ -3,7 +3,7 @@ import BlueprintsItem from "../BlueprintsItem";
 import { useDispatch, useSelector } from 'react-redux';
 import { UPDATE_BLUEPRINTS } from "../../utils/actions";
 import { useQuery } from '@apollo/react-hooks';
-import { QUERY_BLUEPRINTS } from "../../utils/queries";
+import { QUERY_CATEGORY_BLUEPRINTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 
 function Blueprints() {
@@ -12,7 +12,7 @@ function Blueprints() {
 
     const { currentCategory } = state;
 
-    const { loading, data } = useQuery(QUERY_BLUEPRINTS);
+    const { loading, data } = useQuery(QUERY_CATEGORY_BLUEPRINTS);
     console.log(data);
 
     useEffect(() => {
@@ -54,7 +54,6 @@ function Blueprints() {
                             image={blueprint.image}
                             name={blueprint.name}
                             price={blueprint.price}
-                            quantity={blueprint.quantity}
                         />
                     ))}
                 </div>
