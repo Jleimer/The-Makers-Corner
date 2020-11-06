@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Dropdown } from 'semantic-ui-react';
 import {
   UPDATE_CATEGORIES,
   UPDATE_CURRENT_CATEGORY,
@@ -50,10 +51,17 @@ function CategoryMenu() {
       currentCategory: id,
     });
   };
-
-  return (
+    
+    return (
     <div>
       <h2>Choose a Category:</h2>
+      <Dropdown
+      placeholder='Select a Catergory'
+      name="subject"
+      onChange={this.handleChange}
+      selection
+      options={categories}
+      />
       {categories.map((item) => (
         <button
           key={item._id}
