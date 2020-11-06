@@ -13,6 +13,7 @@ import Detail from './pages/Detail';
 import Login from './pages/Login';
 import MessageBoard from './pages/MessageBoard';
 import Signup from './pages/Signup';
+import SinglePost from './pages/SinglePost';
 
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
@@ -50,6 +51,7 @@ function App() {
               <Route exact path="/orderhistory" component={OrderHistory}/>
               <Route exact path="/signup" component={Signup}/>
               <Route exact path="/messageboard" component={MessageBoard}/>
+              <Route exact path="/post/:id" component={SinglePost} />
               <Route component={NoMatch}/>
             </Switch>
           </div>
