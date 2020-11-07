@@ -85,28 +85,26 @@ const resolvers = {
         const user = await User.findById(context.user._id)
           .select("-__v -password")
           .populate({
-            path: "morders.courses",
+            path: "orders.courses",
             populate: "category",
           })
           .populate({
             path: "orders.blueprints",
             populate: "category",
           })
-          .populate("courses")
           .populate({
-            path: "courses.category",
-            populate: "category"
+            path: "courses",
+            populate:{ path: 'category'}
           })
-          .populate("blueprints")
           .populate({
-            path: "blueprints.category",
-            populate: "category"
+            path: "blueprints",
+            populate:{ path: 'category'}
           })
-          .populate("posts")
           .populate({
-            path: "posts.category",
-            populate: "category"
+            path: "posts",
+            populate:{ path: 'category'}
           })
+          
 
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
