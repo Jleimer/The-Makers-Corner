@@ -53,29 +53,28 @@ p {
 {
     display: block;
     text-align: center;
+    margin-top: 50px;
 }
 
-form
+Form
 {
     display: inline-block;
     margin-left: 10px;
     margin-right: 10px;
     text-align: left;
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
+    width: 60%;
 }
 
-.input, .text-area, .select{
+/* .input, .text-area, .select{
   width: 100%;
   padding: 8px 10px;
   margin: 8px 0px;
   box-sizing: border-box;
-}
+} */
 
-input[type=text], select, textarea {
+/* input[type=text], select, textarea {
   resize: vertical
-}
+} */
 
 /* .blueprints, .courses {
   margin: 15px !important;

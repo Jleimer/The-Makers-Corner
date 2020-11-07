@@ -4,14 +4,14 @@ import React from 'react';
 // - ProductList ?? 
 import Blueprints from '../components/Blueprints';
 import Courses from '../components/Courses';
-import { Card } from 'semantic-ui-react';
+import { Grid, Card } from 'semantic-ui-react';
 
 
 const Home = () => {
     return (
         <div className="container">
             <h2>Featured Blueprints</h2>
-            <Blueprints />
+                <Blueprints />
             <h2>Featured Courses</h2>
             <Courses />
         </div>

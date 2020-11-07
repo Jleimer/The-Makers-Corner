@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { Form, Button } from 'semantic-ui-react';
 
 const Login = (props) => {
     const [formState, setFormState] = useState({ username: '', email: '', password: '' });
@@ -37,8 +38,8 @@ const Login = (props) => {
         <div>
             <h2>Login</h2>
             <div className="form-div">
-                <form onSubmit={handleFormSubmit}>
-                    <div>
+                <Form onSubmit={handleFormSubmit}>
+                    <Form.Field>
                         <label htmlFor="email">Email address: </label>
                         <input
                             className="input"
@@ -48,8 +49,8 @@ const Login = (props) => {
                             id="email"
                             onChange={handleChange}
                         />
-                    </div>
-                    <div>
+                    </Form.Field>
+                    <Form.Field>
                         <label htmlFor="password">Password: </label>
                         <input
                             className="input"
@@ -59,22 +60,23 @@ const Login = (props) => {
                             id="password"
                             onChange={handleChange}
                         />
-                    </div>
+                    </Form.Field>
                         {
                             error ? <div>
                                 <p> Oops. Looks like the credentials provided are incorrect. Please try again!</p>
                             </div> : null
                         }
                     <div>
-                        <button type='submit'>
+                        <Button type='submit'>
                             Submit
-                        </button>
+                        </Button>
+                        <br></br>
                         <br></br>
                         <Link to='/signup' className="instead">
                             Signup instead
                         </Link>
                     </div>
-                </form>
+                </Form>
             </div>
         </div>
     );
