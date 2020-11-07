@@ -75,45 +75,78 @@ const Dashboard = () => {
         }
     });
 
-    const [addCourse] = useMutation(ADD_COURSE, {
-        update(cache, { data: { addCourse } }) {
-            try {
-                const { courses } = cache.readQuery({ query: QUERY_SINGLE_COURSE});
-                cache.writeQuery({
-                    query: QUERY_SINGLE_COURSE,
-                    data: { courses: [addCourse, ...courses] }
-                });
-            } catch (e) {
-                console.error(e);
-            }
-            const { me } = cache.readQuery({ query: QUERY_ME });
-            cache.writeQuery({
-                query: QUERY_ME,
-                data: { me: {...me, courses: [...me.courses, addCourse] } }
-            });
-        }
-    });
+  const state = useSelector((state) => state);
 
-    const handleFormSubmit = async event => {
-        event.preventDefault();
+  const { loading, data } = useQuery(QUERY_ME);
+  const posts = data?.me.posts || [];
+  const blueprints = data?.me.blueprints || [];
+  const courses = data?.me.courses || [];
+  const { categories } = useQuery(QUERY_CATEGORIES);
+  console.log(categories, "this is categories");
+  console.log(data, "this is query_me")
 
-        try {
-            await addBlueprint({
-                variables: { formInfo }
-            });
-            await addCourse({
-                variables: { formInfo }
-            });
-            
-            setInfo('');
-        } catch (e) {
+  const [formInfo, setInfo] = useState("");
+
+  const [addBlueprint, { error }] = useMutation(ADD_BLUEPRINT, {
+    update(cache, { data: { addBlueprint } }) {
+      try {
+        const { blueprints } = cache.readQuery({
+          query: QUERY_SINGLE_BLUEPRINT,
+        });
+        cache.writeQuery({
+          query: QUERY_SINGLE_BLUEPRINT,
+          data: { blueprints: [addBlueprint, ...blueprints] },
+        });
+      } catch (e) {
         console.error(e);
-        }
-    };
+      }
+      const { me } = cache.readQuery({ query: QUERY_ME });
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: { me: { ...me, blueprints: [...me.blueprints, addBlueprint] } },
+      });
+    },
+  });
 
-    if (!Auth.loggedIn()) {
-       return <Redirect to="/login" />;
+  const [addCourse] = useMutation(ADD_COURSE, {
+    update(cache, { data: { addCourse } }) {
+      try {
+        const { courses } = cache.readQuery({ query: QUERY_SINGLE_COURSE });
+        cache.writeQuery({
+          query: QUERY_SINGLE_COURSE,
+          data: { courses: [addCourse, ...courses] },
+        });
+      } catch (e) {
+        console.error(e);
+      }
+      const { me } = cache.readQuery({ query: QUERY_ME });
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: { me: { ...me, courses: [...me.courses, addCourse] } },
+      });
+    },
+  });
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      await addBlueprint({
+        variables: { formInfo },
+      });
+      await addCourse({
+        variables: { formInfo },
+      });
+
+      setInfo("");
+    } catch (e) {
+      console.error(e);
     }
+  };
+
+  if (!Auth.loggedIn()) {
+    return <Redirect to="/login" />;
+  }
 
     
 
@@ -285,7 +318,7 @@ const Dashboard = () => {
                     </Button>
                 </Form>
             </div>
-        </div>
+      </div>
     );
 };
 

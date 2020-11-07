@@ -90,7 +90,6 @@ export const UPDATE_USER_INFO = gql`
           description
           username
           price
-          quantity
           category {
             _id
             name

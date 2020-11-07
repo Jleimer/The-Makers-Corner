@@ -14,27 +14,7 @@ db.once("open", async () => {
   ]);
 
   console.log("categories seeded");
-  console.log(categories[0]._id, categories[0].name)
-  await User.deleteMany();
-
-  await User.create(
-    {
-      firstName: "Jonathan",
-      lastName: "Eimer",
-      email: "jleimer@testmail.com",
-      username: "jleimer",
-      password: "ghost",
-    },
-    {
-      firstName: "Keegan",
-      lastName: "Wedwick",
-      email: "kwedwick@testmail.com",
-      password: "ghost",
-      username: "kwedwick",
-    }
-  );
-
-  console.log("User(s) seeded");
+  console.log(categories[0]._id, categories[0].name);
 
   await Course.deleteMany();
   const courses = await Course.insertMany([
@@ -46,7 +26,7 @@ db.once("open", async () => {
       difficulty: "Beginner",
       items: "Resin, wood(walnut), pouring frame",
       category: categories[2]._id,
-      username: "jleimer"
+      username: "jleimer",
     },
     {
       name: "Stained Glass",
@@ -57,15 +37,15 @@ db.once("open", async () => {
       items:
         "Soldering Iron, flux, glass foil, precut stained glass, glass cutter",
       category: categories[0]._id,
-      username: "kwedwick"
+      username: "kwedwick",
     },
   ]);
   console.log("courses seeded");
-  console.log(courses[1].category)
+  console.log(courses[1].category);
 
   await Blueprint.deleteMany();
 
-  const blueprint = await Blueprint.insertMany([
+  const blueprints = await Blueprint.insertMany([
     {
       name: "Workbench",
       description:
@@ -75,7 +55,7 @@ db.once("open", async () => {
       price: 6.0,
       difficulty: "Some exprience required",
       category: categories[3]._id,
-      username: "jleimer"
+      username: "jleimer",
     },
     {
       name: "Shaker cabinet door",
@@ -86,7 +66,7 @@ db.once("open", async () => {
       price: 5.0,
       difficulty: "Experience with table saw required",
       category: categories[4]._id,
-      username: "kwedwick"
+      username: "kwedwick",
     },
   ]);
   console.log("blueprints seeded");
@@ -113,9 +93,34 @@ db.once("open", async () => {
       username: "jleimer",
       createdAt: "10/31/2020",
       category: categories[2]._id,
-    }
-  ])
+    },
+  ]);
   console.log("post(s) seeded");
+
+  await User.deleteMany();
+  await User.create(
+    {
+      firstName: "Jonathan",
+      lastName: "Eimer",
+      email: "jleimer@testmail.com",
+      username: "jleimer",
+      password: "ghost",
+      blueprints: blueprints[0]._id,
+      courses: courses[0]._id,
+      posts: [posts[2]._id],
+    },
+    {
+      firstName: "Keegan",
+      lastName: "Wedwick",
+      email: "kwedwick@testmail.com",
+      password: "ghost",
+      username: "kwedwick",
+      blueprints: blueprints[1]._id,
+      courses: courses[1]._id,
+      posts: [posts[0]._id, posts[1]._id],
+    }
+  );
+  console.log("User(s) seeded");
 
   process.exit();
 });

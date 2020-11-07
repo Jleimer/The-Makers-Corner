@@ -92,10 +92,19 @@ const resolvers = {
             path: "orders.blueprints",
             populate: "category",
           })
-
-          .populate("courses")
-          .populate("blueprints")
-          .populate("posts");
+          .populate({
+            path: "courses",
+            populate:{ path: 'category'}
+          })
+          .populate({
+            path: "blueprints",
+            populate:{ path: 'category'}
+          })
+          .populate({
+            path: "posts",
+            populate:{ path: 'category'}
+          })
+          
 
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
