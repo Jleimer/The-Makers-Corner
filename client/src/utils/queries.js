@@ -113,9 +113,30 @@ export const QUERY_ME = gql`
   }
 `;
 
+export const QUERY_ORDER_HISTORY = gql`
+   {
+      user {
+        orders {
+          blueprints {
+            _id
+            name
+            price
+            purchaseDate
+          }
+          courses {
+            _id
+            name
+            price
+            purchaseDate
+          }
+        }
+      }
+    }
+`;
+
 //checking out with items in the cart
 export const QUERY_CHECKOUT = gql`
-  query getCheckout($products: [ID]!) {
+  query checkout($products: [ID]!) {
     checkout(products: $products) {
       session
     }

@@ -1,15 +1,15 @@
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
-import { QUERY_ME } from "../utils/queries";
+import { QUERY_ORDER_HISTORY } from "../utils/queries";
 import Auth from "../utils/auth";
 
 const OrderHistory = () => {
-  const { loading, data } = useQuery(QUERY_ME);
+  const { loading, data } = useQuery(QUERY_ORDER_HISTORY);
   let user;
 
   if (data) {
-    user = data.me;
+    user = data.user;
     console.log(user);
   }
 
