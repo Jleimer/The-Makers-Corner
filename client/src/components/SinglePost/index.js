@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
-import {idbPromise } from "../../utils/helpers";
 
 function SinglePost(post) {
     const state = useSelector(state => state);
+    console.log(post);
 
     const {
         _id,

@@ -24,7 +24,6 @@ export const QUERY_SINGLE_USER = gql`
         description
         username
         price
-        quantity
         category {
           _id
           name
@@ -35,7 +34,11 @@ export const QUERY_SINGLE_USER = gql`
         name
         description
         price
-        image
+        category {
+          _id
+          name
+        }
+      }
       }
       posts {
         _id
@@ -66,7 +69,6 @@ export const QUERY_ME = gql`
         description
         username
         price
-        quantity
         category {
           _id
           name
@@ -77,7 +79,6 @@ export const QUERY_ME = gql`
         name
         description
         price
-        image
       }
       posts {
         _id
@@ -106,7 +107,6 @@ export const QUERY_ME = gql`
           name
           description
           price
-          image
         }
       }
     }
@@ -172,7 +172,6 @@ export const QUERY_ALL_BLUEPRINTS = gql`
       description
       username
       price
-      quantity
       category {
         _id
         name

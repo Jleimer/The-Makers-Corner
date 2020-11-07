@@ -52,7 +52,6 @@ function Courses() {
                   _id={course._id}
                   name={course.name}
                   price={course.price}
-                  quantity={course.quantity}
                 />
             ))}
         </div>

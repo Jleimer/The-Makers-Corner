@@ -5,7 +5,7 @@ import { UPDATE_POSTS } from "../utils/actions";
 import PostList from "../components/PostList";
 import { idbPromise } from "../utils/helpers";
 import Auth from "../utils/auth";
-import { QUERY_ALL_POSTS, QUERY_SINGLE_USER } from "../utils/queries";
+import { QUERY_SINGLE_USER } from "../utils/queries";
 // QUERY_ME }
 
 // comments CHANGED TO POSTS!!!!!
