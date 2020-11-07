@@ -43,15 +43,13 @@ function Courses() {
   }
 
   return (
-    <div className="my-2">
-      <h2>Our courses:</h2>
+    <div>
       {state.courses.length ? (
-        <div className="courses">
+        <div>
             {filterCourses().map(course => (
                 <CoursesItem
                   key={course._id}
                   _id={course._id}
-                  image={course.image}
                   name={course.name}
                   price={course.price}
                   quantity={course.quantity}

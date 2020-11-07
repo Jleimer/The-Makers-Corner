@@ -58,9 +58,9 @@ function CoursesItem(item) {
       </div>
       <button onClick={addToCart}>Add to cart</button> */}
 
-      <Card href={`/courses/{_id}`}>
+      <Card>
           <Card.Content>
-              <Card.Header>{name}</Card.Header>
+              <Card.Header href={`/courses/{_id}`}>{name}</Card.Header>
               <Card.Meta>Posted by {username}</Card.Meta>
               <Card.Description>{description}</Card.Description>
           </Card.Content>

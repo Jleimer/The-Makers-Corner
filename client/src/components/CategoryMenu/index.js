@@ -9,6 +9,7 @@ import { QUERY_CATEGORIES } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 import store from "../../utils/store";
 import { useDispatch, useSelector } from "react-redux";
+import { Menu } from "semantic-ui-react";
 
 function CategoryMenu() {
   // const [state, dispatch] = useStoreContext();
@@ -53,17 +54,21 @@ function CategoryMenu() {
 
   return (
     <div className="categories">
-      <h2>Choose a Category:</h2>
+      <Menu text vertical>
+        <Menu.Item header>Sort By</Menu.Item>
       {categories.map((item) => (
-        <button
+        <Menu.Item
+          // className="ctgBtn"
+          // basic
           key={item._id}
           onClick={() => {
             handleClick(item._id);
           }}
         >
           {item.name}
-        </button>
+        </Menu.Item>
       ))}
+      </Menu>
     </div>
   );
 }

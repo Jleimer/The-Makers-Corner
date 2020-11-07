@@ -45,14 +45,12 @@ function Blueprints() {
 
     return (
         <div className="my-2">
-            <h2>Our Blueprints:</h2>
             {state.blueprints.length ? (
                 <div className="flex-row">
                     {filterBlueprints().map(blueprint => (
                         <BlueprintsItem
                             key={blueprint._id}
                             _id={blueprint._id}
-                            image={blueprint.image}
                             name={blueprint.name}
                             price={blueprint.price}
                             description={blueprint.description}
