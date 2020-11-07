@@ -45,33 +45,21 @@ function BlueprintsItem(item) {
     }
 
     return ( 
-        <div>
-            {/* <Link to = {`/blueprints/${_id}`} >
-                <p>{name}</p>
-            </Link> 
-            <div>
-                <p>{description}</p>
-                <p>{difficulty}</p>
-                <p>{username}</p>
-                <span>${price}</span> 
-            </div>
-            <button onClick={addToCart}> Add to cart </button>  */}
-            <Card>
-                <Card.Content>
-                    <Card.Header href={`/blueprints/{_id}`}>{name}</Card.Header>
-                    <Card.Meta>Posted by {username}</Card.Meta>
-                    <Card.Description>{description}</Card.Description>
-                </Card.Content>
-                <Card.Content>
-                    <Card.Meta>{difficulty}</Card.Meta>
-                    <Card.Meta>Price: ${price}</Card.Meta>
-                    <br></br>
-                    <Button basic color='black' className="cartBtn" onClick={addToCart}>
-                        Add to Cart
-                    </Button>
-                </Card.Content>
-            </Card>
-        </div>
+        <Card>
+            <Card.Content>
+                <Card.Header href={`/blueprints/{_id}`}>{name}</Card.Header>
+                <Card.Meta>Posted by {username}</Card.Meta>
+                <Card.Description>{description}</Card.Description>
+            </Card.Content>
+            <Card.Content>
+                <Card.Meta>{difficulty}</Card.Meta>
+                <Card.Meta>Price: ${price}</Card.Meta>
+                <br></br>
+                <Button basic color='black' className="cartBtn" onClick={addToCart}>
+                    Add to Cart
+                </Button>
+            </Card.Content>
+        </Card>
     );
 }
 

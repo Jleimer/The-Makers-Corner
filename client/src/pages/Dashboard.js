@@ -2,9 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { ADD_COURSE, ADD_BLUEPRINT } from '../utils/mutations';
 import Auth from "../utils/auth";
-import { QUERY_SINGLE_COURSE, QUERY_SINGLE_BLUEPRINT, QUERY_ME, QUERY_CATEGORIES } from '../utils/queries';
+import {
+    QUERY_SINGLE_COURSE,
+    QUERY_SINGLE_BLUEPRINT,
+    QUERY_ME,
+    QUERY_CATEGORIES,
+  } from "../utils/queries";
 import { Redirect } from 'react-router-dom';
-import { Button, Form, Item } from 'semantic-ui-react';
+import SinglePost from '../components/SinglePost';
+
+import { Button, Form } from 'semantic-ui-react';
 
 import store from '../utils/store';
 import { useDispatch, useSelector } from "react-redux";
@@ -16,143 +23,103 @@ import {
 import { idbPromise } from "../utils/helpers";
 
 const Dashboard = () => {
-    const state = store.getState();
-    useSelector((state) => state);
-    const dispatch = useDispatch();
-    const { categories } = state;
-    const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
-
-    useEffect(() => {
-        // if categoryData exists or has changed from the response of useQuery, then run dispatch()
-        if (categoryData) {
-          // execute our dispatch function with our action object indicating the type of action and the data to set our state for categories to
-          dispatch({
-            type: UPDATE_CATEGORIES,
-            categories: categoryData.categories,
-          });
     
-          //puts the data into indexedDB
-          categoryData.categories.forEach((category) => {
-            idbPromise("categories", "put", category);
-          });
-        } else if (!loading) {
-          // pulls from indexedDB storage
-          idbPromise("categories", "get").then((categories) => {
-            dispatch({
-              type: UPDATE_CATEGORIES,
-              categories: categories,
-            });
-          });
-        }
-      }, [categoryData, loading, dispatch]);
-    
-      const handleClick = (id) => {
-        dispatch({
-          type: UPDATE_CURRENT_CATEGORY,
-          currentCategory: id,
-        });
-      };
+    const state = useSelector((state) => state);
 
+    const { loading, data } = useQuery(QUERY_ME);
+    const posts = data?.me.posts || [];
+    const blueprints = data?.me.blueprints || [];
+    const courses = data?.me.courses || [];
+    const { categories } = useQuery(QUERY_CATEGORIES);
+    console.log(categories, "this is categories");
+    console.log(data, "this is query_me")
 
-    const [formInfo, setInfo] = useState('');
-    
-    const [addBlueprint, {error}] = useMutation(ADD_BLUEPRINT, {
+    const [formInfo, setInfo] = useState("");
+
+    const [addBlueprint, { error }] = useMutation(ADD_BLUEPRINT, {
         update(cache, { data: { addBlueprint } }) {
-            try {
-                const { blueprints } = cache.readQuery({ query: QUERY_SINGLE_BLUEPRINT});
-                cache.writeQuery({
-                    query: QUERY_SINGLE_BLUEPRINT,
-                    data: { blueprints: [addBlueprint, ...blueprints] }
-                });
-            } catch (e) {
-                console.error(e);
-            }
-            const { me } = cache.readQuery({ query: QUERY_ME });
-            cache.writeQuery({
-                query: QUERY_ME,
-                data: { me: {...me, blueprints: [...me.blueprints, addBlueprint] } }
+        try {
+            const { blueprints } = cache.readQuery({
+                query: QUERY_SINGLE_BLUEPRINT,
             });
+            cache.writeQuery({
+                query: QUERY_SINGLE_BLUEPRINT,
+                data: { blueprints: [addBlueprint, ...blueprints] },
+            });
+        } catch (e) {
+            console.error(e);
         }
+        const { me } = cache.readQuery({ query: QUERY_ME });
+        cache.writeQuery({
+            query: QUERY_ME,
+            data: { me: { ...me, blueprints: [...me.blueprints, addBlueprint] } },
+        });
+        },
     });
 
-  const state = useSelector((state) => state);
-
-  const { loading, data } = useQuery(QUERY_ME);
-  const posts = data?.me.posts || [];
-  const blueprints = data?.me.blueprints || [];
-  const courses = data?.me.courses || [];
-  const { categories } = useQuery(QUERY_CATEGORIES);
-  console.log(categories, "this is categories");
-  console.log(data, "this is query_me")
-
-  const [formInfo, setInfo] = useState("");
-
-  const [addBlueprint, { error }] = useMutation(ADD_BLUEPRINT, {
-    update(cache, { data: { addBlueprint } }) {
-      try {
-        const { blueprints } = cache.readQuery({
-          query: QUERY_SINGLE_BLUEPRINT,
-        });
+    const [addCourse] = useMutation(ADD_COURSE, {
+        update(cache, { data: { addCourse } }) {
+        try {
+            const { courses } = cache.readQuery({ query: QUERY_SINGLE_COURSE });
+            cache.writeQuery({
+            query: QUERY_SINGLE_COURSE,
+            data: { courses: [addCourse, ...courses] },
+            });
+        } catch (e) {
+            console.error(e);
+        }
+        const { me } = cache.readQuery({ query: QUERY_ME });
         cache.writeQuery({
-          query: QUERY_SINGLE_BLUEPRINT,
-          data: { blueprints: [addBlueprint, ...blueprints] },
+            query: QUERY_ME,
+            data: { me: { ...me, courses: [...me.courses, addCourse] } },
         });
-      } catch (e) {
-        console.error(e);
-      }
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      cache.writeQuery({
-        query: QUERY_ME,
-        data: { me: { ...me, blueprints: [...me.blueprints, addBlueprint] } },
-      });
-    },
-  });
-
-  const [addCourse] = useMutation(ADD_COURSE, {
-    update(cache, { data: { addCourse } }) {
-      try {
-        const { courses } = cache.readQuery({ query: QUERY_SINGLE_COURSE });
-        cache.writeQuery({
-          query: QUERY_SINGLE_COURSE,
-          data: { courses: [addCourse, ...courses] },
-        });
-      } catch (e) {
-        console.error(e);
-      }
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      cache.writeQuery({
-        query: QUERY_ME,
-        data: { me: { ...me, courses: [...me.courses, addCourse] } },
-      });
-    },
-  });
+        },
+    });
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      await addBlueprint({
-        variables: { formInfo },
-      });
-      await addCourse({
-        variables: { formInfo },
-      });
+        await addBlueprint({
+            variables: { formInfo },
+        });
+        await addCourse({
+            variables: { formInfo },
+        });
 
-      setInfo("");
-    } catch (e) {
-      console.error(e);
+        setInfo("");
+        } catch (e) {
+        console.error(e);
+        }
+    };
+
+    if (!Auth.loggedIn()) {
+        return <Redirect to="/login" />;
     }
-  };
-
-  if (!Auth.loggedIn()) {
-    return <Redirect to="/login" />;
-  }
-
-    
 
     return (
         <div>
             <h2>Dashboard</h2>
+            <div>
+                <h3>My Courses</h3>
+            </div>
+            <div>
+                <h3>My Blueprints</h3>
+            </div>
+            <div>
+                <h3>My Posts</h3>
+                <div className="flex-row">
+                {posts.map((post) => (
+                    <SinglePost
+                    key={post._id}
+                    _id={post._id}
+                    title={post.title}
+                    username={post.username}
+                    createdAt={post.createdAt}
+                    />
+                ))}
+            </div>
+        </div>
             <div className="form-div">
                 <h3>Add a Course</h3>
                 <Form onSubmit={handleFormSubmit}>
@@ -231,11 +198,7 @@ const Dashboard = () => {
                     <Form.Field>
                         <label htmlFor="category">Category: </label>
                         <select className="select">
-                        {categories.map((item) => (
-                            
-                                item.name
-                            
-                        ))}
+                            {/* NEED TO MAP CATEGORIES */}
                         </select>
                     </Form.Field>
                     <Button type='submit'>

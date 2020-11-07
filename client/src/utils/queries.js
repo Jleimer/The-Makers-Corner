@@ -39,7 +39,6 @@ export const QUERY_SINGLE_USER = gql`
           name
         }
       }
-      }
       posts {
         _id
         title
