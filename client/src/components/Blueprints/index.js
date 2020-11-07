@@ -5,6 +5,7 @@ import { UPDATE_BLUEPRINTS } from "../../utils/actions";
 import { useQuery } from '@apollo/react-hooks';
 import { QUERY_CATEGORY_BLUEPRINTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
+import { Card } from "semantic-ui-react";
 
 function Blueprints() {
     const dispatch = useDispatch();

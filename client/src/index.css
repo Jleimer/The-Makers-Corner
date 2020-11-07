@@ -4,7 +4,7 @@ html, body {
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: ''Lato', sans-serif';
 }
 
 ul {
@@ -71,11 +71,10 @@ form
   padding: 8px 10px;
   margin: 8px 0px;
   box-sizing: border-box;
-  /* min-width: 250px; */
 }
 
 input[type=text], select, textarea {
-  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+  resize: vertical
 }
 
 .blueprints {
@@ -99,6 +98,10 @@ button {
   margin-bottom: 15px;
   font-family: 'Lato', sans-serif;
   font-weight: bolder;
+}
+
+.cartBtn {
+ width: 50%;
 }
 
 .instead {

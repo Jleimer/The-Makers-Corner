@@ -15,10 +15,11 @@ import MessageBoard from './pages/MessageBoard';
 import Signup from './pages/Signup';
 import SinglePost from './pages/SinglePost';
 
-import Navigation from './components/Navigation';
+import Navigation from './components/Navigation'
 import Footer from './components/Footer';
 import { Provider } from 'react-redux';
 import store from './utils/store';
+import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 
 const client = new ApolloClient({
@@ -45,7 +46,8 @@ function App() {
               <Route exact path="/" component={Home}/>
               <Route exact path="/blueprints" component={Blueprints}/>
               <Route exact path="/courses" component={Course}/>
-              <Route exact path="/products:id" component={Detail}/>
+              <Route exact path="/blueprints/:id" component={Detail}/>
+              <Route exact path="/courses/:id" component={Detail}/>
               <Route exact path="/dashboard" component={Dashboard}/>
               <Route exact path="/login" component={Login}/>
               <Route exact path="/orderhistory" component={OrderHistory}/>

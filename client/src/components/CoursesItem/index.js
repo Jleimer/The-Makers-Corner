@@ -4,17 +4,20 @@ import { pluralize } from "../../utils/helpers"
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
+import { Card, Button } from 'semantic-ui-react';
 
 function CoursesItem(item) {
   const dispatch = useDispatch();
   const state = useSelector(state => state);
 
   const {
-    image,
     name,
     _id,
+    description,
     price,
-    quantity
+    difficulty,
+    items, 
+    username
   } = item;
 
   const { cart } = state
@@ -41,19 +44,36 @@ function CoursesItem(item) {
   }
 
   return (
-    <div className="card px-1 py-1">
-      <Link to={`/courses/${_id}`}>
-        {/* <img
+    <div>
+      {/* <Link to={`/courses/${_id}`}>
+        <img
           alt={name}
           src={`/images/${image}`}
-        /> */}
+        />
         <p>{name}</p>
       </Link>
       <div>
         <div>{quantity} {pluralize("item", quantity)} in stock</div>
         <span>${price}</span>
       </div>
-      <button onClick={addToCart}>Add to cart</button>
+      <button onClick={addToCart}>Add to cart</button> */}
+
+      <Card href={`/courses/{_id}`}>
+          <Card.Content>
+              <Card.Header>{name}</Card.Header>
+              <Card.Meta>Posted by {username}</Card.Meta>
+              <Card.Description>{description}</Card.Description>
+          </Card.Content>
+          <Card.Content>
+              <Card.Meta>{difficulty}</Card.Meta>
+              <Card.Meta>Price: ${price}</Card.Meta>
+              <Card.Meta>Items included: {items}</Card.Meta>
+              <br></br>
+              <Button basic color='black' className="cartBtn" onClick={addToCart}>
+                  Add to Cart
+              </Button>
+          </Card.Content>
+      </Card>
     </div>
   );
 }

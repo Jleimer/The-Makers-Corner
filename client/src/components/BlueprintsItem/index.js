@@ -4,6 +4,8 @@ import { pluralize } from "../../utils/helpers"
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import {idbPromise } from "../../utils/helpers";
+import { Card, Button } from 'semantic-ui-react';
+import Cart from "../Cart";
 
 function BlueprintsItem(item) {
     const dispatch = useDispatch();
@@ -14,11 +16,8 @@ function BlueprintsItem(item) {
         name,
         _id,
         price,
-        quantity,
         description,
         username,
-        category,
-        reviews,
         difficulty
     } = item;
 
@@ -46,12 +45,8 @@ function BlueprintsItem(item) {
     }
 
     return ( 
-        <div className = "card px-1 py-1" >
-            <Link to = {`/blueprints/${_id}`} >
-                {/* <img 
-                    alt = {name}
-                    src = {`/images/${image}`}
-                />  */}
+        <div>
+            {/* <Link to = {`/blueprints/${_id}`} >
                 <p>{name}</p>
             </Link> 
             <div>
@@ -61,7 +56,22 @@ function BlueprintsItem(item) {
                 <div>{quantity} {pluralize("item", quantity)} in stock </div>
                 <span>${price}</span> 
             </div>
-            <button onClick={addToCart}> Add to cart </button> 
+            <button onClick={addToCart}> Add to cart </button>  */}
+            <Card href={`/blueprints/{_id}`}>
+                <Card.Content>
+                    <Card.Header>{name}</Card.Header>
+                    <Card.Meta>Posted by {username}</Card.Meta>
+                    <Card.Description>{description}</Card.Description>
+                </Card.Content>
+                <Card.Content>
+                    <Card.Meta>{difficulty}</Card.Meta>
+                    <Card.Meta>Price: ${price}</Card.Meta>
+                    <br></br>
+                    <Button basic color='black' className="cartBtn" onClick={addToCart}>
+                        Add to Cart
+                    </Button>
+                </Card.Content>
+            </Card>
         </div>
     );
 }
