@@ -34,7 +34,9 @@ const resolvers = {
         .sort({ createdAt: -1 });
     },
     blueprint: async (parent, { blueprintId }) => {
-      return await Blueprint.findById({_id: blueprintId}).populate("category").populate("reviews");
+      return await Blueprint.findById({ _id: blueprintId })
+        .populate("category")
+        .populate("reviews");
     },
     courses: async (parent, { category, name }) => {
       const params = {};
@@ -53,7 +55,9 @@ const resolvers = {
         .sort({ createdAt: -1 });
     },
     course: async (parent, { courseId }) => {
-      return await Course.findById({_id: courseId}).populate("category").populate("reviews");
+      return await Course.findById({ _id: courseId })
+        .populate("category")
+        .populate("reviews");
     },
     posts: async (parent, { category, name }) => {
       const params = {};
@@ -72,7 +76,9 @@ const resolvers = {
         .sort({ createdAt: -1 });
     },
     post: async (parent, { postId }) => {
-      return await Post.findById({_id: postId}).populate("category").populate("comments");
+      return await Post.findById({ _id: postId })
+        .populate("category")
+        .populate("comments");
     },
     me: async (parent, args, context) => {
       if (context.user) {
@@ -90,7 +96,7 @@ const resolvers = {
           .populate("courses")
           .populate("blueprints")
           .populate("posts");
-          
+
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
         return user;
@@ -98,14 +104,14 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
-    user: async (parent, {username}, context) => {
+    user: async (parent, { username }, context) => {
       if (context.user) {
         const user = await User.findById(username)
           .select("-__v -password")
           .populate("courses")
           .populate("blueprints")
           .populate("posts");
-          
+
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
         return user;
@@ -174,6 +180,20 @@ const resolvers = {
       });
       return { session: session.id };
     },
+    orderHistory: async (parent, args, context) => {
+      if (context.user) {
+        await User.findById(context.user._id)
+          .select("-password")
+          .populate({
+            path: "orders.blueprints",
+            populate: "category",
+          })
+          .populate({
+            path: "orders.courses",
+            populate: "category",
+          });
+      }
+    },
   },
   Mutation: {
     addUser: async (parent, args) => {
@@ -212,7 +232,7 @@ const resolvers = {
     },
     updateUser: async (parent, args, context) => {
       if (context.user) {
-        return await User.findByIdAndUpdate({_id: context.user._id}, args, {
+        return await User.findByIdAndUpdate({ _id: context.user._id }, args, {
           new: true,
         });
       }
@@ -221,7 +241,9 @@ const resolvers = {
     },
     addBlueprint: async (parent, args, context) => {
       if (context.user) {
-        let newBlueprint = await (await Blueprint.create({ ...args, username: context.user.username })).populate("category");
+        let newBlueprint = await (
+          await Blueprint.create({ ...args, username: context.user.username })
+        ).populate("category");
         newBlueprint = await newBlueprint.populate("category").execPopulate();
 
         await User.findByIdAndUpdate(
@@ -236,7 +258,10 @@ const resolvers = {
     },
     addCourse: async (parent, args, context) => {
       if (context.user) {
-        let newCourse = await Course.create({ ...args, username: context.user.username });
+        let newCourse = await Course.create({
+          ...args,
+          username: context.user.username,
+        });
         newCourse = await newCourse.populate("category").execPopulate();
 
         await User.findByIdAndUpdate(
@@ -251,9 +276,12 @@ const resolvers = {
     },
     addPost: async (parent, args, context) => {
       if (context.user) {
-        let newPost = await Post.create({ ...args, username: context.user.username });
+        let newPost = await Post.create({
+          ...args,
+          username: context.user.username,
+        });
         newPost = await newPost.populate("category").execPopulate();
-        
+
         await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { posts: newPost._id } },
@@ -267,7 +295,10 @@ const resolvers = {
     //I don't think this is right
     addCommentPost: async (parent, { postId, args }, context) => {
       if (context.user) {
-        let newComment = await Comment.create({ ...args, username: context.user.username });
+        let newComment = await Comment.create({
+          ...args,
+          username: context.user.username,
+        });
 
         await Post.findByIdAndUpdate(
           { _id: postId },
@@ -281,7 +312,10 @@ const resolvers = {
     },
     addCourseReview: async (parent, { courseId, args }, context) => {
       if (context.user) {
-        const newReview = await Review.create({ ...args, username: context.user.username });
+        const newReview = await Review.create({
+          ...args,
+          username: context.user.username,
+        });
 
         await Course.findByIdAndUpdate(
           { _id: courseId },
@@ -295,7 +329,10 @@ const resolvers = {
     },
     addBlueprintReview: async (parent, { blueprintId, args }, context) => {
       if (context.user) {
-        const newReview = await Review.create({ ...args, username: context.user.username });
+        const newReview = await Review.create({
+          ...args,
+          username: context.user.username,
+        });
 
         await Blueprint.findByIdAndUpdate(
           { _id: blueprintId },
@@ -307,9 +344,9 @@ const resolvers = {
       }
       throw new AuthenticationError("Not logged in!");
     },
-    updateCourse: async (parent, {courseId, ...args}, context) => {
+    updateCourse: async (parent, { courseId, ...args }, context) => {
       if (context.user) {
-        return await Course.findByIdAndUpdate({_id: courseId}, args, {
+        return await Course.findByIdAndUpdate({ _id: courseId }, args, {
           new: true,
         }).populate("reviews");
       }
@@ -318,11 +355,9 @@ const resolvers = {
     },
     updateBlueprint: async (parent, { blueprintId, ...args }, context) => {
       if (context.user) {
-        return await Blueprint.findByIdAndUpdate(
-          { _id: blueprintId },
-          args,
-          { new: true }
-        ).populate("reviews");
+        return await Blueprint.findByIdAndUpdate({ _id: blueprintId }, args, {
+          new: true,
+        }).populate("reviews");
       }
       throw new AuthenticationError("Not logged in!");
     },
@@ -336,22 +371,25 @@ const resolvers = {
     },
     deleteBlueprint: async (parent, { blueprintId }, context) => {
       if (context.user) {
-        await Blueprint.findByIdAndDelete(
-          { _id: blueprintId }
-        );
-        await User.findByIdAndUpdate({_id:context.user._id}, {$pull: {blueprints: blueprintId}}, {new: true}).select("-__v -password")
-        .populate({
-          path: "orders.courses",
-          populate: "category",
-        })
-        .populate({
-          path: "orders.blueprints",
-          populate: "category",
-        })
-        .populate("courses")
-        .populate("blueprints")
-        .populate("posts");
-        
+        await Blueprint.findByIdAndDelete({ _id: blueprintId });
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $pull: { blueprints: blueprintId } },
+          { new: true }
+        )
+          .select("-__v -password")
+          .populate({
+            path: "orders.courses",
+            populate: "category",
+          })
+          .populate({
+            path: "orders.blueprints",
+            populate: "category",
+          })
+          .populate("courses")
+          .populate("blueprints")
+          .populate("posts");
+
         return User;
       }
 
@@ -360,19 +398,24 @@ const resolvers = {
     deleteCourse: async (parent, { courseId }, context) => {
       if (context.user) {
         await Course.findByIdAndDelete({ _id: courseId }, { new: true });
-        await User.findByIdAndUpdate({_id:context.user._id}, {$pull: {courses: courseId}}, {new: true}).select("-__v -password")
-        .populate({
-          path: "orders.courses",
-          populate: "category",
-        })
-        .populate({
-          path: "orders.blueprints",
-          populate: "category",
-        })
-        .populate("courses")
-        .populate("blueprints")
-        .populate("posts");
-        
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $pull: { courses: courseId } },
+          { new: true }
+        )
+          .select("-__v -password")
+          .populate({
+            path: "orders.courses",
+            populate: "category",
+          })
+          .populate({
+            path: "orders.blueprints",
+            populate: "category",
+          })
+          .populate("courses")
+          .populate("blueprints")
+          .populate("posts");
+
         return User;
       }
 
@@ -382,22 +425,26 @@ const resolvers = {
       if (context.user) {
         await Post.findByIdAndDelete({ _id: postId }, { new: true });
 
-        await User.findByIdAndUpdate({_id:context.user._id}, {$pull: {posts: postId}}, {new: true}).select("-__v -password")
-        .populate({
-          path: "orders.courses",
-          populate: "category",
-        })
-        .populate({
-          path: "orders.blueprints",
-          populate: "category",
-        })
-        .populate("courses")
-        .populate("blueprints")
-        .populate("posts");
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $pull: { posts: postId } },
+          { new: true }
+        )
+          .select("-__v -password")
+          .populate({
+            path: "orders.courses",
+            populate: "category",
+          })
+          .populate({
+            path: "orders.blueprints",
+            populate: "category",
+          })
+          .populate("courses")
+          .populate("blueprints")
+          .populate("posts");
 
         return User;
       }
-      
 
       throw new AuthenticationError("Not logged in!");
     },
@@ -408,29 +455,29 @@ const resolvers = {
           { $pull: { comments: { _id: commentId } } },
           { new: true }
         ).populate("comments");
-        await Comment.findByIdAndDelete(
-          {
-            _id: commentId,
-          }
-        );
+        await Comment.findByIdAndDelete({
+          _id: commentId,
+        });
 
         return updatedPost;
       }
 
       throw new AuthenticationError("Not logged in!");
     },
-    deleteBlueprintReview: async (parent, { blueprintId, reviewId }, context) => {
+    deleteBlueprintReview: async (
+      parent,
+      { blueprintId, reviewId },
+      context
+    ) => {
       if (context.user) {
         await Blueprint.findByIdAndUpdate(
           { _id: blueprintId },
           { $pull: { reviews: { _id: reviewId } } },
           { new: true }
         ).populate("reviews");
-        await Review.findByIdAndDelete(
-          {
-            _id: reviewId,
-          }
-        );
+        await Review.findByIdAndDelete({
+          _id: reviewId,
+        });
 
         return Blueprint;
       }
@@ -444,11 +491,9 @@ const resolvers = {
           { $pull: { reviews: { _id: reviewId } } },
           { new: true }
         ).populate("reviews");
-        await Review.findByIdAndDelete(
-          {
-            _id: reviewId,
-          }
-        );
+        await Review.findByIdAndDelete({
+          _id: reviewId,
+        });
 
         return Course;
       }
