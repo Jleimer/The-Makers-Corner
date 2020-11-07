@@ -12,7 +12,8 @@ export const QUERY_CATEGORIES = gql`
 
 //returns the single user info - shows that user dashboard
 export const QUERY_SINGLE_USER = gql`
- {
+  {
+    token
     user {
       firstName
       lastName
@@ -55,7 +56,7 @@ export const QUERY_SINGLE_USER = gql`
 //returns just the person logged in - dashboard
 export const QUERY_ME = gql`
   {
-    user {
+    me {
       firstName
       lastName
       username

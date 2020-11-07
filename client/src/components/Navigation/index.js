@@ -63,6 +63,11 @@ function Navigation() {
             </Link>
           </li>
           <li>
+            <Link to="/messageboard">
+              Message Board
+            </Link>
+          </li>
+          <li>
             <Link to="/signup">
               Signup
             </Link>

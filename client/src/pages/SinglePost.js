@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 
 import PostList from '../components/PostList';
 import PostForm from '../components/PostForm';
@@ -16,6 +16,9 @@ const SinglePost = props => {
     });
 
     const post = data?.post || {};
+    if (!Auth.loggedIn()) {
+        return <Redirect to="/login" />;
+      }
 
     if (loading) {
         return <div>Loading...</div>;

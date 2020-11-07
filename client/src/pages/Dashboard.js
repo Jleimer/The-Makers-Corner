@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { ADD_COURSE, ADD_BLUEPRINT } from '../utils/mutations';
+import Auth from "../utils/auth";
 import { QUERY_SINGLE_COURSE, QUERY_SINGLE_BLUEPRINT, QUERY_ME } from '../utils/queries';
+import { Redirect } from 'react-router-dom';
 
 const Dashboard = () => {
+    
     const [formInfo, setInfo] = useState('');
     
     const [addBlueprint, {error}] = useMutation(ADD_BLUEPRINT, {
@@ -60,6 +63,10 @@ const Dashboard = () => {
         console.error(e);
         }
     };
+
+    if (!Auth.loggedIn()) {
+       return <Redirect to="/login" />;
+    }
 
     return (
         <div>
@@ -142,9 +149,10 @@ const Dashboard = () => {
                         </div>
                         <div>
                             <label htmlFor="category">Category: </label>
-                            <select
-                                className="select"
-                            >
+                            <select className="select">
+                                {/* {state.categories.map((category) => {
+                                    return <option value={category._id}>{category.name}</option>
+                                })} */}
                             </select>
                         </div>
                         <button type='submit'>

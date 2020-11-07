@@ -92,7 +92,7 @@ const typeDefs = gql`
         post(postId: ID!): Post
         user(username: String!): User
         users: [User]
-        me: Auth
+        me: User
         order(_id: ID!): Order
         checkout(courses: [ID]!, blueprints: [ID]!): Checkout
     }
