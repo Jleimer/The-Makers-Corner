@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { QUERY_ALL_POSTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 import SinglePost from "../SinglePost";
+import { Feed, Grid } from "semantic-ui-react";
 
 function PostList() {
   const state = useSelector((state) => state);
@@ -43,20 +44,23 @@ function PostList() {
 
   return (
     <div className="my-2">
-      <h2>Our Posts:</h2>
-
+      <h3>Join the Discussion:</h3>
       {loading ? (
         <h3>Loading posts...</h3>
       ) : (
-        <div className="flex-row">
+        <div className="feed">
           {posts.map((post) => (
-            <SinglePost
-              key={post._id}
-              _id={post._id}
-              title={post.title}
-              username={post.username}
-              createdAt={post.createdAt}
-            />
+            <Grid textAlign='center'>
+              <Feed>
+                <SinglePost
+                  key={post._id}
+                  _id={post._id}
+                  title={post.title}
+                  username={post.username}
+                  createdAt={post.createdAt}
+                />
+              </Feed>
+            </Grid>
           ))}
         </div>
       )}
