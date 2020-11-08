@@ -79,7 +79,7 @@ const typeDefs = gql`
         products(categroy: ID, type: ID, name: String): [Product]
         product(productId: ID!): Product
         blueprints(category: ID, type: ID, name: String): [Product]
-        courses(type: ID, category: ID, name: String): [Course]
+        courses(type: ID, category: ID, name: String): [Product]
         posts(category: ID, name: String): [Post]
         post(postId: ID!): Post
         user(username: String!): User

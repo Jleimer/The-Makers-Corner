@@ -12,6 +12,6 @@ const typeSchema = new Schema (
     }
 );
 
-const Type = mongoose.model('Type', categorySchema);
+const Type = mongoose.model('Type', typeSchema);
 
 module.exports = Type;
