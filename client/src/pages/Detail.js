@@ -41,23 +41,14 @@ const Detail = () => {
             });
             dispatch({
                 type: UPDATE_COURSES,
-                courses: data.courses
+                products: data.courses
             });
 
             data.courses.forEach((course) => {
                 idbPromise('courses', 'put', course);
             });
         }
-        // else if (data) {
-        //     dispatch({
-        //         type: UPDATE_COURSES,
-        //         courses: data.courses
-        //     });
-
-        //     data.courses.forEach((course) => {
-        //         idbPromise('courses', 'put', course);
-        //     });
-        // }
+        
         else if (!loading) {
             idbPromise('blueprints', 'get').then((indexedBlueprints) => {
               dispatch({
@@ -75,43 +66,58 @@ const Detail = () => {
     }, [blueprints, courses, data, loading, dispatch, id]);
 
     const addToCart = () => {
-        const itemInCart = cart.find((cartItem) => cartItem._id === id)
-        if (!itemInCart) {
-            dispatch({
-                type: ADD_TO_CART,
-                blueprint: {...currentBlueprint, purchaseQuantity: 1},
-                course: {...currentCourse, purchaseQuantity: 1}
-            });
-            idbPromise('cart', 'put', {...currentBlueprint || currentCourse, purchaseQuantity: 1});
-        }
+      const itemInCart = cart.find((cartItem) => cartItem._id === id)
+    
+      if (itemInCart) {
+        dispatch({
+          type: UPDATE_CART_QUANTITY,
+          _id: id,
+          purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+        });
+        // if we're updating quantity, use existing item data and increment purchaseQuantity value by one
+        idbPromise('cart', 'put', {
+          ...itemInCart,
+          purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+        });
+      } else {
+        dispatch({
+          type: ADD_TO_CART,
+          product: { ...currentProduct, purchaseQuantity: 1 }
+        });
+        // if product isn't in the cart yet, add it to the current shopping cart in IndexedDB
+        idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
+      }
     }
 
     const removeFromCart = () => {
-        dispatch({
-          type: REMOVE_FROM_CART,
-          _id: currentBlueprint._id || currentCourse._id
-        });
-    
-        idbPromise('cart', 'delete', { ...currentBlueprint || currentCourse });
-      };
+      dispatch({
+        type: REMOVE_FROM_CART,
+        _id: currentProduct._id
+      });
 
     return (
         <>
-        {currentBlueprint || currentCourse && cart ? (
-          <div>
-            <h2>{currentBlueprint.name || currentCourse.name}</h2>
-            <p>
-              {currentBlueprint.description || currentCourse.description}
-            </p>
-            <p>
+        {currentProduct ? (
+        <div className="container my-1">
+          <Link to="/">
+            ← Back to Products
+          </Link>
+
+          <h2>{currentProduct.name}</h2>
+
+          <p>
+            {currentProduct.description}
+          </p>
+
+          <p>
               <strong>Price:</strong>
-              ${currentBlueprint.price || currentCourse.price}
+              ${currentProduct.price}
               {" "}
               <button onClick={addToCart}>
                 Add to Cart
               </button>
               <button 
-                disabled={!cart.find(p => p._id === currentBlueprint._id || currentCourse._id)} 
+                disabled={!cart.find(p => p._id === currentProduct._id)} 
                 onClick={removeFromCart}
               >
                 Remove from Cart
@@ -121,6 +127,6 @@ const Detail = () => {
         ) : null}
       </>
     );
-};
+}};
 
 export default Detail;

@@ -38,6 +38,11 @@ const blueprintSchema = new Schema({
     ref: "Category",
     required: true,
   },
+  types: {
+    type: Schema.Types.ObjectId,
+    ref: "Types",
+    required: true,
+  },
   reviews: {
     type: Schema.Types.ObjectId,
     ref: "Review",

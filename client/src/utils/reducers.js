@@ -16,8 +16,8 @@ import {
 } from "./actions";
 
 const initialState = {
-  // blueprints: [],
-  // courses: [],
+  blueprints: [],
+  courses: [],
   products: [],
   cart: [],
   cartOpen: false,
@@ -33,6 +33,12 @@ export const reducer = (state = initialState, action) => {
         ...state,
         categories: [...action.categories],
       };
+      case UPDATE_PRODUCTS:
+        return {
+          ...state,
+          products: [...action.products],
+        };
+      
     case UPDATE_CURRENT_CATEGORY:
       console.log(action);
       return {

@@ -57,12 +57,8 @@ const Cart = () => {
     });
 
     getCheckout({
-      variables: { 
-          blueprints: productIds,
-          courses: productIds
-          
-        }
-    });
+        variables: { products: productIds }
+      });
   }
 
   if (!state.cartOpen) {
