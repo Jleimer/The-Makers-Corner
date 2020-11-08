@@ -12,11 +12,13 @@ import {
   TOGGLE_CART,
   UPDATE_CART_QUANTITY,
   CLEAR_CART,
+  UPDATE_PRODUCTS
 } from "./actions";
 
 const initialState = {
-  blueprints: [],
-  courses: [],
+  // blueprints: [],
+  // courses: [],
+  products: [],
   cart: [],
   cartOpen: false,
   categories: [],
@@ -79,30 +81,26 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         cartOpen: true,
-        cart: [...state.cart, action.blueprints, action.courses],
+        cart: [...state.cart, action.products],
       };
 
     case ADD_MULTIPLE_TO_CART:
       console.log(action);
       return {
         ...state,
-        cart: [...state.cart, ...action.blueprints, ...action.courses],
+        cart: [...state.cart, ...action.products],
       };
 
-    case REMOVE_FROM_CART:
-      console.log(action);
-      let blueprintState = state.cart.blueprints.filter((blueprints) => {
-        return blueprints._id !== action._id;
-      });
-      let courseState = state.cart.courses.filter((courses) => {
-        return courses._id !== action._id;
-      });
-
-      return {
-        ...state,
-        cartOpen: blueprintState.length > 0 || courseState.length > 0,
-        cart: [...state.cart, blueprintState, courseState],
-      };
+      case REMOVE_FROM_CART:
+        let newState = state.cart.filter(product => {
+          return product._id !== action._id;
+        });
+  
+        return {
+          ...state,
+          cartOpen: newState.length > 0,
+          cart: newState
+        };
 
     case TOGGLE_CART:
       console.log(action);
@@ -111,18 +109,17 @@ export const reducer = (state = initialState, action) => {
         cartOpen: !state.cartOpen,
       };
 
-    case UPDATE_CART_QUANTITY:
-      console.log(action);
-      return {
-        ...state,
-        cartOpen: true,
-        cart: state.cart.blueprints.map((blueprints) => {
-          if (action._id === blueprints._id) {
-            blueprints.purchaseQuantity = action.purchaseQuantity;
-          }
-          return blueprints;
-        }),
-      };
+      case UPDATE_CART_QUANTITY:
+        return {
+          ...state,
+          cartOpen: true,
+          cart: state.cart.map(product => {
+            if (action._id === product._id) {
+              product.purchaseQuantity = action.purchaseQuantity
+            }
+            return product
+          })
+        };
 
     case CLEAR_CART:
       console.log(action);

@@ -8,7 +8,7 @@ export const ADD_REVIEW = 'ADD_REVIEW';
 export const UPDATE_BLUEPRINTS = 'UPDATE_BLUEPRINTS';
 export const UPDATE_COURSES = 'UPDATE_COURSES';
 export const UPDATE_POSTS = 'UPDATE_POSTS';
-
+export const UPDATE_PRODUCTS = 'UPDATE_PRODUCTS';
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const ADD_MULTIPLE_TO_CART = 'ADD_MULTIPLE_TO_CART';

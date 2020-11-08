@@ -135,7 +135,7 @@ export const QUERY_ORDER_HISTORY = gql`
 
 //checking out with items in the cart
 export const QUERY_CHECKOUT = gql`
-  query checkout($products: [ID]!) {
+  query checkout($blueprints: [ID]!) {
     checkout(products: $products) {
       session
     }
