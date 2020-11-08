@@ -1,5 +1,5 @@
 const db = require("./connection");
-const { User, Course, Blueprint, Category, Order, Post, Type } = require("../models");
+const { User, Type, Product, Category, Order, Post } = require("../models");
 
 db.once("open", async () => {
   await Category.deleteMany();
@@ -21,8 +21,8 @@ db.once("open", async () => {
   console.log("categories seeded");
   console.log(categories[0]._id, categories[0].name);
 
-  await Course.deleteMany();
-  const courses = await Course.insertMany([
+  await Product.deleteMany();
+  const products = await Product.insertMany([
     {
       name: "Resin Pouring",
       description:
@@ -31,6 +31,7 @@ db.once("open", async () => {
       difficulty: "Beginner",
       items: "Resin, wood(walnut), pouring frame",
       category: categories[2]._id,
+      items: "tools",
       type: type[1]._id,
       username: "jleimer",
     },
@@ -46,13 +47,6 @@ db.once("open", async () => {
       type: type[1]._id,
       username: "kwedwick",
     },
-  ]);
-  console.log("courses seeded");
-  console.log(courses[1].category);
-
-  await Blueprint.deleteMany();
-
-  const blueprints = await Blueprint.insertMany([
     {
       name: "Workbench",
       description:
@@ -61,6 +55,7 @@ db.once("open", async () => {
       file: "",
       price: 6.0,
       difficulty: "Some exprience required",
+      items: "tools",
       category: categories[3]._id,
       type: type[0]._id,
       username: "jleimer",
@@ -73,11 +68,17 @@ db.once("open", async () => {
       file: "",
       price: 5.0,
       difficulty: "Experience with table saw required",
+      items: "tools",
       category: categories[4]._id,
       type: type[0]._id,
       username: "kwedwick",
     },
   ]);
+  console.log("products seeded");
+  console.log(products[1].category);
+
+ 
+
   console.log("blueprints seeded");
 
   await Post.deleteMany();
@@ -114,8 +115,7 @@ db.once("open", async () => {
       email: "jleimer@testmail.com",
       username: "jleimer",
       password: "ghost",
-      blueprints: blueprints[0]._id,
-      courses: courses[0]._id,
+      products: [products[0]._id, products[2].Id],
       posts: [posts[2]._id],
     },
     {
@@ -124,8 +124,7 @@ db.once("open", async () => {
       email: "kwedwick@testmail.com",
       password: "ghost",
       username: "kwedwick",
-      blueprints: blueprints[1]._id,
-      courses: courses[1]._id,
+      products: [products[1]._id, products[1]._id],
       posts: [posts[0]._id, posts[1]._id],
     }
   );
