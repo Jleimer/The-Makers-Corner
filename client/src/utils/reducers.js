@@ -17,7 +17,10 @@ import {
 const initialState = {
   blueprints: [],
   courses: [],
-  cart: [],
+  cart: {
+    blueprints:[],
+    courses: [],
+  },
   cartOpen: false,
   categories: [],
   currentCategory: "",
@@ -76,17 +79,26 @@ export const reducer = (state = initialState, action) => {
 
     case ADD_TO_CART:
       console.log(action);
-      return {
+      if (action.blueprints) {
+        return {
         ...state,
         cartOpen: true,
-        cart: [...state.cart, action.blueprints, action.courses],
+        cart: [ ...state.cart.blueprints, action.blueprints]
       };
+      } else {
+        return {
+          ...state,
+          cartOpen: true,
+          cart: [ ...state.cart.courses, action.courses]
+        };
+      }
+      
 
     case ADD_MULTIPLE_TO_CART:
       console.log(action);
       return {
         ...state,
-        cart: [...state.cart, ...action.blueprints, ...action.courses],
+        cart: [...state.cart, action.blueprints, action.courses],
       };
 
     case REMOVE_FROM_CART:

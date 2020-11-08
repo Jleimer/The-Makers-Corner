@@ -4,7 +4,7 @@ import { pluralize } from "../../utils/helpers"
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import {idbPromise } from "../../utils/helpers";
-import { Card, Button, Container } from 'semantic-ui-react';
+import { Card, Button } from 'semantic-ui-react';
 import Cart from "../Cart";
 
 function BlueprintsItem(item) {
@@ -24,7 +24,8 @@ function BlueprintsItem(item) {
     const { cart } = state
 
     const addToCart = () => {
-        const itemInCart = cart.find((cartItem) => cartItem._id === _id)
+        console.log(state)
+        const itemInCart = cart.blueprints.find((cartItem) => cartItem._id === _id)
         if (itemInCart) {
             dispatch({
                 type: UPDATE_CART_QUANTITY,
@@ -38,29 +39,40 @@ function BlueprintsItem(item) {
         } else {
             dispatch({
                 type: ADD_TO_CART,
-                blueprint: { ...item, purchaseQuantity: 1 }
+                blueprints: { ...item, purchaseQuantity: 1 }
             });
             idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
         }
     }
 
     return ( 
-        <div className='ui cards'>
-        <Card>
-            <Card.Content>
-                <Card.Header href={`/blueprints/{_id}`}>{name}</Card.Header>
-                <Card.Meta>Posted by {username}</Card.Meta>
-                <Card.Description>{description}</Card.Description>
-            </Card.Content>
-            <Card.Content>
-                <Card.Meta>{difficulty}</Card.Meta>
-                <Card.Meta>Price: ${price}</Card.Meta>
-                <br></br>
-                <Button basic color='black' className="cartBtn" onClick={addToCart}>
-                    Add to Cart
-                </Button>
-            </Card.Content>
-        </Card>
+        <div>
+            {/* <Link to = {`/blueprints/${_id}`} >
+                <p>{name}</p>
+            </Link> 
+            <div>
+                <p>{description}</p>
+                <p>{difficulty}</p>
+                <p>{username}</p>
+                <div>{quantity} {pluralize("item", quantity)} in stock </div>
+                <span>${price}</span> 
+            </div>
+            <button onClick={addToCart}> Add to cart </button>  */}
+            <Card>
+                <Card.Content>
+                    <Card.Header href={`/blueprints/{_id}`}>{name}</Card.Header>
+                    <Card.Meta>Posted by {username}</Card.Meta>
+                    <Card.Description>{description}</Card.Description>
+                </Card.Content>
+                <Card.Content>
+                    <Card.Meta>{difficulty}</Card.Meta>
+                    <Card.Meta>Price: ${price}</Card.Meta>
+                    <br></br>
+                    <Button basic color='black' className="cartBtn" onClick={addToCart}>
+                        Add to Cart
+                    </Button>
+                </Card.Content>
+            </Card>
         </div>
     );
 }

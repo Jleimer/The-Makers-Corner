@@ -6,6 +6,11 @@ const typeDefs = gql`
         name: String
     }
 
+    type Type {
+        _id: ID
+        name: String
+    }
+
     type Review {
         _id: ID
         reviewBody: String
@@ -20,7 +25,7 @@ const typeDefs = gql`
         createdAt: String
     }
 
-    type Blueprint {
+    type Product {
         _id: ID
         name: String
         username: String
@@ -29,20 +34,8 @@ const typeDefs = gql`
         file: String
         price: Float
         difficulty: String
-        category: Category
-        reviews: [Review]
-        
-    }
-
-    type Course {
-        _id: ID
-        name: String
-        username: String
-        description: String
-        price: Float
-        courseTime: String
-        difficulty: String
         items: String
+        courseTime: String
         category: Category
         reviews: [Review]
         
@@ -51,8 +44,7 @@ const typeDefs = gql`
     type Order {
         _id: ID
         purchaseDate: String
-        courses: [Course]
-        blueprints: [Blueprint]
+        products: [Product]
     }
 
     type User {
@@ -63,8 +55,7 @@ const typeDefs = gql`
         username: String
         orders: [Order]
         posts: [Post]
-        courses: [Course]
-        blueprints: [Blueprint]
+        products: [Product]
     }
 
     type Post {
@@ -84,40 +75,41 @@ const typeDefs = gql`
 
     type Query {
         categories: [Category]
-        blueprints(category: ID, name: String): [Blueprint]
-        blueprint(blueprintId: ID!): Blueprint
-        courses(category: ID, name: String): [Course]
-        course(courseId: ID!): Course
+        type: [Type]
+        products(categroy: ID, type: ID, name: String): [Product]
+        product(productId: ID!): Product
+        blueprints(category: ID, type: ID, name: String): [Product]
+        courses(type: ID, category: ID, name: String): [Course]
         posts(category: ID, name: String): [Post]
         post(postId: ID!): Post
         user(username: String!): User
         users: [User]
         me: User
         order(_id: ID!): Order
-        checkout(courses: [ID]!, blueprints: [ID]!): Checkout
+        checkout(products: [ID]!): Checkout
         orderHistory: User
     }
 
     type Mutation {
         addUser(firstName: String!, lastName: String!, email: String!, username: String!, password: String!): Auth
-        addOrder(courses:[ID]!, blueprints: [ID]!): Order
+        addOrder(products:[ID]!): Order
         login(email: String!, password: String!): Auth
         updateUser(firstName: String!, lastName: String!, email: String!, password: String!): User
-        addBlueprint(name: String!, description: String!, image: String, file: String, price: Float!, difficulty: String!, category: ID!): Blueprint
-        addCourse(name: String!, description: String!, price: Float!, courseTime: String!, difficulty: String!, items: String!, category: ID!): Course
+        
+        addProduct(name: String!, description: String!, image: String, file: String, price: Float!, difficulty: String!,courseTime: String, items: String!, type: ID!, category: ID!): Product
+    
         addPost(postText: String!, title: String!, category: ID!): Post
         addCommentPost(postId: ID!, commentBody: String!): Post
-        addCourseReview(courseId: ID!, reviewBody: String!): Course
-        addBlueprintReview(blueprintId: ID!, reviewBody: String!): Blueprint
-        updateCourse(courseId: ID!, name: String!, description: String!, courseTime: String!, difficulty: String!, price: Float!, items: String!): Course
-        updateBlueprint(blueprintId: ID!, name: String!, description: String!, difficulty: String!, price: Float!): Blueprint
+        addProductReview(productId: ID!, reviewBody: String!): Product
+        
+        updateProduct(productId: ID!, name: String!, description: String!, image: String, file: String, price: Float!, difficulty: String!, courseTime: String, items: String!, type: ID!, category: ID!): Product
         updatePost(postId: ID!, title: String!, postText: String!, category: ID!): Post
-        deleteBlueprint(blueprintId: ID!): Blueprint
-        deleteCourse(courseId: ID!): Course
+        deleteProduct(productId: ID!): Product
+
         deletePost(postId: ID!): Post
         deleteCommentPost(postId: ID!, commentId: ID!): Post
-        deleteBlueprintReview(blueprintId: ID!, reviewId: ID!): Blueprint
-        deleteCourseReview(blueprintId: ID!, reviewId: ID!): Course
+        deleteProductReview(productId: ID!, reviewId: ID!): Product
+
     }
 
     type Checkout {
