@@ -1,5 +1,5 @@
 const db = require("./connection");
-const { User, Course, Blueprint, Category, Order, Post, Types } = require("../models");
+const { User, Course, Blueprint, Category, Order, Post, Type } = require("../models");
 
 db.once("open", async () => {
   await Category.deleteMany();
@@ -13,7 +13,7 @@ db.once("open", async () => {
     { name: "ceramics" },
   ]);
 
-  const types = await Types.insertMany([
+  const type = await Type.insertMany([
     { name: "blueprints" },
     { name: "courses" },
   ]);
@@ -31,6 +31,7 @@ db.once("open", async () => {
       difficulty: "Beginner",
       items: "Resin, wood(walnut), pouring frame",
       category: categories[2]._id,
+      type: type[1]._id,
       username: "jleimer",
     },
     {
@@ -42,6 +43,7 @@ db.once("open", async () => {
       items:
         "Soldering Iron, flux, glass foil, precut stained glass, glass cutter",
       category: categories[0]._id,
+      type: type[1]._id,
       username: "kwedwick",
     },
   ]);
@@ -60,6 +62,7 @@ db.once("open", async () => {
       price: 6.0,
       difficulty: "Some exprience required",
       category: categories[3]._id,
+      type: type[0]._id,
       username: "jleimer",
     },
     {
@@ -71,6 +74,7 @@ db.once("open", async () => {
       price: 5.0,
       difficulty: "Experience with table saw required",
       category: categories[4]._id,
+      type: type[0]._id,
       username: "kwedwick",
     },
   ]);
