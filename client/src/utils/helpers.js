@@ -14,6 +14,8 @@ export function idbPromise(storeName, method, object) {
     request.onupgradeneeded = function (e) {
       const db = request.result;
       db.createObjectStore("products", { keyPath: "_id" });
+      db.createObjectStore("blueprints", { keyPath: "_id" });
+      db.createObjectStore("courses", { keyPath: "_id" });
       db.createObjectStore("categories", { keyPath: "_id" });
       db.createObjectStore("cart", { keyPath: "_id" });
       db.createObjectStore("posts", { keyPath: "_id" });
