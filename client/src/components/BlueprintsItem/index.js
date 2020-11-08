@@ -4,7 +4,7 @@ import { pluralize } from "../../utils/helpers"
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import {idbPromise } from "../../utils/helpers";
-import { Card, Button } from 'semantic-ui-react';
+import { Card, Button, Container } from 'semantic-ui-react';
 import Cart from "../Cart";
 
 function BlueprintsItem(item) {
@@ -45,6 +45,7 @@ function BlueprintsItem(item) {
     }
 
     return ( 
+        <div className='ui cards'>
         <Card>
             <Card.Content>
                 <Card.Header href={`/blueprints/{_id}`}>{name}</Card.Header>
@@ -60,6 +61,7 @@ function BlueprintsItem(item) {
                 </Button>
             </Card.Content>
         </Card>
+        </div>
     );
 }
 

@@ -8,7 +8,7 @@ function Navigation() {
   function showNavigation() {
     if (Auth.loggedIn()) {
       return (
-        <ul className="flex-row">
+        <ul className="flex-row navigation">
           <li>
             <Link to="/">
               Home
