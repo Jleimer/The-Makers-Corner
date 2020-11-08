@@ -11,7 +11,7 @@ export const QUERY_CATEGORIES = gql`
 `;
 
 export const QUERY_PRODUCTS = gql`
-  query getProducts($category: ID) {
+  query products($category: ID) {
     products(category: $category) {
       _id
       name
@@ -38,9 +38,11 @@ export const QUERY_ALL_PRODUCTS = gql`
       price
       quantity
       category {
+        _id
         name
       }
       type {
+        _id
         name
       }
     }
@@ -99,7 +101,7 @@ export const QUERY_ME = gql`
       firstName
       lastName
       username
-      blueprints {
+      products {
         _id
         name
         description
@@ -110,12 +112,7 @@ export const QUERY_ME = gql`
           name
         }
       }
-      courses {
-        _id
-        name
-        description
-        price
-      }
+      
       posts {
         _id
         title
@@ -131,19 +128,14 @@ export const QUERY_ME = gql`
       orders {
         _id
         purchaseDate
-        blueprints {
+        products {
           _id
           name
           description
           price
           image
         }
-        courses {
-          _id
-          name
-          description
-          price
-        }
+        
       }
     }
   }
@@ -153,26 +145,18 @@ export const QUERY_ORDER_HISTORY = gql`
    {
       user {
         orders {
-          blueprints {
+          products{
             _id
             name
             price
             purchaseDate
-          }
-          courses {
-            _id
-            name
-            price
-            purchaseDate
-          }
         }
       }
     }
-`;
+ }`;
 
-//checking out with items in the cart
 export const QUERY_CHECKOUT = gql`
-  query checkout($blueprints: [ID]!) {
+  query checkout($products: [ID]!) {
     checkout(products: $products) {
       session
     }
@@ -217,15 +201,19 @@ export const QUERY_ALL_BLUEPRINTS = gql`
 `;
 
 // returns single blueprint
-export const QUERY_SINGLE_BLUEPRINT = gql`
-  query blueprint($blueprintId: ID!) {
-    blueprint(blueprintId: $blueprintId) {
+export const QUERY_SINGLE_PRODUCT = gql`
+  query product($productId: ID!) {
+    product(productId: $productId) {
       _id
       username
       name
       description
       price
       category {
+        _id
+        name
+      }
+      type {
         _id
         name
       }
@@ -269,22 +257,22 @@ export const QUERY_ALL_COURSES = gql`
   }
 `;
 
-// returns single course
-export const QUERY_SINGLE_COURSE = gql`
-  query course($courseId: ID!) {
-    course(courseId: $courseId) {
-      _id
-      username
-      name
-      description
-      price
-      category {
-        _id
-        name
-      }
-    }
-  }
-`;
+// // returns single course
+// export const QUERY_SINGLE_COURSE = gql`
+//   query course($courseId: ID!) {
+//     course(courseId: $courseId) {
+//       _id
+//       username
+//       name
+//       description
+//       price
+//       category {
+//         _id
+//         name
+//       }
+//     }
+//   }
+// `;
 
 //queries all of the posts -unfiltered - use for messageboard
 export const QUERY_ALL_POSTS = gql`
