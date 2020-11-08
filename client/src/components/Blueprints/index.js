@@ -46,7 +46,7 @@ function Blueprints() {
     return (
         <div>
             {state.blueprints.length ? (
-                <Grid columns={2} textAlign="center">
+                <Grid columns={2} textAlign="center" padded>
                     {filterBlueprints().map(blueprint => (
                         <BlueprintsItem
                             key={blueprint._id}
@@ -58,6 +58,7 @@ function Blueprints() {
                             difficulty={blueprint.difficulty}
                         />
                     ))}
+                    
                 </Grid>
             ) : (
                 <h3>You haven't added any blueprints yet!</h3>

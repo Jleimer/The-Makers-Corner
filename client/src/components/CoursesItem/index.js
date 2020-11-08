@@ -44,21 +44,8 @@ function CoursesItem(item) {
   }
 
   return (
-    <div>
-      {/* <Link to={`/courses/${_id}`}>
-        <img
-          alt={name}
-          src={`/images/${image}`}
-        />
-        <p>{name}</p>
-      </Link>
-      <div>
-        <div>{quantity} {pluralize("item", quantity)} in stock</div>
-        <span>${price}</span>
-      </div>
-      <button onClick={addToCart}>Add to cart</button> */}
-
-      <Card>
+    <div className='ui cards'>
+      <Card >
           <Card.Content>
               <Card.Header href={`/courses/{_id}`}>{name}</Card.Header>
               <Card.Meta>Posted by {username}</Card.Meta>

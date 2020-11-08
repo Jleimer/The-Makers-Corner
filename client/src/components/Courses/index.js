@@ -5,7 +5,7 @@ import { UPDATE_COURSES } from "../../utils/actions";
 import { useQuery } from '@apollo/react-hooks';
 import { QUERY_ALL_COURSES } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
-// import spinner from "../../assets/spinner.gif"
+import { Grid } from 'semantic-ui-react';
 
 function Courses() {
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ function Courses() {
   return (
     <div>
       {state.courses.length ? (
-        <div>
+        <Grid columns={2} textAlign='center'>
             {filterCourses().map(course => (
                 <CoursesItem
                   key={course._id}
@@ -54,7 +54,7 @@ function Courses() {
                   price={course.price}
                 />
             ))}
-        </div>
+        </Grid>
       ) : (
         <h3>You haven't added any courses yet!</h3>
       )}
