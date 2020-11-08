@@ -1,5 +1,5 @@
 const db = require("./connection");
-const { User, Course, Blueprint, Category, Order, Post } = require("../models");
+const { User, Course, Blueprint, Category, Order, Post, Types } = require("../models");
 
 db.once("open", async () => {
   await Category.deleteMany();
@@ -13,6 +13,11 @@ db.once("open", async () => {
     { name: "ceramics" },
   ]);
 
+  const types = await Types.insertMany([
+    { name: "blueprints" },
+    { name: "courses" },
+  ]);
+  
   console.log("categories seeded");
   console.log(categories[0]._id, categories[0].name);
 

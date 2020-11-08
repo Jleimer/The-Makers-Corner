@@ -5,7 +5,7 @@ import { UPDATE_BLUEPRINTS } from "../../utils/actions";
 import { useQuery } from '@apollo/react-hooks';
 import { QUERY_CATEGORY_BLUEPRINTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
-import { Card } from "semantic-ui-react";
+import { Card, Grid } from "semantic-ui-react";
 
 function Blueprints() {
     const dispatch = useDispatch();
@@ -46,7 +46,7 @@ function Blueprints() {
     return (
         <div className="my-2">
             {state.blueprints.length ? (
-                <div className="flex-row">
+                <Grid columns={2} textAlign="center">
                     {filterBlueprints().map(blueprint => (
                         <BlueprintsItem
                             key={blueprint._id}
@@ -58,7 +58,7 @@ function Blueprints() {
                             difficulty={blueprint.difficulty}
                         />
                     ))}
-                </div>
+                </Grid>
             ) : (
                 <h3>You haven't added any blueprints yet!</h3>
             )}
