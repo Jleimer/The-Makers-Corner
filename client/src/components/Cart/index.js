@@ -1,79 +1,103 @@
-import React, { useEffect } from "react";
-import { loadStripe } from "@stripe/stripe-js";
+import React, { useEffect } from 'react';
+import CartItem from '../CartItem';
+import Auth from '../../utils/auth';
+
+import { loadStripe } from '@stripe/stripe-js';
 import { useLazyQuery } from '@apollo/react-hooks';
-import { QUERY_CHECKOUT } from "../../utils/queries"
-import { idbPromise } from "../../utils/helpers"
-import CartItem from "../CartItem";
-import Auth from "../../utils/auth";
+import { QUERY_CHECKOUT } from '../../utils/queries';
+// import { idbPromise } from '../../utils/helpers';
+import store from '../../utils/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from "../../utils/actions";
-import "./style.css";
+import { TOGGLE_CART } from '../../utils/actions';
+import './style.css'
 
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const Cart = () => {
-  const dispatch = useDispatch();
-  const state = useSelector(state => state);
-  const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+    const dispatch = useDispatch();
+    
+    const state = store.getState();
+    useSelector(state => state);
 
-  useEffect(() => {
-    if (data) {
-      stripePromise.then((res) => {
-        res.redirectToCheckout({ sessionId: data.checkout.session })
-      })
-    }
-  }, [data]);
+    const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
-  useEffect(() => {
-    async function getCart() {
-      const cart = await idbPromise('cart', 'get');
-      dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
-    };
+    // useEffect(() => {
+    //     async function getCart() {
+    //         const cart = await idbPromise('cart', 'get');
+    //         dispatch({ type: ADD_MULTIPLE_TO_CART, courses: [...cart] });
+    //     };
 
-    if (!state.cart.length) {
-      getCart();
-    }
-  }, [state.cart.length, dispatch]);
+    //     if (!state.cart.length) {
+    //         getCart();
+    //     }
+    // }, [state.cart.length, dispatch]);
 
-  function toggleCart() {
-    dispatch({ type: TOGGLE_CART });
-  }
+    // useEffect(() => {
+    //     async function getCart() {
+    //         const cart = await idbPromise('cart', 'get');
+    //         dispatch({ type: ADD_MULTIPLE_TO_CART, blueprints: [...cart] });
+    //     };
 
-  function calculateTotal() {
-    let sum = 0;
-    state.cart.forEach(item => {
-      sum += item.price * item.purchaseQuantity;
-    });
-    return sum.toFixed(2);
-  }
+    //     if (!state.cart.length) {
+    //         getCart();
+    //     }
+    // }, [state.cart.length, dispatch]);
 
-  function submitCheckout() {
-    const productIds = [];
-
-    state.cart.forEach((item) => {
-      for (let i = 0; i < item.purchaseQuantity; i++) {
-        productIds.push(item._id);
-      }
-    });
-
-    getCheckout({
-      variables: { 
-          blueprints: productIds,
-          courses: productIds
-          
+    useEffect(() => {
+        if (data) {
+            stripePromise.then((res) => {
+                res.redirectToCheckout({ sessionId: data.checkout.session });
+            });
         }
-    });
-  }
+    }, [data, dispatch]);
 
-  if (!state.cartOpen) {
-    return (
-      <div className="cart-closed" onClick={toggleCart}>
-        <span
-          role="img"
-          aria-label="trash">🛒</span>
-      </div>
-    );
-  }
+    function toggleCart() {
+        dispatch({ type: TOGGLE_CART });
+    }
+
+    function calculateTotal() {
+        let sum = 0;
+        state.cart.blueprints.forEach(item => {
+            sum += item.price;
+        });
+        state.cart.courses.forEach(item => {
+            sum += item.price;
+        });
+        return sum.toFixed(2);
+    }
+
+    if (!state.cartOpen) {
+        return (
+            <div className="cart-closed" onClick={toggleCart}>
+                <span role="img" aria-label="trash">
+                    🛒
+                </span>
+            </div>
+        );
+    }
+
+    function submitCheckout() {
+        const courseIds = [];
+        const blueprintIds = [];
+
+        state.cart.blueprints.forEach((item) => {
+            for (let i = 0; i < item.purchaseQuantity; i++) {
+                blueprintIds.push(item._id);
+            }
+        });
+        state.cart.courses.forEach((item) => {
+            for (let i = 0; i < item.purchaseQuantity; i++) {
+                courseIds.push(item._id);
+            }
+        });
+
+        getCheckout({
+            variables: { courses: courseIds, blueprints: blueprintIds }
+        });
+    }
+
+    
+
     return (
         <div className="cart">
             <div className="close" onClick={toggleCart}>
@@ -81,7 +105,10 @@ const Cart = () => {
             <h2>Shopping Cart</h2>
             {state.cart.length ? (
                 <div>
-                    {state.cart.map(item => (
+                    {state.cart.blueprints.map(item => (
+                        <CartItem key={item._id} item={item} />
+                    ))}
+                    {state.cart.courses.map(item => (
                         <CartItem key={item._id} item={item} />
                     ))}
 
