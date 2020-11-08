@@ -1,52 +1,53 @@
 import React, { useEffect } from "react";
 import CoursesItem from "../CoursesItem";
 import { useDispatch, useSelector } from 'react-redux';
-import { UPDATE_COURSES } from "../../utils/actions";
+import { UPDATE_PRODUCTS } from "../../utils/actions";
 import { useQuery } from '@apollo/react-hooks';
-import { QUERY_ALL_COURSES } from "../../utils/queries";
+import { QUERY_CATEGORY_COURSES } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 import { Grid } from 'semantic-ui-react';
 
 function Courses() {
   const dispatch = useDispatch();
-  const state = useSelector(state => state);
+    const state = useSelector(state => state);
 
-  const { currentCategory } = state;
+    const { currentCategory } = state;
 
-  const { loading, data } = useQuery(QUERY_ALL_COURSES);
+    const { loading, data } = useQuery(QUERY_CATEGORY_COURSES);
+    console.log(data);
 
-  useEffect(() => {
-    if(data) {
-      dispatch({
-           type: UPDATE_COURSES,
-          courses: data.courses
-        });
-        data.courses.forEach((course) => {
-          idbPromise('courses', 'put', course);
-        });
-    } else if (!loading) {
-      idbPromise('courses', 'get').then((courses) => {
-        dispatch({
-          type: UPDATE_COURSES,
-         courses: courses
-       });
-      });
+    useEffect(() => {
+        if(data) {
+          dispatch({
+               type: UPDATE_PRODUCTS,
+                products: data.products
+            });
+            data.products.forEach((product) => {
+              idbPromise('products', 'put', product);
+            });
+        } else if (!loading) {
+          idbPromise('products', 'get').then((products) => {
+            dispatch({
+              type: UPDATE_PRODUCTS,
+                products: products
+            });
+          });
+        }
+    }, [data, loading, dispatch]);
+    
+    function filterProducts() {
+        if (!currentCategory) {
+            return state.products;
+        }
+
+        return state.products.filter(product => product.category._id === currentCategory);
     }
-  }, [data, loading, dispatch]);
-
-  function filterCourses() {
-    if (!currentCategory) {
-      return state.courses;
-    }
-
-    return state.courses.filter(course => course.category._id === currentCategory);
-  }
 
   return (
     <div>
-      {state.courses.length ? (
+      {state.products.length ? (
         <Grid columns={2} textAlign='center'>
-            {filterCourses().map(course => (
+            {filterProducts().map(course => (
                 <CoursesItem
                   key={course._id}
                   _id={course._id}
@@ -58,8 +59,8 @@ function Courses() {
       ) : (
         <h3>You haven't added any courses yet!</h3>
       )}
-      {/* { loading ? 
-      <img src={spinner} alt="loading" />: null} */}
+      { loading ? 
+      <div>Loading.....</div>: null}
     </div>
   );
 }

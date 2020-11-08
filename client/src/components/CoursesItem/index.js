@@ -15,28 +15,31 @@ function CoursesItem(item) {
 
 
   const addToCart = () => {
-    console.log(state);
-    const itemInCart = cart.find((cartItem) => cartItem._id === _id)
+
+    const itemInCart = cart.find((cartItem) => cartItem._id === _id);
+
     if (itemInCart) {
       dispatch({
         type: UPDATE_CART_QUANTITY,
         _id: _id,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       });
 
-      idbPromise('cart', 'put', {
+      idbPromise("cart", "put", {
         ...itemInCart,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       });
-    } 
-    else {
+
+    } else {
       dispatch({
         type: ADD_TO_CART,
-        courses: { ...item, purchaseQuantity: 1 }
+        product: { ...item, purchaseQuantity: 1 },
       });
-      idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
+      
+      idbPromise("cart", "put", { ...item, purchaseQuantity: 1 });
     }
-  }
+    
+  };
 
   return (
     <div className='ui cards'>

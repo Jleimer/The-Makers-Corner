@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import BlueprintsItem from "../BlueprintsItem";
 import { useDispatch, useSelector } from 'react-redux';
-import { UPDATE_BLUEPRINTS } from "../../utils/actions";
+import { UPDATE_PRODUCTS } from "../../utils/actions";
 import { useQuery } from '@apollo/react-hooks';
 import { QUERY_CATEGORY_BLUEPRINTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
@@ -19,35 +19,35 @@ function Blueprints() {
     useEffect(() => {
         if(data) {
           dispatch({
-               type: UPDATE_BLUEPRINTS,
-                blueprints: data.blueprints
+               type: UPDATE_PRODUCTS,
+                products: data.products
             });
-            data.blueprints.forEach((blueprint) => {
-              idbPromise('blueprints', 'put', blueprint);
+            data.products.forEach((product) => {
+              idbPromise('products', 'put', product);
             });
         } else if (!loading) {
-          idbPromise('blueprints', 'get').then((blueprints) => {
+          idbPromise('products', 'get').then((products) => {
             dispatch({
-              type: UPDATE_BLUEPRINTS,
-                blueprints: blueprints
+              type: UPDATE_PRODUCTS,
+                products: products
             });
           });
         }
     }, [data, loading, dispatch]);
     
-    function filterBlueprints() {
+    function filterProducts() {
         if (!currentCategory) {
-            return state.blueprints;
+            return state.products;
         }
 
-        return state.blueprints.filter(blueprint => blueprint.category._id === currentCategory);
+        return state.products.filter(product => product.category._id === currentCategory);
     }
 
     return (
         <div className="my-2">
-            {state.blueprints.length ? (
+            {state.products.length ? (
                 <Grid columns={2} textAlign="center">
-                    {filterBlueprints().map(blueprint => (
+                    {filterProducts().map(blueprint => (
                         <BlueprintsItem
                             key={blueprint._id}
                             _id={blueprint._id}
