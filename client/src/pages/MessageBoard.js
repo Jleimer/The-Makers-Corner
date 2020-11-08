@@ -1,39 +1,57 @@
-import { useQuery } from '@apollo/react-hooks';
-import React from 'react';
-import PostList from '../components/PostList';
-import Auth from '../utils/auth';
-import { QUERY_ALL_POSTS, QUERY_SINGLE_USER } from '../utils/queries';
-    // QUERY_ME } 
+import { useQuery } from "@apollo/react-hooks";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { UPDATE_POSTS } from "../utils/actions";
+import PostList from "../components/PostList";
+import { idbPromise } from "../utils/helpers";
+import Auth from "../utils/auth";
+import { QUERY_SINGLE_USER } from "../utils/queries";
+// QUERY_ME }
 
+// comments CHANGED TO POSTS!!!!!
 
-    // comments CHANGED TO POSTS!!!!!
-    
 const MessageBoard = () => {
-   // const { data } = useQuery(QUERY_COMMENTS);
-   // const { data: userData } = useQuery(QUERY_ME);
-   // const comments = data?.comments || [];
+  const loggedIn = Auth.loggedIn();
+  useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { loading, data } = useQuery(QUERY_SINGLE_USER);
+  let user;
 
-//    const { loading, data } = useQuery(QUERY_ALL_POSTS);
-//    const { data: userData } = useQuery(QUERY_ME);
-//    const posts = data?.posts || [];
+  if (data) {
+    user = data.user;
+  }
 
-//    const loggedIn = Auth.loggedIn();
-const { data } =useQuery(QUERY_SINGLE_USER);
-    let user;
-
+  useEffect(() => {
     if (data) {
-        user = data.user;
+      dispatch({
+        type: UPDATE_POSTS,
+        posts: data.posts,
+      });
+      data.posts.forEach((post) => {
+        idbPromise("posts", "put", post);
+      });
+    } else if (!loading) {
+      idbPromise("posts", "get").then((posts) => {
+        dispatch({
+          type: UPDATE_POSTS,
+          posts: posts,
+        });
+      });
     }
-    return (
+  }, [data, loading, dispatch]);
+
+  return (
+    <div>
+      <h2>Message Board</h2>
+      {loggedIn ? (
         <div>
-            <h2>Message Board</h2>
-            {user ? (
-                <div>
-                    <PostList />
-                </div>
-            ) : ( <h2>You need to be logged into to see the message board!</h2>)}
+          <PostList />
         </div>
-    );
+      ) : (
+        <h2>You need to be logged into to see the message board!</h2>
+      )}
+    </div>
+  );
 };
 
 export default MessageBoard;

@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
 import BlueprintsItem from "../BlueprintsItem";
 import { useDispatch, useSelector } from 'react-redux';
-import { UPDATE_BLUEPRINTS } from "../../utils/actions";
+import { UPDATE_PRODUCTS } from "../../utils/actions";
 import { useQuery } from '@apollo/react-hooks';
 import { QUERY_CATEGORY_BLUEPRINTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
+import store from '../../utils/store';
+import { Card, Grid } from "semantic-ui-react";
 
 function Blueprints() {
+    const state = store.getState();
     const dispatch = useDispatch();
-    const state = useSelector(state => state);
+    useSelector(state => state);
 
     const { currentCategory } = state;
 
@@ -18,48 +21,49 @@ function Blueprints() {
     useEffect(() => {
         if(data) {
           dispatch({
-               type: UPDATE_BLUEPRINTS,
-                blueprints: data.blueprints
+               type: UPDATE_PRODUCTS,
+                products: data.blueprints
             });
-            data.blueprints.forEach((blueprint) => {
-              idbPromise('blueprints', 'put', blueprint);
+            data.blueprints.forEach((product) => {
+              idbPromise('products', 'put', product);
             });
         } else if (!loading) {
-          idbPromise('blueprints', 'get').then((blueprints) => {
+          idbPromise('products', 'get').then((products) => {
             dispatch({
-              type: UPDATE_BLUEPRINTS,
-                blueprints: blueprints
+              type: UPDATE_PRODUCTS,
+                products: products
             });
           });
         }
     }, [data, loading, dispatch]);
     
-    function filterBlueprints() {
+    function filterProducts() {
         if (!currentCategory) {
-            return state.blueprints;
+          return state.products;
         }
-
-        return state.blueprints.filter(blueprint => blueprint.category._id === currentCategory);
-    }
+    
+        return state.products.filter(
+          (product) => product.category._id === currentCategory
+        );
+      }
+    
 
     return (
         <div className="my-2">
-            <h2>Our Blueprints:</h2>
-            {state.blueprints.length ? (
-                <div className="blueprints">
-                    {filterBlueprints().map(blueprint => (
+            {state.products.length ? (
+                <Grid columns={2} textAlign="center">
+                    {filterProducts().map(blueprint => (
                         <BlueprintsItem
-                            // key={blueprint._id}
-                            // _id={blueprint._id}
-                            // image={blueprint.image}
-                            // name={blueprint.name}
-                            // price={blueprint.price}
-                            // description={blueprint.description}
-                            // username={blueprint.username}
-                            // difficulty={blueprint.difficulty}
+                            key={blueprint._id}
+                            _id={blueprint._id}
+                            name={blueprint.name}
+                            price={blueprint.price}
+                            description={blueprint.description}
+                            username={blueprint.username}
+                            difficulty={blueprint.difficulty}
                         />
                     ))}
-                </div>
+                </Grid>
             ) : (
                 <h3>You haven't added any blueprints yet!</h3>
             )}

@@ -7,18 +7,12 @@ const orderSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  courses: [
+  products: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Course'
+      ref: 'Product'
     }
-  ],
-  blueprints: [
-      {
-          type: Schema.Types.ObjectId,
-          ref: 'Blueprint'
-      }
-  ],
+  ]
 });
 
 const Order = mongoose.model('Order', orderSchema);

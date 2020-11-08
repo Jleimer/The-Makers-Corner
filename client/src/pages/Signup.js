@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { ADD_USER } from '../utils/mutations';
 import { Link } from 'react-router-dom';
 import Auth from '../utils/auth';
+import { Form, Button } from 'semantic-ui-react';
 
 const Signup = (props) => {
     const [formState, setFormState] = useState({ username: '', email: '', password: '' });
@@ -37,77 +38,68 @@ const Signup = (props) => {
         <div>
             <h2>Signup</h2>
             <div className="form-div">
-            <form onSubmit={handleFormSubmit}>
-                <div>
-                    <label htmlFor="username">Username: </label>
-                    <br></br>
+            <Form onSubmit={handleFormSubmit}>
+                <Form.Field>
+                    <label htmlFor='username'>Username: </label>
                     <input
-                        className="input"
-                        placeholder="johndoe"
-                        name="username"
-                        type="username"
-                        id="username"
+                        placeholder='johndoe'
+                        name='username'
+                        type='text'
+                        id='username'
                         onChange={handleChange}
                     />
-                </div>
-                <div>
-                    <label htmlFor="firstName">First Name: </label>
-                    <br></br>
-                    <input 
-                        className="input"
-                        placeholder="John"
-                        name="firstName"
-                        type="firstName"
-                        id="firstName"
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="lastName">Last Name: </label>
-                    <br></br>
+                </Form.Field>
+                <Form.Field>
+                    <label htmlFor='firstName'>First Name: </label>
                     <input
-                        className="input"
-                        placeholder="Doe"
-                        name="lastName"
-                        type="lastName"
-                        id="lastName"
+                        placeholder='John'
+                        name='firstName'
+                        type='text'
+                        id='firstName'
                         onChange={handleChange}
                     />
-                </div>
-                <div>
+                </Form.Field>
+                <Form.Field>
+                    <label htmlFor='lastName'>Last Name: </label>
+                    <input
+                        placeholder='Doe'
+                        name='lastName'
+                        type='text'
+                        id='lastName'
+                        onChange={handleChange}
+                    />
+                </Form.Field>
+                <Form.Field>
                     <label htmlFor="email">Email: </label>
-                    <br></br>
                     <input
-                        className="input"
                         placeholder="johndoe@test.com"
                         name="email"
                         type="email"
                         id="email"
                         onChange={handleChange}
                     />
-                </div>
-                <div>
+                </Form.Field>
+                <Form.Field>
                     <label htmlFor="password">Password: </label>
-                    <br></br>
                     <input
-                        className="input"
                         placeholder="******"
                         name="password"
                         type="password"
                         id="password"
                         onChange={handleChange}
                     />
-                </div>
+                </Form.Field>
                 <div>
-                    <button type="submit">
+                    <Button type="submit">
                         Signup
-                    </button>
+                    </Button>
+                    <br></br>
                     <br></br>
                     <Link to='/login' className="instead">
                         Login instead
                     </Link>
                 </div>
-            </form>
+            </Form>
             </div>
             {error && <div>Signup failed, please try again!</div>}
         </div>

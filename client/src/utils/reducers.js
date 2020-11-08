@@ -3,8 +3,6 @@ import {
   UPDATE_CURRENT_CATEGORY,
   ADD_COMMENT,
   ADD_REVIEW,
-  UPDATE_BLUEPRINTS,
-  UPDATE_COURSES,
   UPDATE_POSTS,
   ADD_TO_CART,
   ADD_MULTIPLE_TO_CART,
@@ -12,11 +10,11 @@ import {
   TOGGLE_CART,
   UPDATE_CART_QUANTITY,
   CLEAR_CART,
+  UPDATE_PRODUCTS,
 } from "./actions";
 
 const initialState = {
-  blueprints: [],
-  courses: [],
+  products: [],
   cart: [],
   cartOpen: false,
   categories: [],
@@ -25,19 +23,26 @@ const initialState = {
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case UPDATE_PRODUCTS:
+      console.log(action.type);
+      return {
+        ...state,
+        products: [action.products],
+      };
+    // if action type value is the value of `UPDATE_CATEGORIES`, return a new state object with an updated categories array
     case UPDATE_CATEGORIES:
-      console.log(action);
+      console.log(action.type);
       return {
         ...state,
         categories: [...action.categories],
       };
+
     case UPDATE_CURRENT_CATEGORY:
-      console.log(action);
+      console.log(action.type);
       return {
         ...state,
         currentCategory: action.currentCategory,
       };
-
     case ADD_COMMENT:
       console.log(action);
       return {
@@ -49,22 +54,7 @@ export const reducer = (state = initialState, action) => {
       console.log(action);
       return {
         ...state,
-        blueprints: [...state.blueprints, action.reviews],
-        courses: [...state.courses, action.reviews],
-      };
-
-    case UPDATE_BLUEPRINTS:
-      console.log(action);
-      return {
-        ...state,
-        blueprints: [...action.blueprints],
-      };
-
-    case UPDATE_COURSES:
-      console.log(action);
-      return {
-        ...state,
-        courses: [...action.courses],
+        products: [...state.products, action.reviews],
       };
 
     case UPDATE_POSTS:
@@ -75,33 +65,28 @@ export const reducer = (state = initialState, action) => {
       };
 
     case ADD_TO_CART:
-      console.log(action);
+      console.log(action.type);
       return {
         ...state,
         cartOpen: true,
-        cart: [...state.cart, action.blueprints, action.courses],
+        cart: [...state.cart, action.product],
       };
-
     case ADD_MULTIPLE_TO_CART:
-      console.log(action);
+      console.log(action.type);
       return {
         ...state,
-        cart: [...state.cart, ...action.blueprints, ...action.courses],
+        cart: [...state.cart, ...action.products],
       };
 
     case REMOVE_FROM_CART:
-      console.log(action);
-      let blueprintState = state.cart.blueprints.filter((blueprints) => {
-        return blueprints._id !== action._id;
-      });
-      let courseState = state.cart.courses.filter((courses) => {
-        return courses._id !== action._id;
+      let newState = state.cart.filter((product) => {
+        return product._id !== action._id;
       });
 
       return {
         ...state,
-        cartOpen: blueprintState.length > 0 || courseState.length > 0,
-        cart: [...state.cart, blueprintState, courseState],
+        cartOpen: newState.length > 0,
+        cart: newState,
       };
 
     case TOGGLE_CART:
@@ -112,15 +97,14 @@ export const reducer = (state = initialState, action) => {
       };
 
     case UPDATE_CART_QUANTITY:
-      console.log(action);
       return {
         ...state,
         cartOpen: true,
-        cart: state.cart.blueprints.map((blueprints) => {
-          if (action._id === blueprints._id) {
-            blueprints.purchaseQuantity = action.purchaseQuantity;
+        cart: state.cart.map((product) => {
+          if (action._id === product._id) {
+            product.purchaseQuantity = action.purchaseQuantity;
           }
-          return blueprints;
+          return product;
         }),
       };
 

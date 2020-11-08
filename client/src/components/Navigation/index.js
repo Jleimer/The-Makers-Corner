@@ -8,7 +8,12 @@ function Navigation() {
   function showNavigation() {
     if (Auth.loggedIn()) {
       return (
-        <ul className="flex-row">
+        <ul className="flex-row navigation">
+          <li>
+            <Link to="/">
+              Home
+            </Link>
+          </li>
           <li>
             <Link to="/blueprints">
               Blueprints
@@ -55,6 +60,11 @@ function Navigation() {
           <li>
             <Link to="/courses">
               Courses
+            </Link>
+          </li>
+          <li>
+            <Link to="/messageboard">
+              Message Board
             </Link>
           </li>
           <li>

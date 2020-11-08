@@ -1,5 +1,5 @@
 const db = require("./connection");
-const { User, Course, Blueprint, Category, Order, Post } = require("../models");
+const { User, Type, Product, Category, Order, Post } = require("../models");
 
 db.once("open", async () => {
   await Category.deleteMany();
@@ -13,31 +13,16 @@ db.once("open", async () => {
     { name: "ceramics" },
   ]);
 
+  const type = await Type.insertMany([
+    { name: "blueprints" },
+    { name: "courses" },
+  ]);
+  
   console.log("categories seeded");
-  console.log(categories[0]._id, categories[0].name)
-  await User.deleteMany();
+  console.log(categories[0]._id, categories[0].name);
 
-  await User.create(
-    {
-      firstName: "Jonathan",
-      lastName: "Eimer",
-      email: "jleimer@testmail.com",
-      username: "jleimer",
-      password: "ghost",
-    },
-    {
-      firstName: "Keegan",
-      lastName: "Wedwick",
-      email: "kwedwick@testmail.com",
-      password: "ghost",
-      username: "kwedwick",
-    }
-  );
-
-  console.log("User(s) seeded");
-
-  await Course.deleteMany();
-  const courses = await Course.insertMany([
+  await Product.deleteMany();
+  const products = await Product.insertMany([
     {
       name: "Resin Pouring",
       description:
@@ -46,7 +31,9 @@ db.once("open", async () => {
       difficulty: "Beginner",
       items: "Resin, wood(walnut), pouring frame",
       category: categories[2]._id,
-      username: "jleimer"
+      items: "tools",
+      type: type[1]._id,
+      username: "jleimer",
     },
     {
       name: "Stained Glass",
@@ -57,39 +44,38 @@ db.once("open", async () => {
       items:
         "Soldering Iron, flux, glass foil, precut stained glass, glass cutter",
       category: categories[0]._id,
-      username: "kwedwick"
+      type: type[1]._id,
+      username: "kwedwick",
     },
-  ]);
-  console.log("courses seeded");
-  console.log(courses[1].category)
-
-  await Blueprint.deleteMany();
-
-  const blueprint = await Blueprint.insertMany([
     {
       name: "Workbench",
       description:
         "This is an easy work that can fit in almost any garage or shop. Storage underneath and a places for a small tools on top. You can easliy add wheels to this for the perfect mobile bench.",
-      image: "asdfsadf",
-      file: "asdf",
+      image: "",
+      file: "",
       price: 6.0,
       difficulty: "Some exprience required",
+      items: "tools",
       category: categories[3]._id,
-      username: "jleimer"
+      type: type[0]._id,
+      username: "jleimer",
     },
     {
       name: "Shaker cabinet door",
       description:
         "Plans for basic shaker cabinet doors.  Just adjust plans for custom measurements and you are set!",
-      image: "asdfasdf",
-      file: "asdfasdf",
+      image: "",
+      file: "",
       price: 5.0,
       difficulty: "Experience with table saw required",
+      items: "tools",
       category: categories[4]._id,
-      username: "kwedwick"
+      type: type[0]._id,
+      username: "kwedwick",
     },
   ]);
-  console.log("blueprints seeded");
+  console.log("products seeded");
+  console.log(products[1].category);
 
   await Post.deleteMany();
   const posts = await Post.insertMany([
@@ -113,9 +99,32 @@ db.once("open", async () => {
       username: "jleimer",
       createdAt: "10/31/2020",
       category: categories[2]._id,
-    }
-  ])
+    },
+  ]);
   console.log("post(s) seeded");
+
+  await User.deleteMany();
+  await User.create(
+    {
+      firstName: "Jonathan",
+      lastName: "Eimer",
+      email: "jleimer@testmail.com",
+      username: "jleimer",
+      password: "ghost",
+      products: [products[0]._id, products[2].Id],
+      posts: [posts[2]._id],
+    },
+    {
+      firstName: "Keegan",
+      lastName: "Wedwick",
+      email: "kwedwick@testmail.com",
+      password: "ghost",
+      username: "kwedwick",
+      products: [products[1]._id, products[1]._id],
+      posts: [posts[0]._id, posts[1]._id],
+    }
+  );
+  console.log("User(s) seeded");
 
   process.exit();
 });

@@ -13,11 +13,13 @@ import Detail from './pages/Detail';
 import Login from './pages/Login';
 import MessageBoard from './pages/MessageBoard';
 import Signup from './pages/Signup';
+import SinglePost from './pages/SinglePost';
 
-import Navigation from './components/Navigation';
+import Navigation from './components/Navigation'
 import Footer from './components/Footer';
 import { Provider } from 'react-redux';
 import store from './utils/store';
+import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 
 const client = new ApolloClient({
@@ -44,19 +46,19 @@ function App() {
               <Route exact path="/" component={Home}/>
               <Route exact path="/blueprints" component={Blueprints}/>
               <Route exact path="/courses" component={Course}/>
-              <Route exact path="/products:id" component={Detail}/>
+              <Route exact path="/blueprints/:id" component={Detail}/>
+              <Route exact path="/courses/:id" component={Detail}/>
               <Route exact path="/dashboard" component={Dashboard}/>
               <Route exact path="/login" component={Login}/>
               <Route exact path="/orderhistory" component={OrderHistory}/>
               <Route exact path="/signup" component={Signup}/>
               <Route exact path="/messageboard" component={MessageBoard}/>
+              <Route exact path="/post/:id" component={SinglePost} />
               <Route component={NoMatch}/>
             </Switch>
           </div>
           </Provider>
-          <footer>
-            <Footer/>
-          </footer>
+          <Footer/>
         </div>
       </Router>
     </ApolloProvider>

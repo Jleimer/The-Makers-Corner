@@ -27,20 +27,10 @@ export const ADD_USER = gql`
 
 //add's item to the order for checkout
 export const ADD_ORDER = gql`
-  mutation addOrder($courses: [ID]!, $blueprints: [ID]!) {
-    addOrder(courses: $courses, blueprints: $blueprints) {
+  mutation addOrder($products: [ID]!) {
+    addOrder(products: $products) {
       purchaseDate
-      courses {
-        _id
-        name
-        description
-        price
-        category {
-          _id
-          name
-        }
-      }
-      blueprints {
+      products {
         _id
         name
         description
@@ -84,24 +74,20 @@ export const UPDATE_USER_INFO = gql`
         firstName
         lastName
         username
-        blueprints {
+        products {
           _id
           name
           description
           username
           price
-          quantity
           category {
             _id
             name
           }
-        }
-        courses {
-          _id
-          name
-          description
-          price
-          image
+          type {
+            _id
+            name
+          }
         }
         posts {
           _id
@@ -118,14 +104,7 @@ export const UPDATE_USER_INFO = gql`
         orders {
           _id
           purchaseDate
-          blueprints {
-            _id
-            name
-            description
-            price
-            image
-          }
-          courses {
+          products {
             _id
             name
             description
@@ -139,8 +118,8 @@ export const UPDATE_USER_INFO = gql`
 `;
 
 // add blueprint to Database under user info - separate page
-export const ADD_BLUEPRINT = gql`
-  mutation addBlueprint(
+export const ADD_PRODUCT = gql`
+  mutation addProduct(
     $name: String!,
     $description: String!,
     $image: String,
@@ -148,15 +127,20 @@ export const ADD_BLUEPRINT = gql`
     $price: Float!,
     $difficulty: String!,
     $category: ID!,
+    $items: String!,
+    $courseTime: String,
+    $type: ID!
   ) {
-    addBlueprint(
+    addProduct(
       name: $name,
       description: $description,
       image: $image,
       file: $file,
       price: $price,
       difficulty: $difficulty,
-      category: $category
+      category: $category,
+      items: $items,
+      type: $type
     ) {
       _id
       name
@@ -165,6 +149,11 @@ export const ADD_BLUEPRINT = gql`
       file
       price
       difficulty
+      items
+      type {
+        _id
+        name
+      }
       category {
         _id
         name
@@ -172,25 +161,6 @@ export const ADD_BLUEPRINT = gql`
       username
     }
   }
-`;
-// add single course to database
-export const ADD_COURSE = gql`
-    mutation addCourse($name: String!, $description: String!, $price: Number!, $classTime: String!, $difficulty: String!, $items: String!, $category: ID!) {
-        addClass(name: $name, description: $description, price: $price, classTime: $classTime, difficulty: $difficulty, items: $items, category: $category) {
-            _id
-            name
-            description
-            price
-            classTime
-            difficulty
-            items
-            category {
-                _id
-                name
-            }
-            username
-        }
-    }
 `;
 
 // add post to database under user info - separate page
@@ -228,10 +198,10 @@ export const ADD_COMMENT_POST = gql`
   }
 `;
 
-//add course review to database, on a single course page
-export const ADD_REVIEW_COURSE = gql`
-  mutation addCourseReview($courseId: ID!, $commentBody: String!) {
-    addCourseReview(courseId: $courseId, commentBody: $commentBody) {
+//add course review to database, on a single product page
+export const ADD_PRODUCT_REVIEW = gql`
+  mutation addProductReview($productId: ID!, $commentBody: String!) {
+    addProductReview(productId: $productId, commentBody: $commentBody) {
       _id
       name
       username
@@ -240,33 +210,12 @@ export const ADD_REVIEW_COURSE = gql`
       courseTime
       difficulty
       items
+      image
       category {
         _id
         name
       }
-      reviews {
-        _id
-        username
-        reviewBody
-        createdAt
-      }
-    }
-  }
-`;
-
-//add blueprint review to database, on a single blueprint page
-export const ADD_REVIEW_BLUEPRINT = gql`
-  mutation addBlueprintReview($blueprintId: ID!, $commentBody: String!) {
-    addBlueprintReview(blueprintId: $courseId, commentBody: $commentBody) {
-      _id
-      name
-      username
-      description
-      image
-      file
-      price
-      difficulty
-      category {
+      type {
         _id
         name
       }
@@ -281,16 +230,18 @@ export const ADD_REVIEW_BLUEPRINT = gql`
 `;
 
 //update course information on an update page
-export const UPDATE_COURSE_INFO = gql`
-  mutation updateCourse( $courseId: ID!, $name: String!, $description: String!, $courseTime: String!, $difficulty: String!, $price: Float! $items: String!,) {
-    updateCourse(
-      courseId: $courseId,
+export const UPDATE_PRODUCT_INFO = gql`
+  mutation updateProduct( $productId: ID!, $name: String!, $description: String!, $courseTime: String!, $difficulty: String!, $price: Float! $items: String!, $type: ID!, $image: String) {
+    updateProduct(
+      productId: $productId,
       name: $name,
       description: $description,
       courseTime: $courseTime,
       difficulty: $difficulty,
       price: $price,
-      items: $items
+      items: $items,
+      type: $type,
+      image: $image
     ) {
       _id
       name
@@ -300,37 +251,12 @@ export const UPDATE_COURSE_INFO = gql`
       courseTime
       difficulty
       items
+      image
       category {
         _id
         name
       }
-      reviews {
-        _id
-        username
-        reviewBody
-        createdAt
-      }
-    }
-  }
-`;
-
-//update blueprint information on an update page
-export const UPDATE_BLUEPRINT_INFO = gql`
-  mutation updateBlueprint( $blueprintId: ID!, $name: String!, $description: String!, $difficulty: String!, $price: Float!) {
-    updateBlueprint(
-      blueprintId: $blueprintId,
-      name: $name,
-      description: $description,
-      difficulty: $difficulty,
-      price: $price,
-    ) {
-      _id
-      name
-      username
-      description
-      price
-      difficulty
-      category {
+      type {
         _id
         name
       }

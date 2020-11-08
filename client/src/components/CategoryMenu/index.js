@@ -6,10 +6,10 @@ import {
 } from "../../utils/actions";
 import { useQuery } from "@apollo/react-hooks";
 import { QUERY_CATEGORIES } from "../../utils/queries";
-// import { useStoreContext } from "../../utils/GlobalState";
 import { idbPromise } from "../../utils/helpers";
 import store from "../../utils/store";
 import { useDispatch, useSelector } from "react-redux";
+import { Menu } from "semantic-ui-react";
 
 function CategoryMenu() {
   // const [state, dispatch] = useStoreContext();
@@ -51,27 +51,24 @@ function CategoryMenu() {
       currentCategory: id,
     });
   };
-    
-    return (
-    <div>
-      <h2>Choose a Category:</h2>
-      <Dropdown
-      placeholder='Select a Catergory'
-      name="subject"
-      onChange={this.handleChange}
-      selection
-      options={categories}
-      />
+
+  return (
+    <div className="categories">
+      <Menu text vertical>
+        <Menu.Item header>Sort By</Menu.Item>
       {categories.map((item) => (
-        <button
+        <Menu.Item
+          // className="ctgBtn"
+          // basic
           key={item._id}
           onClick={() => {
             handleClick(item._id);
           }}
         >
           {item.name}
-        </button>
+        </Menu.Item>
       ))}
+      </Menu>
     </div>
   );
 }

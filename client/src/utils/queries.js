@@ -10,9 +10,49 @@ export const QUERY_CATEGORIES = gql`
   }
 `;
 
+export const QUERY_PRODUCTS = gql`
+  query products($category: ID) {
+    products(category: $category) {
+      _id
+      name
+      description
+      price
+      quantity
+      image
+      category {
+        _id
+      }
+      type {
+        name
+      }
+    }
+  }
+`;
+
+export const QUERY_ALL_PRODUCTS = gql`
+  {
+    products {
+      _id
+      name
+      description
+      price
+      quantity
+      category {
+        _id
+        name
+      }
+      type {
+        _id
+        name
+      }
+    }
+  }
+`;
+
 //returns the single user info - shows that user dashboard
 export const QUERY_SINGLE_USER = gql`
- {
+  {
+    token
     user {
       firstName
       lastName
@@ -23,7 +63,6 @@ export const QUERY_SINGLE_USER = gql`
         description
         username
         price
-        quantity
         category {
           _id
           name
@@ -34,7 +73,10 @@ export const QUERY_SINGLE_USER = gql`
         name
         description
         price
-        image
+        category {
+          _id
+          name
+        }
       }
       posts {
         _id
@@ -55,29 +97,22 @@ export const QUERY_SINGLE_USER = gql`
 //returns just the person logged in - dashboard
 export const QUERY_ME = gql`
   {
-    user {
+    me {
       firstName
       lastName
       username
-      blueprints {
+      products {
         _id
         name
         description
         username
         price
-        quantity
         category {
           _id
           name
         }
       }
-      courses {
-        _id
-        name
-        description
-        price
-        image
-      }
+      
       posts {
         _id
         title
@@ -93,28 +128,35 @@ export const QUERY_ME = gql`
       orders {
         _id
         purchaseDate
-        blueprints {
+        products {
           _id
           name
           description
           price
           image
         }
-        courses {
-          _id
-          name
-          description
-          price
-          image
-        }
+        
       }
     }
   }
 `;
 
-//checking out with items in the cart
+export const QUERY_ORDER_HISTORY = gql`
+   {
+      user {
+        orders {
+          products{
+            _id
+            name
+            price
+            purchaseDate
+        }
+      }
+    }
+ }`;
+
 export const QUERY_CHECKOUT = gql`
-  query getCheckout($products: [ID]!) {
+  query checkout($products: [ID]!) {
     checkout(products: $products) {
       session
     }
@@ -131,9 +173,12 @@ export const QUERY_CATEGORY_BLUEPRINTS = gql`
       username
       price
       file
-      image
       difficulty
       category {
+        _id
+        name
+      }
+      type {
         _id
         name
       }
@@ -150,7 +195,6 @@ export const QUERY_ALL_BLUEPRINTS = gql`
       description
       username
       price
-      quantity
       category {
         _id
         name
@@ -160,15 +204,19 @@ export const QUERY_ALL_BLUEPRINTS = gql`
 `;
 
 // returns single blueprint
-export const QUERY_SINGLE_BLUEPRINT = gql`
-  query blueprint($blueprintId: ID!) {
-    blueprint(blueprintId: $blueprintId) {
+export const QUERY_SINGLE_PRODUCT = gql`
+  query product($productId: ID!) {
+    product(productId: $productId) {
       _id
       username
       name
       description
       price
       category {
+        _id
+        name
+      }
+      type {
         _id
         name
       }
@@ -212,22 +260,22 @@ export const QUERY_ALL_COURSES = gql`
   }
 `;
 
-// returns single course
-export const QUERY_SINGLE_COURSE = gql`
-  query course($courseId: ID!) {
-    course(courseId: $courseId) {
-      _id
-      username
-      name
-      description
-      price
-      category {
-        _id
-        name
-      }
-    }
-  }
-`;
+// // returns single course
+// export const QUERY_SINGLE_COURSE = gql`
+//   query course($courseId: ID!) {
+//     course(courseId: $courseId) {
+//       _id
+//       username
+//       name
+//       description
+//       price
+//       category {
+//         _id
+//         name
+//       }
+//     }
+//   }
+// `;
 
 //queries all of the posts -unfiltered - use for messageboard
 export const QUERY_ALL_POSTS = gql`
