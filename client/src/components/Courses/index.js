@@ -20,9 +20,9 @@ function Courses() {
         if(data) {
           dispatch({
                type: UPDATE_PRODUCTS,
-                products: data.products
+                products: data.courses
             });
-            data.products.forEach((product) => {
+            data.courses.forEach((product) => {
               idbPromise('products', 'put', product);
             });
         } else if (!loading) {

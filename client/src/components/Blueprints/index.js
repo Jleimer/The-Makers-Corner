@@ -5,11 +5,13 @@ import { UPDATE_PRODUCTS } from "../../utils/actions";
 import { useQuery } from '@apollo/react-hooks';
 import { QUERY_CATEGORY_BLUEPRINTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
+import store from '../../utils/store';
 import { Card, Grid } from "semantic-ui-react";
 
 function Blueprints() {
+    const state = store.getState();
     const dispatch = useDispatch();
-    const state = useSelector(state => state);
+    useSelector(state => state);
 
     const { currentCategory } = state;
 
@@ -20,9 +22,9 @@ function Blueprints() {
         if(data) {
           dispatch({
                type: UPDATE_PRODUCTS,
-                products: data.products
+                products: data.blueprints
             });
-            data.products.forEach((product) => {
+            data.blueprints.forEach((product) => {
               idbPromise('products', 'put', product);
             });
         } else if (!loading) {
@@ -37,11 +39,14 @@ function Blueprints() {
     
     function filterProducts() {
         if (!currentCategory) {
-            return state.products;
+          return state.products;
         }
-
-        return state.products.filter(product => product.category._id === currentCategory);
-    }
+    
+        return state.products.filter(
+          (product) => product.category._id === currentCategory
+        );
+      }
+    
 
     return (
         <div className="my-2">

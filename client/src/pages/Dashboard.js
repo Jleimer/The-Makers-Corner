@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import { ADD_COURSE, ADD_BLUEPRINT } from '../utils/mutations';
+import { ADD_PRODUCT } from '../utils/mutations';
 import Auth from "../utils/auth";
 import {
-    QUERY_SINGLE_COURSE,
-    QUERY_SINGLE_BLUEPRINT,
+    QUERY_SINGLE_PRODUCT,
     QUERY_ME,
     QUERY_CATEGORIES,
   } from "../utils/queries";
@@ -28,23 +27,21 @@ const Dashboard = () => {
 
     const { loading, data } = useQuery(QUERY_ME);
     const posts = data?.me.posts || [];
-    const blueprints = data?.me.blueprints || [];
-    const courses = data?.me.courses || [];
     const { categories } = useQuery(QUERY_CATEGORIES);
     console.log(categories, "this is categories");
     console.log(data, "this is query_me")
 
     const [formInfo, setInfo] = useState("");
 
-    const [addBlueprint, { error }] = useMutation(ADD_BLUEPRINT, {
-        update(cache, { data: { addBlueprint } }) {
+    const [addProduct, { error }] = useMutation(ADD_PRODUCT, {
+        update(cache, { data: { addProduct } }) {
         try {
-            const { blueprints } = cache.readQuery({
-                query: QUERY_SINGLE_BLUEPRINT,
+            const { products } = cache.readQuery({
+                query: QUERY_SINGLE_PRODUCT,
             });
             cache.writeQuery({
-                query: QUERY_SINGLE_BLUEPRINT,
-                data: { blueprints: [addBlueprint, ...blueprints] },
+                query: QUERY_SINGLE_PRODUCT,
+                data: { blueprints: [addProduct, ...products] },
             });
         } catch (e) {
             console.error(e);
@@ -52,26 +49,7 @@ const Dashboard = () => {
         const { me } = cache.readQuery({ query: QUERY_ME });
         cache.writeQuery({
             query: QUERY_ME,
-            data: { me: { ...me, blueprints: [...me.blueprints, addBlueprint] } },
-        });
-        },
-    });
-
-    const [addCourse] = useMutation(ADD_COURSE, {
-        update(cache, { data: { addCourse } }) {
-        try {
-            const { courses } = cache.readQuery({ query: QUERY_SINGLE_COURSE });
-            cache.writeQuery({
-            query: QUERY_SINGLE_COURSE,
-            data: { courses: [addCourse, ...courses] },
-            });
-        } catch (e) {
-            console.error(e);
-        }
-        const { me } = cache.readQuery({ query: QUERY_ME });
-        cache.writeQuery({
-            query: QUERY_ME,
-            data: { me: { ...me, courses: [...me.courses, addCourse] } },
+            data: { me: { ...me, products: [...me.products, addProduct] } },
         });
         },
     });
@@ -80,13 +58,9 @@ const Dashboard = () => {
     event.preventDefault();
 
     try {
-        await addBlueprint({
+        await addProduct({
             variables: { formInfo },
         });
-        await addCourse({
-            variables: { formInfo },
-        });
-
         setInfo("");
         } catch (e) {
         console.error(e);
@@ -121,10 +95,10 @@ const Dashboard = () => {
             </div>
         </div>
             <div className="form-div">
-                <h3>Add a Course</h3>
+                <h3>Add a Product</h3>
                 <Form onSubmit={handleFormSubmit}>
                     <Form.Field>
-                        <label htmlFor="name">Course Name: </label>
+                        <label htmlFor="name">Product Name: </label>
                         <input
                             className="input"
                             placeholder="Painting 101"
@@ -136,7 +110,13 @@ const Dashboard = () => {
                         />
                     </Form.Field>
                     <Form.Field>
-                        <label htmlFor="description">Course Description: </label>
+                        <label htmlFor="category">Type: </label>
+                        <select className="select">
+                            {/* NEED TO MAP TYPE */}
+                        </select>
+                    </Form.Field>
+                    <Form.Field>
+                        <label htmlFor="description">Product Description: </label>
                         <textarea
                             className="text-area"
                             placeholder="A course on the basics every painter needs to know."
@@ -199,81 +179,6 @@ const Dashboard = () => {
                         <label htmlFor="category">Category: </label>
                         <select className="select">
                             {/* NEED TO MAP CATEGORIES */}
-                        </select>
-                    </Form.Field>
-                    <Button type='submit'>
-                        Submit
-                    </Button>
-                </Form>
-            </div>
-            <div className="form-div">
-                <h3>Add a Blueprint</h3>
-                <Form onSubmit={handleFormSubmit}>
-                    <Form.Field>
-                        <label htmlFor="name">Blueprint Title: </label>
-                        <input
-                            className="input"
-                            placeholder="Mountain Landscape Painting"
-                            name="name"
-                            type="text"
-                            id="name"
-                            required
-                            // onChange={handleChange}
-                        />
-                    </Form.Field>
-                    <Form.Field>
-                        <label htmlFor="description">Description: </label>
-                        <textarea
-                            className="text-area"
-                            placeholder="A step by step guide on how to paint a beautiful mountain landscape."
-                            name="description"
-                            type="text"
-                            id="description"
-                            required
-                            // onChange={handleChange}
-                        />
-                    </Form.Field>
-                    <Form.Field>
-                        <label htmlFor="file">File Type: </label>
-                        <input
-                            className="input"
-                            placeholder="PDF"
-                            name="file"
-                            type="text"
-                            id="file"
-                            required
-                            // onChange={handleChange}
-                        />
-                    </Form.Field>
-                    <Form.Field>
-                        <label htmlFor="price">Price: </label>
-                        <input
-                            className="input"
-                            placeholder="5.00"
-                            name="price"
-                            type="number"
-                            id="price"
-                            required
-                            // onChange={handleChange}
-                        />
-                    </Form.Field>
-                    <Form.Field>
-                        <label htmlFor="difficulty">Difficulty: </label>
-                        <input
-                            className="input"
-                            placeholder="Beginner"
-                            name="difficulty"
-                            type="text"
-                            id="difficulty"
-                            required
-                            // onChange={handleChange}
-                        />
-                    </Form.Field>
-                    <Form.Field>
-                        <label htmlFor="category">Category: </label>
-                        <select
-                            className="select"
-                        >
                         </select>
                     </Form.Field>
                     <Button type='submit'>

@@ -173,9 +173,12 @@ export const QUERY_CATEGORY_BLUEPRINTS = gql`
       username
       price
       file
-      image
       difficulty
       category {
+        _id
+        name
+      }
+      type {
         _id
         name
       }

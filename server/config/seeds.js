@@ -77,10 +77,6 @@ db.once("open", async () => {
   console.log("products seeded");
   console.log(products[1].category);
 
- 
-
-  console.log("blueprints seeded");
-
   await Post.deleteMany();
   const posts = await Post.insertMany([
     {
