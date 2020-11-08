@@ -59,6 +59,6 @@ const productSchema = new Schema({
   },
 });
 
-const Product = mongoose.model("Product", blueprintSchema);
+const Product = mongoose.model("Product", productSchema);
 
 module.exports = Product;
