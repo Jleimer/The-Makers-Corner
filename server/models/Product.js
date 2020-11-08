@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const blueprintSchema = new Schema({
+const productSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -15,7 +15,7 @@ const blueprintSchema = new Schema({
   description: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   image: {
     type: String,
@@ -31,16 +31,26 @@ const blueprintSchema = new Schema({
   difficulty: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+  },
+  courseTime: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  items: {
+    type: String,
+    required: true,
+    trim: true,
   },
   category: {
     type: Schema.Types.ObjectId,
     ref: "Category",
     required: true,
   },
-  types: {
+  type: {
     type: Schema.Types.ObjectId,
-    ref: "Types",
+    ref: "Type",
     required: true,
   },
   reviews: {
@@ -49,6 +59,6 @@ const blueprintSchema = new Schema({
   },
 });
 
-const Blueprint = mongoose.model("Blueprint", blueprintSchema);
+const Product = mongoose.model("Product", productSchema);
 
-module.exports = Blueprint;
+module.exports = Product;

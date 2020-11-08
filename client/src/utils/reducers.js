@@ -3,8 +3,6 @@ import {
   UPDATE_CURRENT_CATEGORY,
   ADD_COMMENT,
   ADD_REVIEW,
-  UPDATE_BLUEPRINTS,
-  UPDATE_COURSES,
   UPDATE_POSTS,
   ADD_TO_CART,
   ADD_MULTIPLE_TO_CART,
@@ -16,8 +14,6 @@ import {
 } from "./actions";
 
 const initialState = {
-  blueprints: [],
-  courses: [],
   products: [],
   cart: [],
   cartOpen: false,
@@ -57,22 +53,7 @@ export const reducer = (state = initialState, action) => {
       console.log(action);
       return {
         ...state,
-        blueprints: [...state.blueprints, action.reviews],
-        courses: [...state.courses, action.reviews],
-      };
-
-    case UPDATE_BLUEPRINTS:
-      console.log(action);
-      return {
-        ...state,
-        blueprints: [...action.blueprints],
-      };
-
-    case UPDATE_COURSES:
-      console.log(action);
-      return {
-        ...state,
-        courses: [...action.courses],
+        products: [...state.products, action.reviews],
       };
 
     case UPDATE_POSTS:
@@ -84,12 +65,13 @@ export const reducer = (state = initialState, action) => {
 
     case ADD_TO_CART:
       console.log(action);
-      return {
+    
+        return {
         ...state,
         cartOpen: true,
         cart: [...state.cart, action.products],
       };
-
+    
     case ADD_MULTIPLE_TO_CART:
       console.log(action);
       return {

@@ -44,7 +44,7 @@ function Blueprints() {
     }
 
     return (
-        <div>
+        <div className="my-2">
             {state.blueprints.length ? (
                 <Grid columns={2} textAlign="center">
                     {filterBlueprints().map(blueprint => (

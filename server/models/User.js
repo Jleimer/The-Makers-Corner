@@ -44,16 +44,10 @@ const userSchema = new Schema({
             ref: 'Post'
         }
     ],
-    courses: [
+    products: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Course'
-        }
-    ],
-    blueprints: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Blueprint'
+            ref: 'Product'
         }
     ]
 });
