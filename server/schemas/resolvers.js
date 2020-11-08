@@ -266,7 +266,7 @@ const resolvers = {
         let newProduct = await (
           await Product.create({ ...args, username: context.user.username })
         )
-        newProduct = await newBlueprint.populate("category").execPopulate();
+        newProduct = await newProduct.populate("category").execPopulate();
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
@@ -314,7 +314,7 @@ const resolvers = {
       }
       throw new AuthenticationError("Not logged in!");
     },
-    addBlueprintReview: async (parent, { productId, args }, context) => {
+    addProductReview: async (parent, { productId, args }, context) => {
       if (context.user) {
         const newReview = await Review.create({
           ...args,
@@ -378,15 +378,9 @@ const resolvers = {
         )
           .select("-__v -password")
           .populate({
-            path: "orders.courses",
+            path: "orders.products",
             populate: "category",
           })
-          .populate({
-            path: "orders.blueprints",
-            populate: "category",
-          })
-          .populate("courses")
-          .populate("blueprints")
           .populate("posts");
 
         return User;
