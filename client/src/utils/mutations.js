@@ -92,7 +92,7 @@ export const UPDATE_USER_INFO = gql`
             _id
             name
           }
-          review {
+          reviews {
             reviewBody
             username
             createdAt

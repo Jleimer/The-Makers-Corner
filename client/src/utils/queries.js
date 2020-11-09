@@ -220,7 +220,7 @@ export const QUERY_ALL_BLUEPRINTS = gql`
         _id
         name
       }
-      review {
+      reviews {
         reviewBody
         username
         createdAt
@@ -247,7 +247,7 @@ export const QUERY_SINGLE_PRODUCT = gql`
         _id
         name
       }
-      review {
+      reviews {
         reviewBody
         username
         createdAt
@@ -259,8 +259,8 @@ export const QUERY_SINGLE_PRODUCT = gql`
 
 // using the category ID or name to filter the courses
 export const QUERY_CATEGORY_COURSES = gql`
-  query courses($category: ID, $name: String) {
-    courses(category: $category, name: $name) {
+  query courses($category: ID, $group: ID, $name: String) {
+    courses(category: $category, group: $group, name: $name) {
       _id
       name
       description
@@ -276,7 +276,7 @@ export const QUERY_CATEGORY_COURSES = gql`
         _id
         name
       }
-      review {
+      reviews {
         reviewBody
         username
         createdAt
@@ -303,7 +303,7 @@ export const QUERY_ALL_COURSES = gql`
         _id
         name
       }
-      review {
+      reviews {
         reviewBody
         username
         createdAt
