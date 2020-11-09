@@ -31,20 +31,20 @@ export const reducer = (state = initialState, action) => {
       console.log(action.type);
       return {
         ...state,
-        products: [action.products],
+        products: [...action.products],
       };
-      case UPDATE_BLUEPRINTS:
+    case UPDATE_BLUEPRINTS:
       console.log(action.type);
       return {
         ...state,
-        blueprints: [action.blueprints],
+        blueprints: [...action.blueprints],
       };
-      case UPDATE_COURSES:
-        console.log(action.type);
-        return {
-          ...state,
-          courses: [action.courses],
-        };
+    case UPDATE_COURSES:
+      console.log(action.type);
+      return {
+        ...state,
+        courses: [...action.courses],
+      };
     // if action type value is the value of `UPDATE_CATEGORIES`, return a new state object with an updated categories array
     case UPDATE_CATEGORIES:
       console.log(action.type);

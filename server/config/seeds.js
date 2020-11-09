@@ -12,14 +12,15 @@ db.once("open", async () => {
     { name: "textile" },
     { name: "ceramics" },
   ]);
+  console.log("categories seeded");
+  console.log(categories[0]._id, categories[0].name);
 
-  const type = await Type.insertMany([
+  await Type.deleteMany();
+  const types = await Type.insertMany([
     { name: "blueprints" },
     { name: "courses" },
   ]);
-  
-  console.log("categories seeded");
-  console.log(categories[0]._id, categories[0].name);
+  console.log("type seeded", types[0]._id);
 
   await Product.deleteMany();
   const products = await Product.insertMany([
@@ -32,7 +33,7 @@ db.once("open", async () => {
       items: "Resin, wood(walnut), pouring frame",
       category: categories[2]._id,
       items: "tools",
-      type: type[1]._id,
+      type: types[1]._id,
       username: "jleimer",
     },
     {
@@ -44,7 +45,7 @@ db.once("open", async () => {
       items:
         "Soldering Iron, flux, glass foil, precut stained glass, glass cutter",
       category: categories[0]._id,
-      type: type[1]._id,
+      type: types[1]._id,
       username: "kwedwick",
     },
     {
@@ -57,7 +58,7 @@ db.once("open", async () => {
       difficulty: "Some exprience required",
       items: "tools",
       category: categories[3]._id,
-      type: type[0]._id,
+      type: types[0]._id,
       username: "jleimer",
     },
     {
@@ -70,7 +71,7 @@ db.once("open", async () => {
       difficulty: "Experience with table saw required",
       items: "tools",
       category: categories[4]._id,
-      type: type[0]._id,
+      type: types[0]._id,
       username: "kwedwick",
     },
   ]);

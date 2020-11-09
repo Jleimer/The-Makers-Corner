@@ -165,20 +165,21 @@ export const QUERY_CHECKOUT = gql`
 
 //filter blueprints by category
 export const QUERY_CATEGORY_BLUEPRINTS = gql`
-  query blueprints($category: ID, $name: String) {
-    blueprints(category: $category, name: $name) {
+  query blueprints ($category: ID, $type: ID, $name: String) {
+    blueprints (category: $category, type: $type, name: $name) {
       _id
       name
       description
       username
       price
-      file
       difficulty
-      category {
+      reviews {
         _id
-        name
+        reviewBody
+        username
+        createdAt
       }
-      type {
+      category {
         _id
         name
       }
@@ -216,10 +217,6 @@ export const QUERY_SINGLE_PRODUCT = gql`
         _id
         name
       }
-      type {
-        _id
-        name
-      }
     }
   }
 `;
@@ -233,7 +230,7 @@ export const QUERY_CATEGORY_COURSES = gql`
       description
       username
       price
-      image
+      items
       difficulty
       category {
         _id

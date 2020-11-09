@@ -11,7 +11,7 @@ import { Card, Grid } from "semantic-ui-react";
 function Blueprints() {
   const state = store.getState();
   const dispatch = useDispatch();
-  useSelector((state) => state);
+  useSelector(state => state);
 
   const { currentCategory } = state;
 
