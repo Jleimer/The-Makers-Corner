@@ -32,7 +32,6 @@ db.once("open", async () => {
       difficulty: "Beginner",
       items: "Resin, wood(walnut), pouring frame",
       category: categories[2]._id,
-      items: "tools",
       type: types[1]._id,
       username: "jleimer",
     },
