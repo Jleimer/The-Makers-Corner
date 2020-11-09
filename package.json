@@ -4,7 +4,6 @@
   "description": "A server for social media and sale of classes for at home construction",
   "main": "server/server.js",
   "dependencies": {
-    "dotenv": "^8.2.0",
     "if-env": "^1.0.4"
   },
   "devDependencies": {

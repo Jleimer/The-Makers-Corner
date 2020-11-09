@@ -1,5 +1,5 @@
 {
-  "name": "server.js",
+  "name": "mern-server",
   "version": "1.0.0",
   "description": "A server for social media and sale of classes for at home construction",
   "main": "server.js",
@@ -8,19 +8,11 @@
     "watch": "nodemon",
     "seed": "node config/seeds.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/Jleimer/The-Makers-Corner.git"
-  },
   "keywords": [
     "mern"
   ],
   "author": "Jleimer, kwedwick,",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Jleimer/The-Makers-Corner/issues"
-  },
-  "homepage": "https://github.com/Jleimer/The-Makers-Corner#readme",
   "dependencies": {
     "apollo-server-express": "^2.18.2",
     "bcrypt": "^5.0.0",
