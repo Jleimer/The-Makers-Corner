@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import CoursesItem from "../CoursesItem";
 import { useDispatch, useSelector } from 'react-redux';
-import { UPDATE_PRODUCTS } from "../../utils/actions";
+import { UPDATE_COURSES } from "../../utils/actions";
 import { useQuery } from '@apollo/react-hooks';
 import { QUERY_CATEGORY_COURSES } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
@@ -19,35 +19,35 @@ function Courses() {
     useEffect(() => {
         if(data) {
           dispatch({
-               type: UPDATE_PRODUCTS,
-                products: data.courses
+               type: UPDATE_COURSES,
+                courses: data.courses
             });
-            data.courses.forEach((product) => {
-              idbPromise('products', 'put', product);
+            data.courses.forEach((course) => {
+              idbPromise('courses', 'put', course);
             });
         } else if (!loading) {
-          idbPromise('products', 'get').then((products) => {
+          idbPromise('courses', 'get').then((courses) => {
             dispatch({
-              type: UPDATE_PRODUCTS,
-                products: products
+              type: UPDATE_COURSES,
+              courses: courses
             });
           });
         }
     }, [data, loading, dispatch]);
     
-    function filterProducts() {
+    function filterCourses() {
         if (!currentCategory) {
-            return state.products;
+            return state.courses;
         }
 
-        return state.products.filter(product => product.category._id === currentCategory);
+        return state.courses.filter(course => course.category._id === currentCategory);
     }
 
   return (
     <div>
-      {state.products.length ? (
+      {state.courses.length ? (
         <Grid columns={2} textAlign='center'>
-            {filterProducts().map(course => (
+            {filterCourses().map(course => (
                 <CoursesItem
                   key={course._id}
                   _id={course._id}

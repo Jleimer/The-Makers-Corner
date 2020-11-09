@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const typeSchema = new Schema (
+const groupSchema = new Schema (
     {
         name: {
             type: String,
@@ -12,6 +12,6 @@ const typeSchema = new Schema (
     }
 );
 
-const Type = mongoose.model('Type', typeSchema);
+const Group = mongoose.model('Group', groupSchema);
 
-module.exports = Type;
+module.exports = Group;

@@ -110,9 +110,9 @@ const Dashboard = () => {
                         />
                     </Form.Field>
                     <Form.Field>
-                        <label htmlFor="category">Type: </label>
+                        <label htmlFor="category">Group: </label>
                         <select className="select">
-                            {/* NEED TO MAP TYPE */}
+                            {/* NEED TO MAP GROUP */}
                         </select>
                     </Form.Field>
                     <Form.Field>

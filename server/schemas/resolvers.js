@@ -3,7 +3,7 @@ const {
   User,
   Post,
   Category,
-  Type,
+  Group,
   Product,
   Order,
   Comment,
@@ -17,17 +17,17 @@ const resolvers = {
     categories: async () => {
       return await Category.find();
     },
-    type: async () => {
-      return await Type.find();
+    group: async () => {
+      return await Group.find();
     },
-    products: async (parent, { category, type, name }) => {
+    products: async (parent, { category, group, name }) => {
       const params = {};
       if (category) {
         params.category = category;
       }
 
-      if (type) {
-        params.type = type;
+      if (group) {
+        params.group = group;
       }
 
       if (name) {
@@ -38,23 +38,23 @@ const resolvers = {
       return await Product.find(params)
         .populate("category")
         .populate("reviews")
-        .populate("type")
+        .populate("group")
         .sort({ createdAt: -1 });
     },
     product: async (parent, { productId }) => {
       return await Product.findById({ _id: productId })
         .populate("category")
         .populate("reviews")
-        .populate("type");
+        .populate("group");
     },
-    blueprints: async (parent, { category, type, name }) => {
+    blueprints: async (parent, { category, group, name }) => {
       const params = {};
       if (category) {
         params.category = category;
       }
 
-      if (type) {
-        params.type = type;
+      if (group) {
+        params.group = group;
       }
 
       if (name) {
@@ -65,17 +65,17 @@ const resolvers = {
       return await Product.find(params)
         .populate("category")
         .populate("reviews")
-        .populate("type")
+        .populate("group")
         .sort({ createdAt: -1 });
     },
-    courses: async (parent, { category, type, name }) => {
+    courses: async (parent, { category, group, name }) => {
       const params = {};
       if (category) {
         params.category = category;
       }
 
-      if (type) {
-        params.type = type;
+      if (group) {
+        params.group = group;
       }
 
       if (name) {
@@ -86,7 +86,7 @@ const resolvers = {
       return await Product.find(params)
         .populate("category")
         .populate("reviews")
-        .populate("type")
+        .populate("group")
         .sort({ createdAt: -1 });
     },
     posts: async (parent, { category, name }) => {
@@ -120,13 +120,12 @@ const resolvers = {
           })
           .populate({
             path: "products",
-            populate:{ path: 'category'}
+            populate: { path: "category" },
           })
           .populate({
             path: "posts",
-            populate:{ path: 'category'}
-          })
-          
+            populate: { path: "category" },
+          });
 
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
@@ -141,7 +140,7 @@ const resolvers = {
           .select("-__v -password")
           .populate({
             path: "products",
-            populate:{ path: 'category'}
+            populate: { path: "category" },
           })
           .populate("posts");
 
@@ -157,11 +156,10 @@ const resolvers = {
     },
     order: async (parent, { _id }, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id)
-          .populate({
-            path: "orders.products",
-            populate: "category",
-          })
+        const user = await User.findById(context.user._id).populate({
+          path: "orders.products",
+          populate: "category",
+        });
         return user.orders.id(_id);
       }
 
@@ -178,7 +176,7 @@ const resolvers = {
         const product = await stripe.products.create({
           name: products[i].name,
           description: products[i].description,
-          images: [`${url}/images/${products[i].image}`]
+          images: [`${url}/images/${products[i].image}`],
         });
         // generate price id using the product id
         const price = await stripe.prices.create({
@@ -194,23 +192,20 @@ const resolvers = {
         });
       }
       const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
+        payment_method_group: ["card"],
         line_items,
         mode: "payment",
-        success_url:
-          `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${url}/`,
       });
-      return { session: session.id};
+      return { session: session.id };
     },
     orderHistory: async (parent, args, context) => {
       if (context.user) {
-        await User.findById(context.user._id)
-          .select("-password")
-          .populate({
-            path: "orders.products",
-            populate: "category",
-          })
+        await User.findById(context.user._id).select("-password").populate({
+          path: "orders.products",
+          populate: "category",
+        });
       }
     },
   },
@@ -263,10 +258,14 @@ const resolvers = {
     },
     addProduct: async (parent, args, context) => {
       if (context.user) {
-        let newProduct = await (
-          await Product.create({ ...args, username: context.user.username })
-        )
-        newProduct = await newProduct.populate("category").execPopulate();
+        let newProduct = await await Product.create({
+          ...args,
+          username: context.user.username,
+        });
+        newProduct = await newProduct
+          .populate("category")
+          .populate("group")
+          .execPopulate();
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
@@ -325,7 +324,10 @@ const resolvers = {
           { _id: productId },
           { $push: { reviews: newReview._id } },
           { new: true }
-        ).populate("reviews");
+        )
+          .populate("reviews")
+          .populate("category")
+          .populate("group");
 
         return Product;
       }
@@ -335,7 +337,10 @@ const resolvers = {
       if (context.user) {
         return await Product.findByIdAndUpdate({ _id: productId }, args, {
           new: true,
-        }).populate("reviews").populate("category").populate("type");
+        })
+          .populate("reviews")
+          .populate("category")
+          .populate("group");
       }
       throw new AuthenticationError("Not logged in!");
     },
@@ -404,11 +409,7 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in!");
     },
-    deleteProductReview: async (
-      parent,
-      { productId, reviewId },
-      context
-    ) => {
+    deleteProductReview: async (parent, { productId, reviewId }, context) => {
       if (context.user) {
         await Product.findByIdAndUpdate(
           { _id: productId },

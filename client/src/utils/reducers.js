@@ -4,6 +4,8 @@ import {
   ADD_COMMENT,
   ADD_REVIEW,
   UPDATE_POSTS,
+  UPDATE_BLUEPRINTS,
+  UPDATE_COURSES,
   ADD_TO_CART,
   ADD_MULTIPLE_TO_CART,
   REMOVE_FROM_CART,
@@ -15,6 +17,8 @@ import {
 
 const initialState = {
   products: [],
+  blueprints: [],
+  courses: [],
   cart: [],
   cartOpen: false,
   categories: [],
@@ -27,7 +31,19 @@ export const reducer = (state = initialState, action) => {
       console.log(action.type);
       return {
         ...state,
-        products: [action.products],
+        products: [...action.products],
+      };
+    case UPDATE_BLUEPRINTS:
+      console.log(action.type);
+      return {
+        ...state,
+        blueprints: [...action.blueprints],
+      };
+    case UPDATE_COURSES:
+      console.log(action.type);
+      return {
+        ...state,
+        courses: [...action.courses],
       };
     // if action type value is the value of `UPDATE_CATEGORIES`, return a new state object with an updated categories array
     case UPDATE_CATEGORIES:

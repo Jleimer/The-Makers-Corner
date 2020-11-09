@@ -7,6 +7,7 @@ import {idbPromise } from "../../utils/helpers";
 import { Card, Button } from 'semantic-ui-react';
 
 function BlueprintsItem(item) {
+    console.log(item)
     const dispatch = useDispatch();
     const state = useSelector(state => state);
 
