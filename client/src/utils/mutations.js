@@ -3,17 +3,17 @@ import gql from "graphql-tag";
 //sign up user
 export const ADD_USER = gql`
   mutation addUser(
-    $username: String!,
-    $firstName: String!,
-    $lastName: String!,
-    $email: String!,
-    $password: String!,
+    $username: String!
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $password: String!
   ) {
     addUser(
-      username: $username,
-      firstName: $firstName,
-      lastName: $lastName,
-      email: $email,
+      username: $username
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
       password: $password
     ) {
       token
@@ -39,6 +39,10 @@ export const ADD_ORDER = gql`
           _id
           name
         }
+        group {
+          _id
+          name
+        }
       }
     }
   }
@@ -59,15 +63,15 @@ export const LOGIN = gql`
 // allows user to change their name/username/email/ and need their password to do so
 export const UPDATE_USER_INFO = gql`
   mutation updateUser(
-    $firstName: String!,
-    $lastName: String!,
-    $email: String!,
-    $password: String!,
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $password: String!
   ) {
     updateUser(
-      firstName: $firstName,
-      lastName: $lastName,
-      email: $email,
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
       password: $password
     ) {
       user {
@@ -87,6 +91,12 @@ export const UPDATE_USER_INFO = gql`
           type {
             _id
             name
+          }
+          review {
+            reviewBody
+            username
+            createdAt
+            _id
           }
         }
         posts {
@@ -110,6 +120,10 @@ export const UPDATE_USER_INFO = gql`
             description
             price
             image
+            group {
+              _id
+              name
+            }
           }
         }
       }
@@ -120,27 +134,27 @@ export const UPDATE_USER_INFO = gql`
 // add blueprint to Database under user info - separate page
 export const ADD_PRODUCT = gql`
   mutation addProduct(
-    $name: String!,
-    $description: String!,
-    $image: String,
-    $file: String,
-    $price: Float!,
-    $difficulty: String!,
-    $category: ID!,
-    $items: String!,
-    $courseTime: String,
-    $type: ID!
+    $name: String!
+    $description: String!
+    $image: String
+    $file: String
+    $price: Float!
+    $difficulty: String!
+    $category: ID!
+    $items: String!
+    $courseTime: String
+    $group: ID!
   ) {
     addProduct(
-      name: $name,
-      description: $description,
-      image: $image,
-      file: $file,
-      price: $price,
-      difficulty: $difficulty,
-      category: $category,
-      items: $items,
-      type: $type
+      name: $name
+      description: $description
+      image: $image
+      file: $file
+      price: $price
+      difficulty: $difficulty
+      category: $category
+      items: $items
+      group: $group
     ) {
       _id
       name
@@ -150,7 +164,7 @@ export const ADD_PRODUCT = gql`
       price
       difficulty
       items
-      type {
+      group {
         _id
         name
       }
@@ -189,10 +203,10 @@ export const ADD_COMMENT_POST = gql`
       createdAt
       username
       comments {
-          _id
-          username
-          createdAt
-          commentBody
+        _id
+        username
+        createdAt
+        commentBody
       }
     }
   }
@@ -215,7 +229,7 @@ export const ADD_PRODUCT_REVIEW = gql`
         _id
         name
       }
-      type {
+      group {
         _id
         name
       }
@@ -231,16 +245,26 @@ export const ADD_PRODUCT_REVIEW = gql`
 
 //update course information on an update page
 export const UPDATE_PRODUCT_INFO = gql`
-  mutation updateProduct( $productId: ID!, $name: String!, $description: String!, $courseTime: String!, $difficulty: String!, $price: Float! $items: String!, $type: ID!, $image: String) {
+  mutation updateProduct(
+    $productId: ID!
+    $name: String!
+    $description: String!
+    $courseTime: String!
+    $difficulty: String!
+    $price: Float!
+    $items: String!
+    $group: ID!
+    $image: String
+  ) {
     updateProduct(
-      productId: $productId,
-      name: $name,
-      description: $description,
-      courseTime: $courseTime,
-      difficulty: $difficulty,
-      price: $price,
-      items: $items,
-      type: $type,
+      productId: $productId
+      name: $name
+      description: $description
+      courseTime: $courseTime
+      difficulty: $difficulty
+      price: $price
+      items: $items
+      group: $group
       image: $image
     ) {
       _id
@@ -256,7 +280,7 @@ export const UPDATE_PRODUCT_INFO = gql`
         _id
         name
       }
-      type {
+      group {
         _id
         name
       }
@@ -272,19 +296,28 @@ export const UPDATE_PRODUCT_INFO = gql`
 
 // update post information on an update page
 export const UPDATE_POST_INFO = gql`
-    mutation updatePost($postId: ID!, $title: String!, $postText: String!, $category: ID!) {
-        updatePost(postId: $postId, title: $title, postText: $postText, category: $category) {
-            _id
-            postText
-            createdAt
-            username
-            comments {
-                _id
-                username
-                createdAt
-                commentBody
-            }
-        }
+  mutation updatePost(
+    $postId: ID!
+    $title: String!
+    $postText: String!
+    $category: ID!
+  ) {
+    updatePost(
+      postId: $postId
+      title: $title
+      postText: $postText
+      category: $category
+    ) {
+      _id
+      postText
+      createdAt
+      username
+      comments {
+        _id
+        username
+        createdAt
+        commentBody
+      }
     }
+  }
 `;
-

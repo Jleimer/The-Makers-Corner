@@ -48,9 +48,9 @@ const productSchema = new Schema({
     ref: "Category",
     required: true,
   },
-  type: {
+  group: {
     type: Schema.Types.ObjectId,
-    ref: "Type",
+    ref: "Group",
     required: true,
   },
   reviews: {

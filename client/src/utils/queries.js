@@ -107,6 +107,10 @@ export const QUERY_ME = gql`
         description
         username
         price
+        group {
+          _id
+          name
+        }
         category {
           _id
           name
@@ -134,6 +138,10 @@ export const QUERY_ME = gql`
           description
           price
           image
+          group {
+            _id
+            name
+          }
         }
         
       }
@@ -150,6 +158,10 @@ export const QUERY_ORDER_HISTORY = gql`
             name
             price
             purchaseDate
+            group {
+              _id
+              name
+            }
         }
       }
     }
@@ -165,8 +177,8 @@ export const QUERY_CHECKOUT = gql`
 
 //filter blueprints by category
 export const QUERY_CATEGORY_BLUEPRINTS = gql`
-  query blueprints ($category: ID, $type: ID, $name: String) {
-    blueprints (category: $category, type: $type, name: $name) {
+  query blueprints ($category: ID, $group: ID, $name: String) {
+    blueprints (category: $category, group: $group, name: $name) {
       _id
       name
       description
@@ -178,6 +190,10 @@ export const QUERY_CATEGORY_BLUEPRINTS = gql`
         reviewBody
         username
         createdAt
+      }
+      group {
+        _id
+        name
       }
       category {
         _id
@@ -196,9 +212,19 @@ export const QUERY_ALL_BLUEPRINTS = gql`
       description
       username
       price
+      group {
+        _id
+        name
+      }
       category {
         _id
         name
+      }
+      review {
+        reviewBody
+        username
+        createdAt
+        _id
       }
     }
   }
@@ -213,9 +239,19 @@ export const QUERY_SINGLE_PRODUCT = gql`
       name
       description
       price
+      group {
+        _id
+        name
+      }
       category {
         _id
         name
+      }
+      review {
+        reviewBody
+        username
+        createdAt
+        _id
       }
     }
   }
@@ -232,9 +268,19 @@ export const QUERY_CATEGORY_COURSES = gql`
       price
       items
       difficulty
+      group {
+        _id
+        name
+      }
       category {
         _id
         name
+      }
+      review {
+        reviewBody
+        username
+        createdAt
+        _id
       }
     }
   }
@@ -249,9 +295,19 @@ export const QUERY_ALL_COURSES = gql`
       description
       username
       price
+      group {
+        _id
+        name
+      }
       category {
         _id
         name
+      }
+      review {
+        reviewBody
+        username
+        createdAt
+        _id
       }
     }
   }

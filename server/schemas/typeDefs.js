@@ -6,7 +6,7 @@ const typeDefs = gql`
         name: String
     }
 
-    type Type {
+    type Group {
         _id: ID
         name: String
     }
@@ -38,6 +38,7 @@ const typeDefs = gql`
         courseTime: String
         category: Category
         reviews: [Review]
+        group: Group
         
     }
 
@@ -75,11 +76,11 @@ const typeDefs = gql`
 
     type Query {
         categories: [Category]
-        type: [Type]
-        products(categroy: ID, type: ID, name: String): [Product]
+        group: [Group]
+        products(categroy: ID, group: ID, name: String): [Product]
         product(productId: ID!): Product
-        blueprints(category: ID, type: ID, name: String): [Product]
-        courses(type: ID, category: ID, name: String): [Product]
+        blueprints(category: ID, group: ID, name: String): [Product]
+        courses(group: ID, category: ID, name: String): [Product]
         posts(category: ID, name: String): [Post]
         post(postId: ID!): Post
         user(username: String!): User
@@ -96,13 +97,13 @@ const typeDefs = gql`
         login(email: String!, password: String!): Auth
         updateUser(firstName: String!, lastName: String!, email: String!, password: String!): User
         
-        addProduct(name: String!, description: String!, image: String, file: String, price: Float!, difficulty: String!,courseTime: String, items: String!, type: ID!, category: ID!): Product
+        addProduct(name: String!, description: String!, image: String, file: String, price: Float!, difficulty: String!,courseTime: String, items: String!, group: ID!, category: ID!): Product
     
         addPost(postText: String!, title: String!, category: ID!): Post
         addCommentPost(postId: ID!, commentBody: String!): Post
         addProductReview(productId: ID!, reviewBody: String!): Product
         
-        updateProduct(productId: ID!, name: String!, description: String!, image: String, file: String, price: Float!, difficulty: String!, courseTime: String, items: String!, type: ID!, category: ID!): Product
+        updateProduct(productId: ID!, name: String!, description: String!, image: String, file: String, price: Float!, difficulty: String!, courseTime: String, items: String!, group: ID!, category: ID!): Product
         updatePost(postId: ID!, title: String!, postText: String!, category: ID!): Post
         deleteProduct(productId: ID!): Product
 
