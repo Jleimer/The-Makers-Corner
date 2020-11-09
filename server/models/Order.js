@@ -7,17 +7,11 @@ const orderSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  classes: [
+  products: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Class'
+      ref: 'Product'
     }
-  ],
-  bluePrints: [
-      {
-          type: Schema.Types.ObjectId,
-          ref: 'Blueprint'
-      }
   ]
 });
 
