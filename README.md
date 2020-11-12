@@ -2,7 +2,7 @@
 
 The Maker's Corner is a website for artists, creators, and most importantly makers of all mediums. A maker is just that, someone who wants to grab a tool of any kind and make something. Makers often experiment with new things and are constantly learning to incorporate new skills and techniques to make something unique.  Sometimes in this process it is easy to get stuck and a youTube video from 6 years ago just is not helping anymore and you wish you could just ask someone who knows what they are talking about.  That's where The Maker's corner comes in. The Maker's Corner is a social media learning platform where a user can post questions to other makers, buy and download project plans or blueprints and take virtual classes.
 
-View The Maker's Corner: https://tranquil-dusk-14791.herokuapp.com/login
+View The Maker's Corner: https://tranquil-dusk-14791.herokuapp.com/
 
 # Features
 
